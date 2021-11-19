@@ -22,11 +22,11 @@ $secondary-color: #19191a;
 
 .dropdown .dropbtn {
   height: 100%;
-  border: 0;
   font-size: 20px;
   text-decoration: none;
   background-color: $primary-color;
   color: #dddddc;
+  border: 0;
 }
 
 .navbar a:hover,
@@ -35,23 +35,23 @@ $secondary-color: #19191a;
 }
 
 .dropdown__content {
-  display: none;
   position: absolute;
-  background-color: $primary-color;
+  z-index: 1;
+  display: none;
   min-width: 140px;
+  background-color: $primary-color;
   text-align: center;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
 }
 
 .dropdown__content a {
+  display: block;
   float: none;
-  border-bottom: 3px solid $primary-color;
-  color: white;
   padding: 12px 16px;
+  color: white;
   font-size: 20px;
   text-decoration: none;
-  display: block;
+  border-bottom: 3px solid $primary-color;
 }
 
 .dropdown__content a:hover {

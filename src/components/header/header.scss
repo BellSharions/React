@@ -2,29 +2,29 @@ $primary-color: #131211;
 $secondary-color: #19191a;
 
 .header {
+  display: flex;
   width: 100%;
   height: 50px;
-  display: flex;
   text-align: center;
   background-color: $primary-color;
   color: #ffffff;
 }
 
 .header__navlinks {
-  width: 100%;
-  height: 50px;
   display: flex;
   justify-content: flex-end;
+  width: 100%;
+  height: 50px;
   background-color: $primary-color;
 }
 
 .header__navlinks-link {
   padding: 10px 20px;
-  border: 0;
   font-size: 20px;
   text-decoration: none;
   background-color: $primary-color;
   color: #dddddc;
+  border: 0;
 }
 
 .header__navlinks-link:hover {
