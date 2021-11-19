@@ -1,9 +1,5 @@
 $primary-color: #131211;
 
-* {
-  font-family: Roboto;
-}
-
 .footer {
   position: absolute;
   bottom: 0;
@@ -15,7 +11,13 @@ $primary-color: #131211;
   color: #ffffff;
 }
 
-.icons {
+.footer__text {
+  padding: 10px 0;
+  width: 10%;
+  margin: 0;
+}
+
+.footer__icons {
   width: 90%;
   height: 50px;
   display: flex;
@@ -27,10 +29,4 @@ $primary-color: #131211;
   width: 70px;
   padding: 10px 20px;
   border: 0;
-}
-
-.footer__text {
-  padding: 10px 0;
-  width: 10%;
-  margin: 0;
 }
