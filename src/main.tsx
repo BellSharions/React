@@ -1,42 +1,31 @@
 import "./styles/main.css";
 import "./styles/main.scss";
 // watch: native intellisense and file-peek for aliases from jsconfig.json and with none-js files doesn't work: https://github.com/microsoft/TypeScript/issues/29334
-import { Component, StrictMode } from "react";
+import { StrictMode } from "react";
 import ReactDom from "react-dom";
-import someTypeScript from "./someTypeScript";
-import HelloWorld from "./components/HelloWorld";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
+import Header from "./components/header/header";
+import Footer from "./components/footer";
+import Home from "./components/home/home";
+import SignIn from "./components/users/sign-in";
+import SignUp from "./components/users/sign-up";
+import Products from "./components/products/products";
+import About from "./components/about/about";
 
-interface AppProps {
-  nothing: boolean;
-}
-interface AppState {
-  title: string;
-}
+const AppContainer: React.FC = () => (
+  <StrictMode>
+    <BrowserRouter>
+      <Header />
+      <Switch>
+        <Route exact path={["/", "/home"]} render={() => <Home />} />
+        <Route path="/sign-in" render={() => <SignIn />} />
+        <Route path="/sign-up" render={() => <SignUp />} />
+        <Route path="/products" render={() => <Products />} />
+        <Route path="/about" render={() => <About />} />
+      </Switch>
+      <Footer />
+    </BrowserRouter>
+  </StrictMode>
+);
 
-class AppContainer extends Component<AppProps, AppState> {
-  ["constructor"]: typeof AppContainer;
-
-  constructor(props: AppProps) {
-    super(props);
-    this.state = {
-      title: someTypeScript("Test-block for css-modules"),
-    };
-    // test class-dead-code
-    const goExlcude = true;
-    if (!goExlcude) {
-      console.warn("class-dead-code doesn't work");
-    }
-  }
-
-  render() {
-    return (
-      <StrictMode>
-        <div>
-          <HelloWorld />
-        </div>
-      </StrictMode>
-    );
-  }
-}
-
-ReactDom.render(<AppContainer nothing={false} />, document.getElementById("app"));
+ReactDom.render(<AppContainer />, document.getElementById("app"));
