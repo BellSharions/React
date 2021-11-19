@@ -3,7 +3,7 @@ import "./styles/main.scss";
 // watch: native intellisense and file-peek for aliases from jsconfig.json and with none-js files doesn't work: https://github.com/microsoft/TypeScript/issues/29334
 import { StrictMode } from "react";
 import ReactDom from "react-dom";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { Switch, Route, HashRouter } from "react-router-dom";
 import Header from "./components/header/header";
 import Footer from "./components/footer";
 import Home from "./components/home/home";
@@ -14,7 +14,7 @@ import About from "./components/about/about";
 
 const AppContainer: React.FC = () => (
   <StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <Header />
       <Switch>
         <Route exact path={["/", "/home"]} render={() => <Home />} />
@@ -24,7 +24,7 @@ const AppContainer: React.FC = () => (
         <Route path="/about" render={() => <About />} />
       </Switch>
       <Footer />
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>
 );
 

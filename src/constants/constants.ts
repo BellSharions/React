@@ -2,4 +2,4 @@ export const PRODUCTS = "/products";
 export const ABOUT = "/about";
 export const HOME = "/home";
 export const SIGNIN = "/sign-in";
-export const SIGNUP = "/sigh-up";
+export const SIGNUP = "/sign-up";

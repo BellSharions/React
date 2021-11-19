@@ -2,7 +2,7 @@ import "./footer.scss";
 
 const Footer: React.FC = () => (
   <footer className="footer">
-    <p className="footer__text">Super best shop ever.</p>
+    <p className="footer__text">Incredible convenient</p>
     <div className="icons">
       <a href="https://www.ea.com">
         <img
@@ -14,7 +14,7 @@ const Footer: React.FC = () => (
       <a href="https://www.activision.com/">
         <img
           className="icons__icon"
-          src="https://res.cloudinary.com/dev3afzlt/image/upload/v1637339129/Activision_tbjzka.png"
+          src="https://res.cloudinary.com/dev3afzlt/image/upload/v1637340397/blizzard-icon-29_biiq2q.png"
           alt="Sorry, resource was not loaded!"
         />
       </a>

@@ -1,5 +1,8 @@
 $primary-color: #131211;
-$secondary-color: #19191a;
+
+* {
+  font-family: Roboto;
+}
 
 .footer {
   position: absolute;
@@ -24,8 +27,6 @@ $secondary-color: #19191a;
   width: 70px;
   padding: 10px 20px;
   border: 0;
-  font-size: 20px;
-  text-decoration: none;
 }
 
 .footer__text {
