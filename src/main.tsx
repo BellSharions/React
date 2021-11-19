@@ -11,17 +11,18 @@ import SignIn from "./components/users/sign-in";
 import SignUp from "./components/users/sign-up";
 import Products from "./components/products/products";
 import About from "./components/about/about";
+import { HOME, ABOUT, SIGNIN, SIGNUP, PRODUCTS } from "./constants/constants";
 
 const AppContainer: React.FC = () => (
   <StrictMode>
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route path="/sign-in" render={() => <SignIn />} />
-        <Route path="/sign-up" render={() => <SignUp />} />
-        <Route path="/products" render={() => <Products />} />
-        <Route path="/about" render={() => <About />} />
-        <Route path={["/", "/home"]} render={() => <Home />} />
+        <Route path={SIGNIN} render={() => <SignIn />} />
+        <Route path={SIGNUP} render={() => <SignUp />} />
+        <Route path={PRODUCTS} render={() => <Products />} />
+        <Route path={ABOUT} render={() => <About />} />
+        <Route path={["/", HOME]} render={() => <Home />} />
       </Switch>
       <Footer />
     </BrowserRouter>
