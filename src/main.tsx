@@ -1,7 +1,6 @@
 import "./styles/main.css";
 import "./styles/main.scss";
-// watch: native intellisense and file-peek for aliases from jsconfig.json and with none-js files doesn't work: https://github.com/microsoft/TypeScript/issues/29334
-import { StrictMode, Component } from "react";
+import { StrictMode, Component, ErrorInfo } from "react";
 import ReactDom from "react-dom";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import Header from "./components/header/header";
@@ -13,15 +12,36 @@ import Products from "./components/products/products";
 import About from "./components/about/about";
 import { HOME, ABOUT, SIGNIN, SIGNUP, PRODUCTS } from "./constants/constants";
 
-class AppContainer extends Component {
+interface ErrorBoundaryProps {
+  children?: React.ReactElement[];
+}
+interface ErrorBoundaryState {
+  errorState: boolean;
+}
+
+class AppContainer extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   ["constructor"]: typeof AppContainer;
 
-  constructor(props: string) {
+  constructor(props: ErrorBoundaryProps | Readonly<ErrorBoundaryProps>) {
     super(props);
-    this.state = {};
+    this.state = { errorState: false };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    alert("It seems you've caused an error! Click OK to redirect to home page.");
+    console.error(errorInfo);
+    console.error(error);
+    window.location.replace(HOME);
+  }
+
+  static getDerivedStateFromError(): Partial<ErrorBoundaryState> {
+    return { errorState: true };
   }
 
   render() {
+    if (this.state.errorState) {
+      return <h1>This UI shows if you have caused an error!</h1>;
+    }
     return (
       <StrictMode>
         <BrowserRouter>
