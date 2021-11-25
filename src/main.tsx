@@ -1,6 +1,6 @@
 import "./styles/main.css";
 import "./styles/main.scss";
-import { StrictMode, Component, ErrorInfo } from "react";
+import { StrictMode, Component } from "react";
 import ReactDom from "react-dom";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import Header from "./components/header/header";
@@ -11,51 +11,33 @@ import SignUp from "./components/users/sign-up";
 import Products from "./components/products/products";
 import About from "./components/about/about";
 import { HOME, ABOUT, SIGNIN, SIGNUP, PRODUCTS, ERROR } from "./constants/constants";
-import ErrorCase from "./components/error";
+import ErrorCase from "./components/errorHandler/errorTest";
+import ErrorBoundary from "./components/errorHandler/errorBoundary";
 
-interface ErrorBoundaryProps {
-  children?: React.ReactElement[];
-}
-interface ErrorBoundaryState {
-  errorState: boolean;
-}
-
-class AppContainer extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class AppContainer extends Component {
   ["constructor"]: typeof AppContainer;
 
-  constructor(props: ErrorBoundaryProps | Readonly<ErrorBoundaryProps>) {
+  constructor(props: string) {
     super(props);
-    this.state = { errorState: false };
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    alert("It seems you've caused an error! Click OK to redirect to home page.");
-    console.error(errorInfo);
-    console.error(error);
-    window.location.replace(HOME);
-  }
-
-  static getDerivedStateFromError(): Partial<ErrorBoundaryState> {
-    return { errorState: true };
+    this.state = {};
   }
 
   render() {
-    if (this.state.errorState) {
-      return <h1>This UI shows if you have caused an error!</h1>;
-    }
     return (
       <StrictMode>
         <BrowserRouter>
-          <Header />
-          <Switch>
-            <Route path={SIGNIN} render={() => <SignIn />} />
-            <Route path={SIGNUP} render={() => <SignUp />} />
-            <Route path={PRODUCTS} render={() => <Products />} />
-            <Route path={ABOUT} render={() => <About />} />
-            <Route path={ERROR} render={() => <ErrorCase />} />
-            <Route path={["/", HOME]} render={() => <Home />} />
-          </Switch>
-          <Footer />
+          <ErrorBoundary>
+            <Header />
+            <Switch>
+              <Route path={SIGNIN} render={() => <SignIn />} />
+              <Route path={SIGNUP} render={() => <SignUp />} />
+              <Route path={PRODUCTS} render={() => <Products />} />
+              <Route path={ABOUT} render={() => <About />} />
+              <Route path={ERROR} render={() => <ErrorCase />} />
+              <Route path={["/", HOME]} render={() => <Home />} />
+            </Switch>
+            <Footer />
+          </ErrorBoundary>
         </BrowserRouter>
       </StrictMode>
     );

@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, ReactNode } from "react";
 
 class ErrorCase extends Component {
   constructor(props: string) {
@@ -6,7 +6,7 @@ class ErrorCase extends Component {
     throw new Error("Oops! there is an Error");
   }
 
-  render() {
+  render(): ReactNode {
     return (
       <>
         <p>Error</p>
