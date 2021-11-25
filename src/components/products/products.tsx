@@ -1,21 +1,10 @@
-import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
-const Products: React.FC = () => {
-  const [count, setCount] = useState(0);
-  const handleClick = () => {
-    setCount(count + 1);
-  };
-  if (count === 1) {
-    throw new Error("Oops! there is an Error");
-  }
-  return (
-    <>
-      <p>Products</p>
-      <button type="button" onClick={handleClick}>
-        Click this button to cause an error
-      </button>
-    </>
-  );
-};
+const Products: React.FC = () => (
+  <>
+    <p>Products</p>
+    <NavLink to="/error">Click this link to cause an error</NavLink>
+  </>
+);
 
 export default Products;

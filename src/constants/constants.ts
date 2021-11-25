@@ -3,6 +3,7 @@ export const ABOUT = "/about";
 export const HOME = "/home";
 export const SIGNIN = "/sign-in";
 export const SIGNUP = "/sign-up";
+export const ERROR = "/error";
 export const enum routeType {
   link,
   dropdown,

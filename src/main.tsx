@@ -10,7 +10,8 @@ import SignIn from "./components/users/sign-in";
 import SignUp from "./components/users/sign-up";
 import Products from "./components/products/products";
 import About from "./components/about/about";
-import { HOME, ABOUT, SIGNIN, SIGNUP, PRODUCTS } from "./constants/constants";
+import { HOME, ABOUT, SIGNIN, SIGNUP, PRODUCTS, ERROR } from "./constants/constants";
+import ErrorCase from "./components/error";
 
 interface ErrorBoundaryProps {
   children?: React.ReactElement[];
@@ -51,6 +52,7 @@ class AppContainer extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
             <Route path={SIGNUP} render={() => <SignUp />} />
             <Route path={PRODUCTS} render={() => <Products />} />
             <Route path={ABOUT} render={() => <About />} />
+            <Route path={ERROR} render={() => <ErrorCase />} />
             <Route path={["/", HOME]} render={() => <Home />} />
           </Switch>
           <Footer />
