@@ -1,0 +1,26 @@
+.newGame__container {
+  background-color: rgba(37, 37, 37, 0.7);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 17px;
+  margin: 0;
+}
+
+.newGame__title-container {
+  box-shadow: 0px -2px 0px 0px #8a8c91 inset;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.newGame__title {
+  margin: 0;
+  font-size: 14px;
+  color: rgb(230, 230, 230);
+}
+
+.newGame__content-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

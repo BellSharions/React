@@ -31,7 +31,7 @@ class AppContainer extends Component {
             <Switch>
               <Route path={SIGNIN} render={() => <SignIn />} />
               <Route path={SIGNUP} render={() => <SignUp />} />
-              <Route path={PRODUCTS} render={() => <Products />} />
+              <Route path={`${PRODUCTS}/:platform`} render={() => <Products />} />
               <Route path={ABOUT} render={() => <About />} />
               <Route path={ERROR} render={() => <ErrorCase />} />
               <Route path={["/", HOME]} render={() => <Home />} />
