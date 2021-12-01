@@ -16,7 +16,7 @@ const GameCard: FC<ProductItemProps> = ({ title, description, category, logo }) 
       </div>
       <div className="gameCard__back">
         <div className="gameCard__back-description">{description}</div>
-        <input className="gameCard__back-button" type="button" value="Buy" />
+        <input className="gameCard__back-button" type="button" value="Buy" onClick={() => alert("got product")} />
       </div>
     </div>
   </div>
