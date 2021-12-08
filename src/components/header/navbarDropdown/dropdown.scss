@@ -7,8 +7,8 @@ $secondary-color: #19191a;
 }
 
 .dropdown__button-container {
-  padding: 10px 20px;
-  border: 0;
+  padding: 10px 25px 5px 25px;
+  border-bottom: 5px hidden;
   font-size: 20px;
   text-decoration: none;
   background-color: $primary-color;
@@ -20,6 +20,13 @@ $secondary-color: #19191a;
   color: #9732cb;
 }
 
+.dropdown__button-container:focus-within {
+  border-bottom: 5px solid #9732cb;
+}
+.dropdown__button-container:focus-within .dropbtn {
+  color: #9732cb;
+}
+
 .dropdown .dropbtn {
   height: 100%;
   font-size: 20px;
@@ -27,6 +34,10 @@ $secondary-color: #19191a;
   background-color: $primary-color;
   color: #dddddc;
   border: 0;
+}
+
+.dropbtn:focus .dropdown__button-container {
+  border-bottom: 3px solid #9732cb;
 }
 
 .navbar a:hover,
