@@ -1,42 +1,47 @@
 import "./styles/main.css";
 import "./styles/main.scss";
-// watch: native intellisense and file-peek for aliases from jsconfig.json and with none-js files doesn't work: https://github.com/microsoft/TypeScript/issues/29334
-import { Component, StrictMode } from "react";
+import { StrictMode, Component } from "react";
 import ReactDom from "react-dom";
-import someTypeScript from "./someTypeScript";
-import HelloWorld from "./components/HelloWorld";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
+import Header from "./components/header/header";
+import Footer from "./components/footer";
+import Home from "./components/home/home";
+import SignIn from "./components/users/sign-in";
+import SignUp from "./components/users/sign-up";
+import Products from "./components/products/products";
+import About from "./components/about/about";
+import { HOME, ABOUT, SIGNIN, SIGNUP, PRODUCTS, ERROR } from "./constants/constants";
+import ErrorCase from "./components/errorHandler/errorTest";
+import ErrorBoundary from "./components/errorHandler/errorBoundary";
 
-interface AppProps {
-  nothing: boolean;
-}
-interface AppState {
-  title: string;
-}
-
-class AppContainer extends Component<AppProps, AppState> {
+class AppContainer extends Component {
   ["constructor"]: typeof AppContainer;
 
-  constructor(props: AppProps) {
+  constructor(props: string) {
     super(props);
-    this.state = {
-      title: someTypeScript("Test-block for css-modules"),
-    };
-    // test class-dead-code
-    const goExlcude = true;
-    if (!goExlcude) {
-      console.warn("class-dead-code doesn't work");
-    }
+    this.state = {};
   }
 
   render() {
     return (
       <StrictMode>
-        <div>
-          <HelloWorld />
-        </div>
+        <BrowserRouter>
+          <ErrorBoundary>
+            <Header />
+            <Switch>
+              <Route path={SIGNIN} render={() => <SignIn />} />
+              <Route path={SIGNUP} render={() => <SignUp />} />
+              <Route path={PRODUCTS} render={() => <Products />} />
+              <Route path={ABOUT} render={() => <About />} />
+              <Route path={ERROR} render={() => <ErrorCase />} />
+              <Route path={["/", HOME]} render={() => <Home />} />
+            </Switch>
+            <Footer />
+          </ErrorBoundary>
+        </BrowserRouter>
       </StrictMode>
     );
   }
 }
 
-ReactDom.render(<AppContainer nothing={false} />, document.getElementById("app"));
+ReactDom.render(<AppContainer />, document.getElementById("app"));

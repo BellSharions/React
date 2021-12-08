@@ -1,0 +1,32 @@
+$primary-color: #131211;
+
+.footer {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  background-color: $primary-color;
+  color: #ffffff;
+  bottom: 0;
+}
+
+.footer__text {
+  padding: 10px 0;
+  width: 10%;
+  margin: 0;
+}
+
+.footer__icons {
+  display: flex;
+  justify-content: flex-end;
+  width: 90%;
+  height: 50px;
+  background-color: $primary-color;
+}
+
+.icons__icon {
+  width: 70px;
+  padding: 10px 20px;
+  border: 0;
+}
