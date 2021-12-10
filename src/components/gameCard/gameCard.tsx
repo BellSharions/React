@@ -14,9 +14,9 @@ const GameCard: FC<ProductItemProps> = ({ title, description, category, logo }) 
           <p>{category}</p>
         </div>
       </div>
-      <div className="gameCard__back">
+      <div className="gameCard__back" onClick={() => alert("got product")} tabIndex={0} role="button">
         <div className="gameCard__back-description">{description}</div>
-        <input className="gameCard__back-button" type="button" value="Buy" onClick={() => alert("got product")} />
+        <input className="gameCard__back-button" type="button" value="Buy" />
       </div>
     </div>
   </div>

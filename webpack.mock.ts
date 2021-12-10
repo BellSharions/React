@@ -22,6 +22,19 @@ export default webpackMockServer.add((app, helper) => {
     res.set("Access-Control-Allow-Origin", "*");
     res.json(response);
   });
+  app.get("/api/search/:category/:text", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    if (_req.path.split("/")[4].toLocaleLowerCase() === "*")
+      res.json(mockGameList.filter(({ category }) => category.includes(_req.path.split("/")[3])) || mockGameList);
+    else if (_req.path.split("/")[4].toLocaleLowerCase() === "")
+      res.json(mockGameList.filter(({ category }) => category.includes(_req.path.split("/")[3])) || mockGameList);
+    else
+      res.json(
+        mockGameList
+          .filter(({ category }) => category.includes(_req.path.split("/")[3]))
+          .filter(({ title }) => title.toLocaleLowerCase().includes(_req.path.split("/")[4].toLocaleLowerCase()))
+      );
+  });
   app.get("/api/search/:text", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     const response =
@@ -30,6 +43,7 @@ export default webpackMockServer.add((app, helper) => {
       ) || mockGameList;
     res.json(response);
   });
+
   app.get("/api/search/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     const response = mockGameList;

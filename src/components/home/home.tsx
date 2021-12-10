@@ -6,7 +6,7 @@ import "./home.scss";
 const Home: React.FC = () => (
   <div className="homePage__container">
     <div className="homePage__search-container">
-      <SearchBar />
+      <SearchBar platform="" />
     </div>
     <Categories />
     <NewGames />
