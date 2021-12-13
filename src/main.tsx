@@ -1,6 +1,5 @@
 import "./styles/main.css";
 import "./styles/main.scss";
-// watch: native intellisense and file-peek for aliases from jsconfig.json and with none-js files doesn't work: https://github.com/microsoft/TypeScript/issues/29334
 import { StrictMode, Component } from "react";
 import ReactDom from "react-dom";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
@@ -11,7 +10,9 @@ import SignIn from "./components/users/sign-in";
 import SignUp from "./components/users/sign-up";
 import Products from "./components/products/products";
 import About from "./components/about/about";
-import { HOME, ABOUT, SIGNIN, SIGNUP, PRODUCTS } from "./constants/constants";
+import { HOME, ABOUT, SIGNIN, SIGNUP, PRODUCTS, ERROR } from "./constants/constants";
+import ErrorCase from "./components/errorHandler/errorTest";
+import ErrorBoundary from "./components/errorHandler/errorBoundary";
 
 class AppContainer extends Component {
   ["constructor"]: typeof AppContainer;
@@ -25,15 +26,18 @@ class AppContainer extends Component {
     return (
       <StrictMode>
         <BrowserRouter>
-          <Header />
-          <Switch>
-            <Route path={SIGNIN} render={() => <SignIn />} />
-            <Route path={SIGNUP} render={() => <SignUp />} />
-            <Route path={PRODUCTS} render={() => <Products />} />
-            <Route path={ABOUT} render={() => <About />} />
-            <Route path={["/", HOME]} render={() => <Home />} />
-          </Switch>
-          <Footer />
+          <ErrorBoundary>
+            <Header />
+            <Switch>
+              <Route path={SIGNIN} render={() => <SignIn />} />
+              <Route path={SIGNUP} render={() => <SignUp />} />
+              <Route path={PRODUCTS} render={() => <Products />} />
+              <Route path={ABOUT} render={() => <About />} />
+              <Route path={ERROR} render={() => <ErrorCase />} />
+              <Route path={["/", HOME]} render={() => <Home />} />
+            </Switch>
+            <Footer />
+          </ErrorBoundary>
         </BrowserRouter>
       </StrictMode>
     );

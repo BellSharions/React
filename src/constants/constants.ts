@@ -6,6 +6,7 @@ export const SIGNUP = "/sign-up";
 export const PC = "/PC";
 export const XBOX = "/XBOX";
 export const PS = "/PLAYSTATION";
+export const ERROR = "/error";
 export const enum routeType {
   link,
   dropdown,
