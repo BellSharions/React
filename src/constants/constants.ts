@@ -3,6 +3,9 @@ export const ABOUT = "/about";
 export const HOME = "/home";
 export const SIGNIN = "/sign-in";
 export const SIGNUP = "/sign-up";
+export const PC = "/PC";
+export const XBOX = "/XBOX";
+export const PS = "/PLAYSTATION";
 export const ERROR = "/error";
 export const enum routeType {
   link,
@@ -31,9 +34,9 @@ export const gameCompaniesIcons = [
 const platformNames = {
   name: "Products",
   data: [
-    { routeName: "PC", route: PRODUCTS },
-    { routeName: "XBox", route: PRODUCTS },
-    { routeName: "Playstation", route: PRODUCTS },
+    { routeName: "PC", route: PRODUCTS + PC },
+    { routeName: "XBox", route: PRODUCTS + XBOX },
+    { routeName: "Playstation", route: PRODUCTS + PS },
   ],
 };
 
