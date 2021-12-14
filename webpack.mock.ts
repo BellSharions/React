@@ -22,33 +22,22 @@ export default webpackMockServer.add((app, helper) => {
     res.set("Access-Control-Allow-Origin", "*");
     res.json(response);
   });
-  app.get("/api/search/:category/:text", (_req, res) => {
+  app.get("/api/search/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
-    if (_req.path.split("/")[4].toLocaleLowerCase() === "*")
-      res.json(mockGameList.filter(({ category }) => category.includes(_req.path.split("/")[3])) || mockGameList);
-    else if (_req.path.split("/")[4].toLocaleLowerCase() === "")
-      res.json(mockGameList.filter(({ category }) => category.includes(_req.path.split("/")[3])) || mockGameList);
+    if (_req.query.platform === undefined && _req.query.text !== undefined)
+      res.json(mockGameList.filter(({ title }) => title.includes(_req.query.text)));
+    else if (_req.query.text === undefined && _req.query.platform !== undefined)
+      res.json(mockGameList.filter(({ category }) => category.includes(_req.query.platform)) || mockGameList);
     else
       res.json(
         mockGameList
-          .filter(({ category }) => category.includes(_req.path.split("/")[3]))
-          .filter(({ title }) => title.toLocaleLowerCase().includes(_req.path.split("/")[4].toLocaleLowerCase()))
+          .filter(({ category }) => category.includes(_req.query.platform))
+          .filter(({ title }) => title.includes(_req.query.text))
       );
-  });
-  app.get("/api/search/:text", (_req, res) => {
-    res.set("Access-Control-Allow-Origin", "*");
-    const response =
-      mockGameList.filter(({ title }) =>
-        title.toLocaleLowerCase().includes(_req.path.split("/")[3].toLocaleLowerCase())
-      ) || mockGameList;
-    res.json(response);
-  });
-
-  app.get("/api/search/", (_req, res) => {
-    res.set("Access-Control-Allow-Origin", "*");
     const response = mockGameList;
     res.json(response);
   });
+
   app.post("/testPostMock", (req, res) => {
     res.json({ body: req.body || null, success: true });
   });

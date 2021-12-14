@@ -13,15 +13,38 @@ const SearchBar: FC<ProductParams> = (platform) => {
   useEffect(() => {
     (async () => {
       if (platform.platform === "") setList(await (await fetch(`${fetchGameLink}`)).json());
-      else setList(await (await fetch(`${fetchGameQueryLink + platform.platform}/*`)).json());
+      else
+        setList(
+          await (
+            await fetch(`${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ platform: platform.platform })}`)
+          ).json()
+        );
     })();
   }, []);
 
   const updateQuery = async (e: ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
-    if (platform.platform === "") setList(await (await fetch(`${fetchGameQueryLink}${e.target.value}`)).json());
-    else if (e.target.value === "") setList(await (await fetch(`${fetchGameQueryLink + platform.platform}/*`)).json());
-    else setList(await (await fetch(`${fetchGameQueryLink + platform.platform}/${e.target.value}`)).json());
+    if (platform.platform === "")
+      setList(
+        await (await fetch(`${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ text: e.target.value })}`)).json()
+      );
+    else if (e.target.value === "")
+      setList(
+        await (
+          await fetch(`${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ platform: platform.platform })}`)
+        ).json()
+      );
+    else
+      setList(
+        await (
+          await fetch(
+            `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({
+              text: e.target.value,
+              platform: platform.platform,
+            })}`
+          )
+        ).json()
+      );
     setIsLoading(false);
   };
 
