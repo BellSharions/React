@@ -79,7 +79,6 @@ export const routes: Array<singleLink | multiLink> = [
   },
 ];
 
-export const fetchGameLink = "http://localhost:8079/games";
 export const fetchNewProductsLink = "http://localhost:8079/api/getTopProducts";
 export const fetchGameQueryLink = "http://localhost:8079/api/search/";
 
