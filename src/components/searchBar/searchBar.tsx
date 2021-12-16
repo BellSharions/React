@@ -5,14 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ProductsOutput from "../products/output/productsOutput";
 import { ProductItemProps, ProductParams } from "../../types/types";
-import { fetchGameLink, fetchGameQueryLink } from "../../constants/constants";
+import { fetchGameQueryLink } from "../../constants/constants";
 
 const SearchBar: FC<ProductParams> = (platform) => {
   const [list, setList] = useState<Array<ProductItemProps>>([]);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     (async () => {
-      if (platform.platform === "") setList(await (await fetch(`${fetchGameLink}`)).json());
+      if (platform.platform === "") setList(await (await fetch(`${fetchGameQueryLink}`)).json());
       else
         setList(
           await (
