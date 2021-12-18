@@ -7,8 +7,8 @@ $secondary-color: #19191a;
 }
 
 .dropdown__button-container {
-  padding: 10px 20px;
-  border: 0;
+  padding: 10px 25px 5px 25px;
+  border-bottom: 5px hidden;
   font-size: 20px;
   text-decoration: none;
   background-color: $primary-color;
@@ -17,7 +17,11 @@ $secondary-color: #19191a;
 
 .dropdown__button-container:hover {
   background-color: $secondary-color;
-  color: #ffffff;
+  color: #9732cb;
+}
+
+.dropdown__button-container:focus-within {
+  border-bottom: 5px solid #9732cb;
 }
 
 .dropdown .dropbtn {
@@ -29,9 +33,14 @@ $secondary-color: #19191a;
   border: 0;
 }
 
+.dropbtn:focus .dropdown__button-container {
+  border-bottom: 3px solid #9732cb;
+}
+
 .navbar a:hover,
-.dropdown:hover .dropbtn {
+.dropdown__button-container:hover .dropbtn {
   background-color: $secondary-color;
+  color: #9732cb;
 }
 
 .dropdown__content {
@@ -48,7 +57,7 @@ $secondary-color: #19191a;
   display: block;
   float: none;
   padding: 12px 16px;
-  color: white;
+  color: #ffffff;
   font-size: 20px;
   text-decoration: none;
   border-bottom: 3px solid $primary-color;
@@ -56,6 +65,7 @@ $secondary-color: #19191a;
 
 .dropdown__content a:hover {
   background-color: $secondary-color;
+  color: #9732cb;
 }
 .dropdown__content a:focus {
   border-bottom: 3px solid #9732cb;

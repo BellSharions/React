@@ -5,6 +5,9 @@ export const ABOUT = "/about";
 export const HOME = "/home";
 export const SIGNIN = "/sign-in";
 export const SIGNUP = "/sign-up";
+export const PC = "/PC";
+export const XBOX = "/XBOX";
+export const PS = "/PLAYSTATION";
 export const ERROR = "/error";
 export const enum routeType {
   link,
