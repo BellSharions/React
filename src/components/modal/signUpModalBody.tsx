@@ -43,7 +43,7 @@ const SignUpModalBody: FC<SignUpModalBodyProps> = ({ logInFunc, closeModalFunc }
     if (!alphNumPass.test(pass)) {
       return { isValid: false, validMessage: "At least 1 character of password must be numeric or alphabetic" };
     }
-    return { isValid: true, validMessage: "Success" };
+    return { isValid: true, validMessage: "Password verification is successful" };
   };
 
   async function putFunc(e: React.SyntheticEvent) {
@@ -91,7 +91,7 @@ const SignUpModalBody: FC<SignUpModalBodyProps> = ({ logInFunc, closeModalFunc }
         <InputText name="Login" id="SignUplogin" type="text" onChange={logupGetter} value={logup} />
         <InputText name="Password" id="SignUpPassword" type="password" onChange={passwordGetter} value={password} />
         <InputText
-          name="RepeatPassword"
+          name="Repeat Password"
           id="SignUpRepeatPassword"
           type="password"
           onChange={repeatPasswordGetter}
