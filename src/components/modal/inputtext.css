@@ -1,0 +1,21 @@
+.inputText__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inputText__label {
+  margin-right: 10px;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.inputText__input {
+  border: 1px solid white;
+  box-sizing: border-box;
+  background-color: inherit;
+  width: 70%;
+  height: 1.5rem;
+  color: white;
+}

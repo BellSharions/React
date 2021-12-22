@@ -6,6 +6,7 @@ export const HOME = "/home";
 export const SIGNIN = "/sign-in";
 export const SIGNUP = "/sign-up";
 export const ERROR = "/error";
+export const PROFILE = "/profile";
 export const enum routeType {
   link,
   dropdown,
@@ -69,19 +70,13 @@ export const routes: Array<singleLink | multiLink> = [
     type: routeType.link,
     item: { route: ABOUT, name: "About" },
   },
-  {
-    type: routeType.link,
-    item: { route: SIGNIN, name: "Sign-in" },
-  },
-  {
-    type: routeType.link,
-    item: { route: SIGNUP, name: "Sign-up" },
-  },
 ];
 
 export const fetchGameLink = "http://localhost:8079/games";
 export const fetchNewProductsLink = "http://localhost:8079/api/getTopProducts";
 export const fetchGameQueryLink = "http://localhost:8079/api/search/";
+export const signInUrl = "http://localhost:8079/api/auth/signIn/";
+export const signUpUrl = "http://localhost:8079/api/auth/signUp/";
 
 export const mockGameList = [
   {
@@ -157,5 +152,11 @@ export const mockGameList = [
     date: "05.04.2016",
     category: "PC",
     logo: "https://res.cloudinary.com/dev3afzlt/image/upload/v1638370431/game-steam-enter-the-gungeon-cover_khtkc3.jpg",
+  },
+];
+export const users = [
+  {
+    userName: "YuryChertko",
+    password: "12345678a",
   },
 ];
