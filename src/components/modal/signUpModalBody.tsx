@@ -65,7 +65,7 @@ const SignUpModalBody: FC<SignUpModalBodyProps> = ({ logInFunc, closeModalFunc }
         body: JSON.stringify(signUpObj),
       });
 
-      if (res.status === 200) {
+      if (res.status === 201) {
         logInFunc(true, logup);
         history.push("/profile");
       } else {

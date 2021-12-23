@@ -45,15 +45,23 @@ export default webpackMockServer.add((app, helper) => {
         console.log(err);
       } else {
         const obj = JSON.parse(data);
-        if (_req.body.login !== undefined && _req.body.password !== undefined) obj.users.push(_req.body);
-        if (obj.users.filter((x) => x.login === _req.body.login).length === 0)
+        console.log(_req.body.login);
+        console.log(_req.body.password);
+        console.log(obj.users.filter((x) => x.login === _req.body.login));
+
+        if (
+          obj.users.filter((x) => x.login === _req.body.login).length === 0 &&
+          _req.body.login !== undefined &&
+          _req.body.password !== undefined
+        ) {
+          obj.users.push(_req.body);
           fs.writeFile("./src/assets/users.json", JSON.stringify(obj), "utf8", (err2) => {
             if (err2) {
               console.log(err2);
             }
             res.status(201).json(_req.body);
           });
-        else res.status(400).json(1);
+        } else res.status(400).json(1);
       }
     });
   });
