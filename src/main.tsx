@@ -30,7 +30,7 @@ class AppContainer extends Component<AppProps, AppState> {
   };
 
   logOutFunc = () => {
-    this.setState({ loggedIn: false });
+    this.setState({ loggedIn: false, showSignInModal: false, showSignUpModal: false  });
   };
 
   showSignUpModalFunc = () => {

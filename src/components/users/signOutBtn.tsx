@@ -10,7 +10,6 @@ const SignOutBtn: FC<SignOutBtnProps> = ({ logOutFunc }) => {
   const handleCkick = () => {
     logOutFunc();
     history.push("/");
-    window.location.reload();
   };
   return (
     <div className="signOut__container">
