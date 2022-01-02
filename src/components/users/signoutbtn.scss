@@ -32,3 +32,17 @@ $secondary-color: #19191a;
   margin: 0;
   font-family: "OpenSans-Regular", sans-serif;
 }
+
+@media only screen and (max-width: 660px) {
+  .signOut__btn {
+    font-size: 0.95em;
+    line-height: 22px;
+  }
+}
+
+@media only screen and (max-width: 588px) {
+  .signOut__btn {
+    font-size: 0.65em;
+    line-height: 22px;
+  }
+}

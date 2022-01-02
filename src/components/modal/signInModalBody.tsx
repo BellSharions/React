@@ -34,7 +34,7 @@ const SignInModalBody: FC<SignInModalBodyProps> = ({ logInFunc, closeModalFunc }
     if (!alphNumPass.test(pass)) {
       return { isValid: false, validMessage: "At least 1 character of password must be numeric or alphabetic" };
     }
-    return { isValid: true, validMessage: "Success" };
+    return { isValid: true, validMessage: "Password is valid. Please wait for verification." };
   };
 
   async function postFunc(e: React.SyntheticEvent) {
@@ -58,6 +58,7 @@ const SignInModalBody: FC<SignInModalBodyProps> = ({ logInFunc, closeModalFunc }
       if (res.status === 200) {
         logInFunc(true, login);
       } else {
+        setMessage("An error has appeared! Check your credentials and try again.");
         throw new Error(`HTTP status: ${res.status}`);
       }
 

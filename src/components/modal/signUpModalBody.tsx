@@ -69,6 +69,7 @@ const SignUpModalBody: FC<SignUpModalBodyProps> = ({ logInFunc, closeModalFunc }
         logInFunc(true, logup);
         history.push("/profile");
       } else {
+        setMessage("This login is already in use, please use another one");
         throw new Error(`HTTP status: ${res.status}`);
       }
 

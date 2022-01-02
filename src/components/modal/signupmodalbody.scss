@@ -5,7 +5,7 @@
   background-color: #111212;
   border-radius: 8px;
   padding: 30px;
-  width: 50%;
+  width: 40%;
   height: 50%;
 }
 
@@ -53,4 +53,10 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 1066px) {
+  .signUp__modal_container {
+    width: 80%;
+  }
 }

@@ -74,9 +74,10 @@ export default webpackMockServer.add((app, helper) => {
         const obj = JSON.parse(data);
         console.log(_req.body);
         console.log(_req.body.login);
-        console.log(obj.users.filter((x) => x.login === _req.body.login));
+        const foundUser = obj.users.filter((x) => x.login === _req.body.login)[0];
+        console.log(foundUser);
         if (_req.body.login !== undefined && _req.body.password !== undefined)
-          if (obj.users.filter((x) => x.login === _req.body.login).length !== 0) res.json(_req.body);
+          if (foundUser.length !== 0 && foundUser.login === _req.body.login && foundUser.password === _req.body.password) res.json(_req.body);
           else res.status(400).json(1);
       }
     });
