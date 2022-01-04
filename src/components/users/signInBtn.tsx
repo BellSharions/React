@@ -17,6 +17,7 @@ const SignInBtn: FC<SignInBtnProps> = ({ logInFunc, showSignInModalFunc, closeMo
     <div className="signIn__container">
       <button type="button" className="signIn__btn" onClick={showModalHandler}>
         <p className="signIn__title">Sign In</p>
+        <i className="fa fa-sign-in-alt"></i>
       </button>
       {showSignInModal ? (
         <Modal>

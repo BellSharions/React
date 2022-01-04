@@ -22,6 +22,7 @@ class AppContainer extends Component<AppProps, AppState> {
 
   constructor(props: AppProps) {
     super(props);
+    
     this.state = { loggedIn: false, userName: "", showSignInModal: false, showSignUpModal: false };
   }
 
@@ -46,6 +47,7 @@ class AppContainer extends Component<AppProps, AppState> {
   };
 
   render() {
+    
     return (
       <StrictMode>
         <BrowserRouter>
@@ -74,7 +76,7 @@ class AppContainer extends Component<AppProps, AppState> {
                 />
               </Route>
               <ProtectedRoute loggedIn={this.state.loggedIn} logInFunc={this.logInFunc} path={`${PRODUCTS}/:platform`}>
-                <Products key={this.props.platform} />
+                <Products />
               </ProtectedRoute>
               <ProtectedRoute loggedIn={this.state.loggedIn} logInFunc={this.logInFunc} path={ABOUT}>
                 <About />
@@ -93,4 +95,4 @@ class AppContainer extends Component<AppProps, AppState> {
   }
 }
 
-ReactDom.render(<AppContainer props="" />, document.getElementById("app"));
+ReactDom.render(<AppContainer props=""/>, document.getElementById("app"));

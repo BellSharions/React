@@ -66,16 +66,9 @@ $secondary-color: #19191a;
   display: block;
 }
 
-@media only screen and (max-width: 660px) {
-  .dropdown {
-    font-size: 0.95em;
-    line-height: 22px;
-  }
-}
 
-@media only screen and (max-width: 588px) {
-  .dropdown {
-    font-size: 0.65em;
-    line-height: 22px;
+@media only screen and (max-width: 645px) {
+  .dropbtn {
+    display: none;
   }
 }

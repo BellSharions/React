@@ -25,7 +25,8 @@ const Header: React.FC<HeaderProps> = ({
         <>
           {object.type === routeType.link && (
             <NavLink className="header__navlinks-link" key={object.item.name} to={(object as singleLink).item.route}>
-              {(object as singleLink).item.name}
+              <span className="navtext">{(object as singleLink).item.name}</span>
+              <i className={(object as singleLink).item.icon}></i>
             </NavLink>
           )}
           {object.type === routeType.dropdown && (

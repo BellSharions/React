@@ -56,6 +56,12 @@
   .signIn__modal_container {
     width: 80%;
   }
+  .signIn__modal_title {
+  font-size: 1.3rem;
+}
+  .signIn__modal_close-btn {
+  font-size: 1.3rem;
+}
 }
 @media only screen and (min-width: 801px) {
   .signIn__modal_container {

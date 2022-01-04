@@ -30,16 +30,9 @@ $secondary-color: #19191a;
   font-family: "OpenSans-Regular", sans-serif;
 }
 
-@media only screen and (max-width: 660px) {
-  .signUp__btn {
-    font-size: 0.95em;
-    line-height: 22px;
-  }
-}
 
-@media only screen and (max-width: 588px) {
-  .signUp__btn {
-    font-size: 0.65em;
-    line-height: 22px;
+@media only screen and (max-width: 645px) {
+  .signUp__title {
+    display: none;
   }
 }

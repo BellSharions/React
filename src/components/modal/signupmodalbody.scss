@@ -5,8 +5,7 @@
   background-color: #111212;
   border-radius: 8px;
   padding: 30px;
-  width: 40%;
-  height: 50%;
+  width: 65%;
 }
 
 .signUp__modal_upper-container {
@@ -46,7 +45,6 @@
 }
 
 .signUp__modal_submit-btn {
-  width: 30%;
   font-size: 1rem;
   color: white;
   background-color: #56236f;
@@ -55,8 +53,17 @@
   cursor: pointer;
 }
 
-@media only screen and (max-width: 1066px) {
+@media only screen and (max-width: 703px) {
   .signUp__modal_container {
     width: 80%;
   }
+}
+@media only screen and (max-width: 586px) {
+    
+  .signUp__modal_title {
+  font-size: 1.3rem;
+}
+  .signUp__modal_close-btn {
+  font-size: 1.3rem;
+}
 }

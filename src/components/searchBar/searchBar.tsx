@@ -12,7 +12,9 @@ const SearchBar: FC<ProductParams> = (platform) => {
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     (async () => {
-      if (platform.platform === "") setList(await (await fetch(`${fetchGameLink}`)).json());
+      console.log(platform.platform);
+      
+      if (platform.platform === "" || platform.platform === ":platform") setList(await (await fetch(`${fetchGameLink}`)).json());
       else
         setList(
           await (
@@ -20,9 +22,11 @@ const SearchBar: FC<ProductParams> = (platform) => {
           ).json()
         );
     })();
-  }, []);
+  }, [platform]);
 
   const updateQuery = async (e: ChangeEvent<HTMLInputElement>) => {
+    
+      console.log(platform.platform);
     setIsLoading(true);
     if (platform.platform === "")
       setList(

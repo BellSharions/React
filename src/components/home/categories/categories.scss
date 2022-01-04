@@ -24,3 +24,13 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+
+
+
+@media only screen and (max-width: 588px) {
+  .categories__content-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

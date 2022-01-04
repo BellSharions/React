@@ -6,7 +6,6 @@
 }
 
 .inputText__label {
-  margin-right: 10px;
   font-size: 1.5rem;
   color: white;
 }
@@ -15,7 +14,13 @@
   border: 1px solid white;
   box-sizing: border-box;
   background-color: inherit;
-  width: 70%;
   height: 1.5rem;
+  width: 60%;
   color: white;
+}
+
+@media only screen and (max-width: 790px) {
+  .inputText__label {
+  font-size: 0.70rem;
+  }
 }

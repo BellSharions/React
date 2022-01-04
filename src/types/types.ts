@@ -12,7 +12,6 @@ export interface ProductItemProps {
 
 export interface AppProps {
   props: string;
-  platform: string;
 }
 
 export interface AppState {

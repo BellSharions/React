@@ -17,11 +17,13 @@ export default webpackMockServer.add((app, helper) => {
     const response = mockGameList;
     res.set("Access-Control-Allow-Origin", "*");
     res.json(response);
+    res.end();
   });
   app.get("/api/getTopProducts", (_req, res) => {
     const response = mockGameList.slice(0, 3);
     res.set("Access-Control-Allow-Origin", "*");
     res.json(response);
+    res.end();
   });
   app.get("/api/search/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
@@ -36,7 +38,6 @@ export default webpackMockServer.add((app, helper) => {
           .filter(({ title }) => title.includes(_req.query.text))
       );
     const response = mockGameList;
-    res.json(response);
   });
   app.put("/api/auth/signUp/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
@@ -60,8 +61,12 @@ export default webpackMockServer.add((app, helper) => {
               console.log(err2);
             }
             res.status(201).json(_req.body);
+            res.end();
           });
-        } else res.status(400).json(1);
+        } else {
+          res.status(400).json(1);
+          res.end();
+        }
       }
     });
   });
@@ -76,9 +81,13 @@ export default webpackMockServer.add((app, helper) => {
         console.log(_req.body.login);
         const foundUser = obj.users.filter((x) => x.login === _req.body.login)[0];
         console.log(foundUser);
-        if (_req.body.login !== undefined && _req.body.password !== undefined)
-          if (foundUser.length !== 0 && foundUser.login === _req.body.login && foundUser.password === _req.body.password) res.json(_req.body);
-          else res.status(400).json(1);
+        if (_req.body.login !== undefined && _req.body.password !== undefined && foundUser !== undefined)
+          if (foundUser.length !== 0 && foundUser.login === _req.body.login && foundUser.password === _req.body.password) {
+            res.json(_req.body);
+            res.end();
+          }
+          else
+            res.status(400).json(1);
       }
     });
   });
@@ -87,12 +96,14 @@ export default webpackMockServer.add((app, helper) => {
     res.set("Access-Control-Allow-Methods", "PUT, POST, GET, OPTIONS");
     res.set("Access-Control-Allow-Headers", "content-type");
     res.json(1);
+    res.end();
   });
   app.options("/api/auth/signIn/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "http://localhost:8080");
     res.set("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS");
     res.set("Access-Control-Allow-Headers", "content-type");
     res.json(1);
+    res.end();
   });
   app.post("/testPostMock", (req, res) => {
     res.json({ body: req.body || null, success: true });

@@ -11,7 +11,7 @@ export const enum routeType {
   link,
   dropdown,
 }
-export type singleLink = { type: routeType; item: { route: string; name: string } };
+export type singleLink = { type: routeType; item: { route: string; name: string; icon: string } };
 export type multiLink = { type: routeType; item: { name: string; data: Array<{ routeName: string; route: string }> } };
 export const gameCategories = [
   {
@@ -48,7 +48,7 @@ export const gameCompaniesIcons = [
   },
 ];
 
-const platformNames = {
+export const platformNames = {
   name: "Products",
   data: [
     { routeName: "PC", route: `${PRODUCTS}/PC` },
@@ -60,7 +60,7 @@ const platformNames = {
 export const routes: Array<singleLink | multiLink> = [
   {
     type: routeType.link,
-    item: { route: HOME, name: "Home" },
+    item: { route: HOME, name: "Home", icon:"fa fa-home" },
   },
   {
     type: routeType.dropdown,
@@ -68,7 +68,7 @@ export const routes: Array<singleLink | multiLink> = [
   },
   {
     type: routeType.link,
-    item: { route: ABOUT, name: "About" },
+    item: { route: ABOUT, name: "About", icon:"fa fa-info-circle" },
   },
 ];
 

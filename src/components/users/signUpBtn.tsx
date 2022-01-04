@@ -21,6 +21,7 @@ const SignUpBtn: FC<SignUpBtnProps> = ({ logInFunc, showSignUpModalFunc, closeMo
     <div className="signUp__container">
       <button type="button" className="signUp__btn" onClick={showModalHandler}>
         <p className="signUp__title">Sign Up</p>
+        <i className="fa fa-user-plus"></i>
       </button>
       {showSignUpModal ? (
         <Modal>
