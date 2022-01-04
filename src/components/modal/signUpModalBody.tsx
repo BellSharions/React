@@ -55,8 +55,8 @@ const SignUpModalBody: FC<SignUpModalBodyProps> = ({ logInFunc, closeModalFunc }
       setMessage("Password is not correct");
     } else if (!verifyPassword(password).isValid) {
       setMessage(verifyPassword(password).validMessage);
-    } else if (logup.length > 30) {
-      setMessage("Please use name shorter than 30 characters");
+    } else if (logup.length > 30 || logup.length < 3 ) {
+      setMessage("Please use name shorter than 30 characters or longer than 3 characters");
     } else {
       setMessage(verifyPassword(password).validMessage);
       const res = await fetch(signUpUrl, {
