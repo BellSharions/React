@@ -9,7 +9,9 @@ type INavProps = {
 const Dropdown: React.FC<INavProps> = (props: INavProps) => (
   <div className="dropdown">
     <div className="dropdown__button-container">
-      <input className="dropbtn" type="button" value={props.name} />
+      <NavLink className="dropbtn" to="/products/PC">
+        Products
+      </NavLink>
       <i className="fa fa-caret-down" />
     </div>
     <div className="dropdown__content">

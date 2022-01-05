@@ -60,7 +60,7 @@ export const platformNames = {
 export const routes: Array<singleLink | multiLink> = [
   {
     type: routeType.link,
-    item: { route: HOME, name: "Home", icon:"fa fa-home" },
+    item: { route: HOME, name: "Home", icon: "fa fa-home" },
   },
   {
     type: routeType.dropdown,
@@ -68,7 +68,7 @@ export const routes: Array<singleLink | multiLink> = [
   },
   {
     type: routeType.link,
-    item: { route: ABOUT, name: "About", icon:"fa fa-info-circle" },
+    item: { route: ABOUT, name: "About", icon: "fa fa-info-circle" },
   },
 ];
 
