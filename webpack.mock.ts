@@ -45,6 +45,7 @@ export default webpackMockServer.add((app, helper) => {
       if (err) {
         console.log(err);
         res.status(400).json(1);
+        res.end();
       } else {
         const obj = JSON.parse(data);
         console.log(_req.body.login);
@@ -60,6 +61,7 @@ export default webpackMockServer.add((app, helper) => {
             if (err2) {
               console.log(err2);
               res.status(400).json(1);
+              res.end();
             } else {
               res.status(201).json(_req.body);
               res.end();
