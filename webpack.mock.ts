@@ -44,12 +44,12 @@ export default webpackMockServer.add((app, helper) => {
     fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
       if (err) {
         console.log(err);
+        res.status(400).json(1);
       } else {
         const obj = JSON.parse(data);
         console.log(_req.body.login);
         console.log(_req.body.password);
         console.log(obj.users.filter((x) => x.login === _req.body.login));
-
         if (
           obj.users.filter((x) => x.login === _req.body.login).length === 0 &&
           _req.body.login !== undefined &&
@@ -59,9 +59,11 @@ export default webpackMockServer.add((app, helper) => {
           fs.writeFile("./src/assets/users.json", JSON.stringify(obj), "utf8", (err2) => {
             if (err2) {
               console.log(err2);
+              res.status(400).json(1);
+            } else {
+              res.status(201).json(_req.body);
+              res.end();
             }
-            res.status(201).json(_req.body);
-            res.end();
           });
         } else {
           res.status(400).json(1);
@@ -75,6 +77,7 @@ export default webpackMockServer.add((app, helper) => {
     fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
       if (err) {
         console.log(err);
+        res.status(400).json(1);
       } else {
         const obj = JSON.parse(data);
         console.log(_req.body);
@@ -82,12 +85,15 @@ export default webpackMockServer.add((app, helper) => {
         const foundUser = obj.users.filter((x) => x.login === _req.body.login)[0];
         console.log(foundUser);
         if (_req.body.login !== undefined && _req.body.password !== undefined && foundUser !== undefined)
-          if (foundUser.length !== 0 && foundUser.login === _req.body.login && foundUser.password === _req.body.password) {
+          if (
+            foundUser.length !== 0 &&
+            foundUser.login === _req.body.login &&
+            foundUser.password === _req.body.password
+          ) {
             res.json(_req.body);
             res.end();
-          }
-          else
-            res.status(400).json(1);
+          } else res.status(400).json(1);
+        else res.status(400).json(1);
       }
     });
   });

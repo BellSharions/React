@@ -37,21 +37,21 @@ $secondary-color: #19191a;
 }
 
 .header__title {
-  padding: 10px 0;
+  padding: 10px 15px;
   margin: 0;
-  margin-right: auto
+  margin-right: auto;
 }
 
 @media only screen and (min-width: 645px) {
-  .fa{
+  .fa {
     display: none;
   }
-  .fa-caret-down{
+  .fa-caret-down {
     display: inline;
   }
 }
 @media only screen and (max-width: 645px) {
-  .navtext{
+  .navtext {
     display: none;
   }
 }
