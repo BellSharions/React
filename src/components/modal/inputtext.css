@@ -1,0 +1,26 @@
+.inputText__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inputText__label {
+  font-size: 1.5rem;
+  color: white;
+}
+
+.inputText__input {
+  border: 1px solid white;
+  box-sizing: border-box;
+  background-color: inherit;
+  height: 1.5rem;
+  width: 60%;
+  color: white;
+}
+
+@media only screen and (max-width: 790px) {
+  .inputText__label {
+  font-size: 0.70rem;
+  }
+}

@@ -2,8 +2,22 @@ import { NavLink } from "react-router-dom";
 import "./header.scss";
 import { multiLink, routes, routeType, singleLink } from "../../constants/constants";
 import Dropdown from "./navbarDropdown/dropdown";
+import { LoggedInConsumer, UserNameConsumer } from "../../context";
+import SignOutBtn from "../users/signOutBtn";
+import SignInBtn from "../users/signInBtn";
+import SignUpBtn from "../users/signUpBtn";
+import { HeaderProps } from "../../types/types";
+import UserName from "../users/userName";
 
-const Header: React.FC = () => (
+const Header: React.FC<HeaderProps> = ({
+  showSignInModal,
+  showSignUpModal,
+  logInFunc,
+  logOutFunc,
+  showSignInModalFunc,
+  showSignUpModalFunc,
+  closeModalFunc,
+}) => (
   <header className="header">
     <h3 className="header__title">Game Market</h3>
     <div className="header__navlinks">
@@ -11,7 +25,8 @@ const Header: React.FC = () => (
         <>
           {object.type === routeType.link && (
             <NavLink className="header__navlinks-link" key={object.item.name} to={(object as singleLink).item.route}>
-              {(object as singleLink).item.name}
+              <span className="navtext">{(object as singleLink).item.name}</span>
+              <i className={(object as singleLink).item.icon}></i>
             </NavLink>
           )}
           {object.type === routeType.dropdown && (
@@ -23,6 +38,34 @@ const Header: React.FC = () => (
           )}
         </>
       ))}
+      <LoggedInConsumer>
+        {(contextLogInState) => {
+          if (contextLogInState) {
+            return (
+              <>
+                <UserNameConsumer>{(contextUserName) => <UserName userName={contextUserName} />}</UserNameConsumer>
+                <SignOutBtn logOutFunc={logOutFunc} />
+              </>
+            );
+          }
+          return (
+            <>
+              <SignInBtn
+                logInFunc={logInFunc}
+                showSignInModalFunc={showSignInModalFunc}
+                closeModalFunc={closeModalFunc}
+                showSignInModal={showSignInModal}
+              />
+              <SignUpBtn
+                logInFunc={logInFunc}
+                showSignUpModalFunc={showSignUpModalFunc}
+                closeModalFunc={closeModalFunc}
+                showSignUpModal={showSignUpModal}
+              />
+            </>
+          );
+        }}
+      </LoggedInConsumer>
     </div>
   </header>
 );

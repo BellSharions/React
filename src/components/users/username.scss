@@ -1,0 +1,36 @@
+$primary-color: #131211;
+$secondary-color: #19191a;
+
+.userName__container {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.userName__container:hover {
+  background-color: $secondary-color;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.userName__title {
+  font-size: 16px;
+  color: #d1d1d1;
+  margin: 0;
+}
+
+@media only screen and (max-width: 660px) {
+  .userName__title {
+    font-size: 0.95em;
+    line-height: 22px;
+  }
+}
+
+@media only screen and (max-width: 588px) {
+  .userName__title {
+    font-size: 0.65em;
+    line-height: 22px;
+  }
+}

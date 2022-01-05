@@ -1,0 +1,69 @@
+.signUp__modal_container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background-color: #111212;
+  border-radius: 8px;
+  padding: 30px;
+  width: 65%;
+}
+
+.signUp__modal_upper-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.signUp__modal_title {
+  margin: 0;
+  font-size: 2rem;
+  color: #e3e3e3;
+}
+
+.signUp__modal_close-btn {
+  background-color: inherit;
+  border: none;
+  font-size: 2rem;
+  color: #808080;
+  cursor: pointer;
+}
+
+.signUp__modal_content-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.signUp__modal_submit-btn-container {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.signUp__modal_submit-btn {
+  font-size: 1rem;
+  color: white;
+  background-color: #56236f;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 703px) {
+  .signUp__modal_container {
+    width: 80%;
+  }
+}
+@media only screen and (max-width: 586px) {
+    
+  .signUp__modal_title {
+  font-size: 1.3rem;
+}
+  .signUp__modal_close-btn {
+  font-size: 1.3rem;
+}
+}

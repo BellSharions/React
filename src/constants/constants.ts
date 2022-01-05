@@ -9,11 +9,12 @@ export const PC = "/PC";
 export const XBOX = "/XBOX";
 export const PS = "/PLAYSTATION";
 export const ERROR = "/error";
+export const PROFILE = "/profile";
 export const enum routeType {
   link,
   dropdown,
 }
-export type singleLink = { type: routeType; item: { route: string; name: string } };
+export type singleLink = { type: routeType; item: { route: string; name: string; icon: string } };
 export type multiLink = { type: routeType; item: { name: string; data: Array<{ routeName: string; route: string }> } };
 export const gameCategories = [
   {
@@ -50,7 +51,7 @@ export const gameCompaniesIcons = [
   },
 ];
 
-const platformNames = {
+export const platformNames = {
   name: "Products",
   data: [
     { routeName: "PC", route: `${PRODUCTS}/PC` },
@@ -62,7 +63,7 @@ const platformNames = {
 export const routes: Array<singleLink | multiLink> = [
   {
     type: routeType.link,
-    item: { route: HOME, name: "Home" },
+    item: { route: HOME, name: "Home", icon: "fa fa-home" },
   },
   {
     type: routeType.dropdown,
@@ -70,20 +71,14 @@ export const routes: Array<singleLink | multiLink> = [
   },
   {
     type: routeType.link,
-    item: { route: ABOUT, name: "About" },
-  },
-  {
-    type: routeType.link,
-    item: { route: SIGNIN, name: "Sign-in" },
-  },
-  {
-    type: routeType.link,
-    item: { route: SIGNUP, name: "Sign-up" },
+    item: { route: ABOUT, name: "About", icon: "fa fa-info-circle" },
   },
 ];
 
 export const fetchNewProductsLink = "http://localhost:8079/api/getTopProducts";
 export const fetchGameQueryLink = "http://localhost:8079/api/search/";
+export const signInUrl = "http://localhost:8079/api/auth/signIn/";
+export const signUpUrl = "http://localhost:8079/api/auth/signUp/";
 
 export const mockGameList = [
   {
@@ -159,5 +154,11 @@ export const mockGameList = [
     date: "05.04.2016",
     category: "PC",
     logo: "https://res.cloudinary.com/dev3afzlt/image/upload/v1638370431/game-steam-enter-the-gungeon-cover_khtkc3.jpg",
+  },
+];
+export const users = [
+  {
+    userName: "YuryChertko",
+    password: "12345678a",
   },
 ];

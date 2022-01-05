@@ -5,11 +5,6 @@
   margin: 0 30px 10px 0;
   text-decoration: none;
 }
-
-.category__container:last-child {
-  margin-right: 0;
-}
-
 .category__container:hover {
   cursor: pointer;
   background-color: #9732cb;
@@ -47,4 +42,12 @@
 .category__title {
   margin: 0;
   color: rgb(230, 230, 230);
+}
+
+
+@media only screen and (min-width: 588px) {
+  .category__container:last-child {
+  margin-right: 0;
+}
+
 }
