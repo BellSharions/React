@@ -30,6 +30,10 @@ $secondary-color: #19191a;
   border: 0;
 }
 
+.dropbtn {
+  margin-right: 10px;
+}
+
 .navbar a:hover,
 .dropdown:hover .dropbtn {
   background-color: $secondary-color;
@@ -65,7 +69,6 @@ $secondary-color: #19191a;
 .dropdown:hover .dropdown__content {
   display: block;
 }
-
 
 @media only screen and (max-width: 645px) {
   .dropbtn {
