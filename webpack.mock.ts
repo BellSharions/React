@@ -31,6 +31,7 @@ export default webpackMockServer.add((app, helper) => {
       res.json(mockGameList.filter(({ title }) => title.includes(_req.query.text)));
     else if (_req.query.text === undefined && _req.query.platform !== undefined)
       res.json(mockGameList.filter(({ category }) => category.includes(_req.query.platform)) || mockGameList);
+    else if (_req.query.text === undefined && _req.query.platform === undefined) res.json(mockGameList);
     else
       res.json(
         mockGameList

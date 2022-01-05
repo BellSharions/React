@@ -2,7 +2,7 @@ import "./styles/main.css";
 import "./styles/main.scss";
 import { StrictMode, Component } from "react";
 import ReactDom from "react-dom";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 import Header from "./components/header/header";
 import Footer from "./components/footer";
 import Home from "./components/home/home";
@@ -85,7 +85,10 @@ class AppContainer extends Component<AppProps, AppState> {
                 <Profile />
               </ProtectedRoute>
               <Route path={ERROR} render={() => <ErrorCase />} />
-              <Route path={["/", HOME]} render={() => <Home />} />
+              <Route path={HOME} render={() => <Home />} />
+              <Route path="/">
+                <Redirect to="/home" />
+              </Route>
             </Switch>
             <Footer />
           </ErrorBoundary>

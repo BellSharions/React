@@ -5,6 +5,9 @@ export const ABOUT = "/about";
 export const HOME = "/home";
 export const SIGNIN = "/sign-in";
 export const SIGNUP = "/sign-up";
+export const PC = "/PC";
+export const XBOX = "/XBOX";
+export const PS = "/PLAYSTATION";
 export const ERROR = "/error";
 export const PROFILE = "/profile";
 export const enum routeType {
@@ -72,7 +75,6 @@ export const routes: Array<singleLink | multiLink> = [
   },
 ];
 
-export const fetchGameLink = "http://localhost:8079/games";
 export const fetchNewProductsLink = "http://localhost:8079/api/getTopProducts";
 export const fetchGameQueryLink = "http://localhost:8079/api/search/";
 export const signInUrl = "http://localhost:8079/api/auth/signIn/";
