@@ -22,7 +22,7 @@ class AppContainer extends Component<AppProps, AppState> {
 
   constructor(props: AppProps) {
     super(props);
-    
+
     this.state = { loggedIn: false, userName: "", showSignInModal: false, showSignUpModal: false };
   }
 
@@ -31,7 +31,7 @@ class AppContainer extends Component<AppProps, AppState> {
   };
 
   logOutFunc = () => {
-    this.setState({ loggedIn: false, showSignInModal: false, showSignUpModal: false  });
+    this.setState({ loggedIn: false, showSignInModal: false, showSignUpModal: false });
   };
 
   showSignUpModalFunc = () => {
@@ -47,7 +47,6 @@ class AppContainer extends Component<AppProps, AppState> {
   };
 
   render() {
-    
     return (
       <StrictMode>
         <BrowserRouter>
@@ -95,4 +94,4 @@ class AppContainer extends Component<AppProps, AppState> {
   }
 }
 
-ReactDom.render(<AppContainer props=""/>, document.getElementById("app"));
+ReactDom.render(<AppContainer props="" />, document.getElementById("app"));
