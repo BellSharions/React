@@ -1,19 +1,35 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import "./signupmodalbody.scss";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
 import InputText from "./inputText";
-import { SignUpModalBodyProps } from "../../types/types";
 import { signUpUrl } from "../../constants/constants";
+import { ReducerState } from "../redux/reducer";
+import { closeModalAction, logInAction } from "../redux/actions";
 
-const SignUpModalBody: FC<SignUpModalBodyProps> = ({ logInFunc, closeModalFunc }) => {
+const SignUpModalBody: FC = () => {
   const [logup, setLogup] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [repeatPassword, setRepeatPassword] = useState<string>("");
   const [message, setMessage] = useState("Please enter password");
+  const loggedIn = useSelector((state: ReducerState) => state.loggedIn);
+  const closeLogModalDispatch = useDispatch();
 
+  useEffect(() => {
+    if (loggedIn) {
+      closeLogModalDispatch(closeModalAction());
+    }
+  }, [loggedIn]);
+
+  const closeLogIn = () => closeLogModalDispatch(closeModalAction());
+  const dispatchedLogInAction = (userName: string) => closeLogModalDispatch(logInAction(userName));
   const history = useHistory();
+  const closeModalHandler = () => {
+    closeLogIn();
+    history.push("/");
+  };
 
   const logupGetter = (logupData: string) => {
     setLogup(logupData);
@@ -68,7 +84,7 @@ const SignUpModalBody: FC<SignUpModalBodyProps> = ({ logInFunc, closeModalFunc }
       });
 
       if (res.status === 201) {
-        logInFunc(true, logup);
+        dispatchedLogInAction(logup);
         history.push("/profile");
       } else {
         setMessage("This login is already in use, please use another one");
@@ -85,7 +101,7 @@ const SignUpModalBody: FC<SignUpModalBodyProps> = ({ logInFunc, closeModalFunc }
     <div className="signUp__modal_container">
       <div className="signUp__modal_upper-container">
         <h1 className="signUp__modal_title">Registration</h1>
-        <button className="signUp__modal_close-btn" type="button" onClick={closeModalFunc}>
+        <button className="signUp__modal_close-btn" type="button" onClick={closeModalHandler}>
           <FontAwesomeIcon icon={faTimes} />
         </button>
       </div>

@@ -15,8 +15,8 @@ export interface AppProps {
 }
 
 export interface AppState {
-  loggedIn: boolean;
-  userName: string;
+  loggedIn?: boolean;
+  userName?: string;
   showSignInModal: boolean;
   showSignUpModal: boolean;
 }
@@ -25,9 +25,7 @@ export interface ProductParams {
   platform: string;
 }
 export interface ProtectedParams {
-  loggedIn: boolean;
   path: string;
-  logInFunc: (status: boolean, userName: string) => void;
 }
 export interface CategoryProp {
   title: string;
@@ -35,7 +33,7 @@ export interface CategoryProp {
   icon: IconProp;
 }
 
-export type LogInFunctionType = (status: boolean, userName: string) => void;
+export type LogInFunctionType = (userName: string) => void;
 export type LogOutFunctionType = () => void;
 
 export interface InputProps {
@@ -47,51 +45,22 @@ export interface InputProps {
 }
 
 export interface HeaderProps {
-  logOutFunc: LogOutFunctionType;
-  logInFunc: LogInFunctionType;
-  showSignInModalFunc: () => void;
-  showSignUpModalFunc: () => void;
-  closeModalFunc: () => void;
-  logInState?: boolean;
-  showSignInModal: boolean;
-  showSignUpModal: boolean;
+  dispatchedLogOutAction: LogOutFunctionType;
+  dispatchedLogInAction: LogInFunctionType;
   userName?: string;
+  loggedIn?: boolean;
 }
 
 export interface SignInBtnProps {
-  logInFunc: LogInFunctionType;
-  showSignInModalFunc: () => void;
-  closeModalFunc: () => void;
-  showSignInModal: boolean;
-}
-
-export interface LogInPageProps {
-  logInFunc: LogInFunctionType;
-  closeModalFunc: () => void;
-  showSignInModalFunc: () => void;
-  showSignInModal: boolean;
-  logInState: boolean;
-}
-
-export interface SignInModalBodyProps {
-  logInFunc: LogInFunctionType;
-  closeModalFunc: () => void;
+  dispatchedLogInAction: LogInFunctionType;
 }
 
 export interface SignUpBtnProps {
-  logInFunc: LogInFunctionType;
-  showSignUpModalFunc: () => void;
-  closeModalFunc: () => void;
-  showSignUpModal: boolean;
-}
-
-export interface SignUpModalBodyProps {
-  logInFunc: LogInFunctionType;
-  closeModalFunc: () => void;
+  dispatchedLogInAction: LogInFunctionType;
 }
 
 export interface SignOutBtnProps {
-  logOutFunc: LogOutFunctionType;
+  dispatchedLogOutAction: LogOutFunctionType;
 }
 
 export interface LocationState {
@@ -101,5 +70,5 @@ export interface LocationState {
 }
 
 export interface UserNameProps {
-  userName: string;
+  userName: string | undefined;
 }

@@ -1,23 +1,26 @@
 import { FC } from "react";
-import { Route, Redirect } from "react-router-dom";
-import { ProtectedParams } from "../types/types";
+import { useSelector } from "react-redux";
+import { Route, Redirect, RouteProps } from "react-router-dom";
+import { ReducerState } from "./redux/reducer";
 
-const ProtectedRoute: FC<ProtectedParams> = ({ loggedIn, children, path, ...routeProps }) => (
-  <Route
-    {...routeProps}
-    render={() =>
-      loggedIn ? (
-        children
-      ) : (
-        <Redirect
-          to={{
-            pathname: "/login",
-            state: { from: path },
-          }}
-        />
-      )
-    }
-  />
-);
-
+const ProtectedRoute: FC<RouteProps> = ({ children, location, ...routeProps }) => {
+  const loggedIn = useSelector((state: ReducerState) => state.loggedIn);
+  return (
+    <Route
+      {...routeProps}
+      render={() =>
+        loggedIn ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location?.pathname },
+            }}
+          />
+        )
+      }
+    />
+  );
+};
 export default ProtectedRoute;

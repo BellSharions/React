@@ -1,43 +1,21 @@
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import "./logIn.scss";
-import { useLocation, Redirect, useHistory } from "react-router-dom";
-import Modal from "../modal/modal";
-import SignInModalBody from "../modal/signInModalBody";
-import { LogInPageProps, LocationState } from "../../types/types";
+import { useLocation, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { LocationState } from "../../types/types";
+import { showSignInModalAction } from "../redux/actions";
 
-const LogInPage: FC<LogInPageProps> = ({
-  logInFunc,
-  closeModalFunc,
-  showSignInModalFunc,
-  showSignInModal,
-  logInState,
-}) => {
+const LogInPage: React.FC = () => {
+  const loggedIn = useSelector((state: ReducerState) => state.loggedIn);
   const { state } = useLocation<LocationState>();
-  const history = useHistory();
-
-  const closeModalHandler = () => {
-    closeModalFunc();
-    history.push("/");
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    showSignInModalFunc();
-  }, []);
+    if (!loggedIn) {
+      dispatch(showSignInModalAction());
+    }
+  }, [loggedIn]);
 
-  return (
-    <div className="logInPage__container">
-      {logInState ? (
-        <Redirect to={state?.from || "/"} />
-      ) : (
-        <div>
-          {showSignInModal ? (
-            <Modal>
-              <SignInModalBody logInFunc={logInFunc} closeModalFunc={closeModalHandler} />
-            </Modal>
-          ) : null}
-        </div>
-      )}
-    </div>
-  );
+  return <div className="logInPage__container">{loggedIn ? <Redirect to={state?.from || "/"} /> : null}</div>;
 };
 export default LogInPage;

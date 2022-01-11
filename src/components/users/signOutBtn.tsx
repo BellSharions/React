@@ -5,15 +5,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
 import { SignOutBtnProps } from "../../types/types";
 
-const SignOutBtn: FC<SignOutBtnProps> = ({ logOutFunc }) => {
+const SignOutBtn: FC<SignOutBtnProps> = ({ dispatchedLogOutAction }) => {
   const history = useHistory();
-  const handleCkick = () => {
-    logOutFunc();
+  const handleClick = () => {
+    dispatchedLogOutAction();
     history.push("/");
   };
   return (
     <div className="signOut__container">
-      <button type="button" className="signOut__btn" onClick={handleCkick}>
+      <button type="button" className="signOut__btn" onClick={handleClick}>
         <FontAwesomeIcon icon={faDoorOpen} />
       </button>
     </div>

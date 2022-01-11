@@ -1,23 +1,17 @@
 import { NavLink } from "react-router-dom";
 import "./header.scss";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
 import { multiLink, routes, routeType, singleLink } from "../../constants/constants";
 import Dropdown from "./navbarDropdown/dropdown";
-import { LoggedInConsumer, UserNameConsumer } from "../../context";
 import SignOutBtn from "../users/signOutBtn";
 import SignInBtn from "../users/signInBtn";
 import SignUpBtn from "../users/signUpBtn";
 import { HeaderProps } from "../../types/types";
 import UserName from "../users/userName";
+import { logInAction, logOutAction } from "../redux/actions";
 
-const Header: React.FC<HeaderProps> = ({
-  showSignInModal,
-  showSignUpModal,
-  logInFunc,
-  logOutFunc,
-  showSignInModalFunc,
-  showSignUpModalFunc,
-  closeModalFunc,
-}) => (
+const Header: React.FC<HeaderProps> = ({ loggedIn, userName, dispatchedLogInAction, dispatchedLogOutAction }) => (
   <header className="header">
     <h3 className="header__title">Game Market</h3>
     <div className="header__navlinks">
@@ -26,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({
           {object.type === routeType.link && (
             <NavLink className="header__navlinks-link" key={object.item.name} to={(object as singleLink).item.route}>
               <span className="navtext">{(object as singleLink).item.name}</span>
-              <i className={(object as singleLink).item.icon}></i>
+              <i className={(object as singleLink).item.icon} />
             </NavLink>
           )}
           {object.type === routeType.dropdown && (
@@ -38,36 +32,29 @@ const Header: React.FC<HeaderProps> = ({
           )}
         </>
       ))}
-      <LoggedInConsumer>
-        {(contextLogInState) => {
-          if (contextLogInState) {
-            return (
-              <>
-                <UserNameConsumer>{(contextUserName) => <UserName userName={contextUserName} />}</UserNameConsumer>
-                <SignOutBtn logOutFunc={logOutFunc} />
-              </>
-            );
-          }
-          return (
-            <>
-              <SignInBtn
-                logInFunc={logInFunc}
-                showSignInModalFunc={showSignInModalFunc}
-                closeModalFunc={closeModalFunc}
-                showSignInModal={showSignInModal}
-              />
-              <SignUpBtn
-                logInFunc={logInFunc}
-                showSignUpModalFunc={showSignUpModalFunc}
-                closeModalFunc={closeModalFunc}
-                showSignUpModal={showSignUpModal}
-              />
-            </>
-          );
-        }}
-      </LoggedInConsumer>
+      {loggedIn ? (
+        <>
+          <UserName userName={userName} />
+          <SignOutBtn dispatchedLogOutAction={dispatchedLogOutAction} />
+        </>
+      ) : (
+        <>
+          <SignInBtn dispatchedLogInAction={dispatchedLogInAction} />
+          <SignUpBtn dispatchedLogInAction={dispatchedLogInAction} />
+        </>
+      )}
     </div>
   </header>
 );
 
-export default Header;
+const mapStateToProps = (state: { loggedIn: boolean; userName: string }) => ({
+  loggedIn: state.loggedIn,
+  userName: state.userName,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatchedLogInAction: (userName: string) => dispatch(logInAction(userName)),
+  dispatchedLogOutAction: () => dispatch(logOutAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
