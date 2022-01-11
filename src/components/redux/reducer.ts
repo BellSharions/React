@@ -1,4 +1,6 @@
-import { logInType, logOutType, showSignInModal, showSignUpModal, closeModal, initialState } from "./actionTypes";
+import { logInType, logOutType, showSignInModal, showSignUpModal, closeModal } from "./actionTypes";
+
+export const initialState = { loggedIn: false, userName: "", signInModalVisible: false, signUpModalVisible: false };
 
 const reducer = (
   state = initialState,
