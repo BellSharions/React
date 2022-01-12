@@ -45,8 +45,6 @@ export interface InputProps {
 }
 
 export interface HeaderProps {
-  dispatchedLogOutAction: LogOutFunctionType;
-  dispatchedLogInAction: LogInFunctionType;
   userName?: string;
   loggedIn?: boolean;
 }

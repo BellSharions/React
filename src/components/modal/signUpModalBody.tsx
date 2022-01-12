@@ -1,12 +1,11 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import "./signupmodalbody.scss";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import InputText from "./inputText";
 import { signUpUrl } from "../../constants/constants";
-import { ReducerState } from "../redux/reducer";
 import { closeModalAction, logInAction } from "../redux/actions";
 
 const SignUpModalBody: FC = () => {
@@ -14,22 +13,9 @@ const SignUpModalBody: FC = () => {
   const [password, setPassword] = useState<string>("");
   const [repeatPassword, setRepeatPassword] = useState<string>("");
   const [message, setMessage] = useState("Please enter password");
-  const loggedIn = useSelector((state: ReducerState) => state.loggedIn);
-  const closeLogModalDispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (loggedIn) {
-      closeLogModalDispatch(closeModalAction());
-    }
-  }, [loggedIn]);
-
-  const closeLogIn = () => closeLogModalDispatch(closeModalAction());
-  const dispatchedLogInAction = (userName: string) => closeLogModalDispatch(logInAction(userName));
   const history = useHistory();
-  const closeModalHandler = () => {
-    closeLogIn();
-    history.push("/");
-  };
 
   const logupGetter = (logupData: string) => {
     setLogup(logupData);
@@ -84,7 +70,8 @@ const SignUpModalBody: FC = () => {
       });
 
       if (res.status === 201) {
-        dispatchedLogInAction(logup);
+        dispatch(logInAction(logup));
+        dispatch(closeModalAction());
         history.push("/profile");
       } else {
         setMessage("This login is already in use, please use another one");
@@ -101,7 +88,7 @@ const SignUpModalBody: FC = () => {
     <div className="signUp__modal_container">
       <div className="signUp__modal_upper-container">
         <h1 className="signUp__modal_title">Registration</h1>
-        <button className="signUp__modal_close-btn" type="button" onClick={closeModalHandler}>
+        <button className="signUp__modal_close-btn" type="button" onClick={() => dispatch(closeModalAction())}>
           <FontAwesomeIcon icon={faTimes} />
         </button>
       </div>

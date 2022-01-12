@@ -21,6 +21,6 @@
 
 @media only screen and (max-width: 790px) {
   .inputText__label {
-  font-size: 0.70rem;
+    font-size: 0.7rem;
   }
 }

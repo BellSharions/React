@@ -5,7 +5,6 @@ import "./products.scss";
 
 const Products: React.FC = () => {
   const { platform } = useParams<ProductParams>();
-
   return (
     <div className="productsPage__container">
       <SearchBar platform={platform} />

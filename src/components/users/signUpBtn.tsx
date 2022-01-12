@@ -1,10 +1,9 @@
 import { FC } from "react";
 import "./signupbtn.scss";
 import { useDispatch } from "react-redux";
-import { SignUpBtnProps } from "../../types/types";
 import { showSignUpModalAction } from "../redux/actions";
 
-const SignUpBtn: FC<SignUpBtnProps> = () => {
+const SignUpBtn: FC = () => {
   const dispatch = useDispatch();
 
   return (

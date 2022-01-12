@@ -3,6 +3,7 @@ import debounce from "lodash.debounce";
 import "./searchBar.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { useLocation } from "react-router-dom";
 import ProductsOutput from "../products/output/productsOutput";
 import { ProductItemProps, ProductParams } from "../../types/types";
 import { fetchGameLink, fetchGameQueryLink } from "../../constants/constants";
@@ -10,23 +11,22 @@ import { fetchGameLink, fetchGameQueryLink } from "../../constants/constants";
 const SearchBar: FC<ProductParams> = (platform) => {
   const [list, setList] = useState<Array<ProductItemProps>>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const plat = useLocation();
+  const search = plat.pathname.split("/")[2];
   useEffect(() => {
     (async () => {
-      console.log(platform.platform);
-      
-      if (platform.platform === "" || platform.platform === ":platform") setList(await (await fetch(`${fetchGameLink}`)).json());
+      console.log(search);
+      if (search === "" || search === ":platform" || search === "home" || search === undefined)
+        setList(await (await fetch(`${fetchGameLink}`)).json());
       else
         setList(
-          await (
-            await fetch(`${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ platform: platform.platform })}`)
-          ).json()
+          await (await fetch(`${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ platform: search })}`)).json()
         );
     })();
   }, [platform]);
 
   const updateQuery = async (e: ChangeEvent<HTMLInputElement>) => {
-    
-      console.log(platform.platform);
+    console.log(platform.platform);
     setIsLoading(true);
     if (platform.platform === "")
       setList(
@@ -34,9 +34,7 @@ const SearchBar: FC<ProductParams> = (platform) => {
       );
     else if (e.target.value === "")
       setList(
-        await (
-          await fetch(`${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ platform: platform.platform })}`)
-        ).json()
+        await (await fetch(`${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ platform: search })}`)).json()
       );
     else
       setList(
@@ -44,7 +42,7 @@ const SearchBar: FC<ProductParams> = (platform) => {
           await fetch(
             `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({
               text: e.target.value,
-              platform: platform.platform,
+              platform: search,
             })}`
           )
         ).json()
