@@ -1,12 +1,10 @@
 import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./signinmodalbody.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
-import InputText from "./inputText";
 import { signInUrl } from "../../constants/constants";
 import { closeModalAction, logInAction } from "../redux/actions";
+import SignInModalBodyComponent from "./signInModalBodyComponent";
 
 const SignInModalBody: FC = () => {
   const [login, setLogin] = useState<string>("");
@@ -17,6 +15,10 @@ const SignInModalBody: FC = () => {
 
   const loginGetter = (loginData: string) => {
     setLogin(loginData);
+  };
+
+  const messageGetter = (messageData: string) => {
+    setMessage(messageData);
   };
 
   const passwordGetter = (passwordData: string) => {
@@ -77,22 +79,17 @@ const SignInModalBody: FC = () => {
   }
 
   return (
-    <div className="signIn__modal_container">
-      <div className="signIn__modal_upper-container">
-        <h1 className="signIn__modal_title">Authorization</h1>
-        <button className="signIn__modal_close-btn" type="button" onClick={() => dispatch(closeModalAction())}>
-          <FontAwesomeIcon icon={faTimes} />
-        </button>
-      </div>
-      <form action="#" className="signIn__modal_content-container" onSubmit={postFunc}>
-        <span>{message}</span>
-        <InputText name="Login" id="SignInLogin" type="text" onChange={loginGetter} value={login} />
-        <InputText name="Password" id="SignInPassword" type="password" onChange={passwordGetter} value={password} />
-        <div className="signIn__modal_submit-btn-container">
-          <input className="signIn__modal_submit-btn" type="submit" />
-        </div>
-      </form>
-    </div>
+    <SignInModalBodyComponent
+      dispatch={dispatch}
+      loginGetter={loginGetter}
+      postFunc={postFunc}
+      passwordGetter={passwordGetter}
+      messageGetter={messageGetter}
+      login={login}
+      password={password}
+      message={message}
+      verifyPassword={verifyPassword}
+    />
   );
 };
 

@@ -1,12 +1,10 @@
 import { useState, useEffect, FC, ChangeEvent } from "react";
 import debounce from "lodash.debounce";
 import "./searchBar.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useLocation } from "react-router-dom";
-import ProductsOutput from "../products/output/productsOutput";
 import { ProductItemProps, ProductParams } from "../../types/types";
 import { fetchGameLink, fetchGameQueryLink } from "../../constants/constants";
+import SearchBarComponent from "./SearchBarComponent";
 
 const SearchBar: FC<ProductParams> = (platform) => {
   const [list, setList] = useState<Array<ProductItemProps>>([]);
@@ -52,21 +50,7 @@ const SearchBar: FC<ProductParams> = (platform) => {
 
   const debouncedOnChange = debounce(updateQuery, 300);
 
-  return (
-    <>
-      <div className="searchBar__container">
-        <input type="text" placeholder="Search" className="searchBar" onChange={debouncedOnChange} />
-        <div className="searchBar__icon-container">
-          {isLoading ? (
-            <FontAwesomeIcon icon={faSpinner} className="searchBar__loading-icon" />
-          ) : (
-            <FontAwesomeIcon icon={faSearch} className="searchBar__search-icon" />
-          )}
-        </div>
-      </div>
-      <ProductsOutput productList={list} />
-    </>
-  );
+  return <SearchBarComponent list={list} isLoading={isLoading} debouncedOnChange={debouncedOnChange} />;
 };
 
 export default SearchBar;
