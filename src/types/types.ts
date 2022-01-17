@@ -40,7 +40,7 @@ export interface CategoryProp {
   icon: IconProp;
 }
 export interface SignInModalProps {
-  dispatch: Dispatch<unknown>;
+  closeModal: () => void;
   login: string;
   password: string;
   message: string;
@@ -52,7 +52,7 @@ export interface SignInModalProps {
 }
 
 export interface SignUpModalProps {
-  dispatch: Dispatch<unknown>;
+  closeModal: () => void;
   logup: string;
   password: string;
   repeatPassword: string;

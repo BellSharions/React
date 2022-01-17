@@ -12,7 +12,9 @@ const SignUpModalBodyContainer: FC = () => {
   const [repeatPassword, setRepeatPassword] = useState<string>("");
   const [message, setMessage] = useState("Please enter password");
   const dispatch = useDispatch();
-
+  const closeModal = () => {
+    dispatch(closeModalAction());
+  };
   const history = useHistory();
 
   const logupGetter = (logupData: string) => {
@@ -84,7 +86,7 @@ const SignUpModalBodyContainer: FC = () => {
 
   return (
     <SignUpModal
-      dispatch={dispatch}
+      closeModal={closeModal}
       logupGetter={logupGetter}
       putFunc={putFunc}
       passwordGetter={passwordGetter}

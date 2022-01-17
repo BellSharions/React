@@ -4,10 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { SignUpModalProps } from "@/types/types";
 import InputText from "./inputTextContainer";
-import { closeModalAction } from "../redux/actions";
 
 const SignUpModal: FC<SignUpModalProps> = ({
-  dispatch,
+  closeModal,
   logup,
   password,
   message,
@@ -20,7 +19,7 @@ const SignUpModal: FC<SignUpModalProps> = ({
   <div className="signUp__modal_container">
     <div className="signUp__modal_upper-container">
       <h1 className="signUp__modal_title">Registration</h1>
-      <button className="signUp__modal_close-btn" type="button" onClick={() => dispatch(closeModalAction())}>
+      <button className="signUp__modal_close-btn" type="button" onClick={() => closeModal()}>
         <FontAwesomeIcon icon={faTimes} />
       </button>
     </div>

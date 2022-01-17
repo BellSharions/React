@@ -3,11 +3,10 @@ import "./signinmodalbody.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import InputText from "./inputTextContainer";
-import { closeModalAction } from "../redux/actions";
 import { SignInModalProps } from "../../types/types";
 
 const SignInModalBody: FC<SignInModalProps> = ({
-  dispatch,
+  closeModal,
   login,
   password,
   message,
@@ -18,7 +17,7 @@ const SignInModalBody: FC<SignInModalProps> = ({
   <div className="signIn__modal_container">
     <div className="signIn__modal_upper-container">
       <h1 className="signIn__modal_title">Authorization</h1>
-      <button className="signIn__modal_close-btn" type="button" onClick={() => dispatch(closeModalAction())}>
+      <button className="signIn__modal_close-btn" type="button" onClick={() => closeModal()}>
         <FontAwesomeIcon icon={faTimes} />
       </button>
     </div>

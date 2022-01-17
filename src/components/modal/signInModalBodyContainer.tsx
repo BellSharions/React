@@ -12,7 +12,9 @@ const SignInModalBodyContainer: FC = () => {
   const [message, setMessage] = useState("Please enter password");
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const closeModal = () => {
+    dispatch(closeModalAction());
+  };
   const loginGetter = (loginData: string) => {
     setLogin(loginData);
   };
@@ -64,9 +66,8 @@ const SignInModalBodyContainer: FC = () => {
 
       if (res.status === 200) {
         dispatch(logInAction(login));
-        console.log(history);
-        history.push(history.location.state);
-        dispatch(closeModalAction());
+        if (history.location.state !== null) history.push(history.location.state);
+        closeModal();
       } else {
         setMessage("An error has appeared! Check your credentials and try again.");
         throw new Error(`HTTP status: ${res.status}`);
@@ -80,7 +81,7 @@ const SignInModalBodyContainer: FC = () => {
 
   return (
     <SignInModalBody
-      dispatch={dispatch}
+      closeModal={closeModal}
       loginGetter={loginGetter}
       postFunc={postFunc}
       passwordGetter={passwordGetter}
