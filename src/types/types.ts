@@ -87,18 +87,18 @@ export interface HeaderProps {
 }
 
 export interface SignInBtnProps {
-  dispatch: Dispatch<unknown>;
+  showModal: () => void;
 }
 
 export interface SignUpBtnProps {
-  dispatch: Dispatch<unknown>;
+  showModal: () => void;
 }
-export interface ProtectedRouteProps<RouteProps> {
+export interface ProtectedRouteProps {
   dispatch: Dispatch<unknown>;
 }
 
 export interface SignOutBtnProps {
-  dispatch: Dispatch<unknown>;
+  logOut: () => void;
 }
 
 export interface LocationState {

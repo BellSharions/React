@@ -3,10 +3,9 @@ import "./styles/main.scss";
 import { StrictMode, Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import Home from "./components/home/home";
-import Products from "./components/products/products";
+import Products from "./components/products/productsContainer";
 import About from "./components/about/about";
 import { routesMap } from "./constants/constants";
 import ErrorCase from "./components/errorHandler/errorTest";
@@ -16,9 +15,10 @@ import ProtectedRoute from "./components/protectedRoute/protectedRoute";
 import Profile from "./components/users/profile";
 import store from "./components/redux/store";
 import Modal from "./components/modal/modal";
-import SignInModalBody from "./components/modal/signInModalBody";
-import SignUpModalBody from "./components/modal/signUpModalBody";
+import SignInModalBody from "./components/modal/signInModalBodyContainer";
+import SignUpModalBody from "./components/modal/signUpModalBodyContainer";
 import { ReducerState } from "./components/redux/reducer";
+import HeaderContainer from "./components/header/headerContainer";
 
 const mapStateToProps = (state: ReducerState) => ({
   signInModalVisible: state.signInModalVisible,
@@ -33,7 +33,7 @@ class AppContainer extends Component<AppProps, AppState> {
     return (
       <StrictMode>
         <ErrorBoundary>
-          <Header />
+          <HeaderContainer />
           <Switch>
             <ProtectedRoute path={`${routesMap.PRODUCTS}/:platform`}>
               <Products />

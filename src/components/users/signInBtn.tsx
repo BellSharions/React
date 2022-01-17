@@ -1,12 +1,14 @@
 import { FC } from "react";
+import { SignInBtnProps } from "@/types/types";
 import "./signinbtn.scss";
-import { useDispatch } from "react-redux";
-import SignInBtnComponent from "./signInBtnComponent";
 
-const SignInBtn: FC = () => {
-  const dispatch = useDispatch();
-
-  return <SignInBtnComponent dispatch={dispatch} />;
-};
+const SignInBtn: FC<SignInBtnProps> = ({ showModal }) => (
+  <div className="signIn__container">
+    <button type="button" className="signIn__btn" onClick={() => showModal()}>
+      <p className="signIn__title">Sign In</p>
+      <i className="fa fa-sign-in-alt" />
+    </button>
+  </div>
+);
 
 export default SignInBtn;

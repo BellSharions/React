@@ -1,11 +1,15 @@
 import { FC } from "react";
 import "./signoutbtn.scss";
-import { useDispatch } from "react-redux";
-import SignOutBtnComponent from "./signOutBtnComponent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
+import { SignOutBtnProps } from "@/types/types";
 
-const SignOutBtn: FC = () => {
-  const dispatch = useDispatch();
-  return <SignOutBtnComponent dispatch={dispatch} />;
-};
+const SignOutBtn: FC<SignOutBtnProps> = ({ logOut }) => (
+  <div className="signOut__container">
+    <button type="button" className="signOut__btn" onClick={() => logOut()}>
+      <FontAwesomeIcon icon={faDoorOpen} />
+    </button>
+  </div>
+);
 
 export default SignOutBtn;
