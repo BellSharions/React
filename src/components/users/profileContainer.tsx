@@ -23,12 +23,11 @@ const ProfilePageContainer: FC = () => {
     setDescription(inputName);
   };
   const profilePicGetter = async () => {
-    const getResponse = await fetch(`http://localhost:8080/users/?login_like=${userName}`, {
+    await fetch(`http://localhost:8080/users/?login_like=${userName}`, {
       method: "GET",
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setProfilePic(data.profilePic);
       });
   };
@@ -36,11 +35,10 @@ const ProfilePageContainer: FC = () => {
     profilePicGetter();
   }, []);
   const profilePicHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files[0]);
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
     formData.append("upload_preset", "mpuznhgs");
-    const postResponse = await fetch(`https://api.cloudinary.com/v1_1/dev3afzlt/image/upload`, {
+    await fetch(`https://api.cloudinary.com/v1_1/dev3afzlt/image/upload`, {
       method: "POST",
       body: formData,
     })
@@ -55,7 +53,6 @@ const ProfilePageContainer: FC = () => {
             method: "POST",
             body: url,
           }).then(() => setProfilePic(url));
-          console.log(data);
         }
       });
   };
@@ -83,7 +80,7 @@ const ProfilePageContainer: FC = () => {
     if (e) {
       e.preventDefault();
     }
-    const patchResponse = await fetch(`http://localhost:8080/users/${userName}`, {
+    await fetch(`http://localhost:8080/users/${userName}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
