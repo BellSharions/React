@@ -55,7 +55,6 @@ const SignInModalBodyContainer: FC = () => {
       setMessage(verifyPassword(password).validMessage);
     } else {
       setMessage(verifyPassword(password).validMessage);
-      console.log(signInObj);
       const res = await fetch(signInUrl, {
         method: "POST",
         headers: {

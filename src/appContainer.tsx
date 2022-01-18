@@ -12,17 +12,19 @@ import ErrorCase from "./components/errorHandler/errorTest";
 import ErrorBoundary from "./components/errorHandler/errorBoundary";
 import { AppProps, AppState } from "./types/types";
 import ProtectedRoute from "./components/protectedRoute/protectedRoute";
-import Profile from "./components/users/profile";
+import Profile from "./components/users/profileContainer";
 import store from "./components/redux/store";
 import Modal from "./components/modal/modal";
 import SignInModalBody from "./components/modal/signInModalBodyContainer";
 import SignUpModalBody from "./components/modal/signUpModalBodyContainer";
 import { ReducerState } from "./components/redux/reducer";
 import HeaderContainer from "./components/header/headerContainer";
+import ChangePassModalBodyContainer from "./components/modal/passwordModalBodyContainer";
 
 const mapStateToProps = (state: ReducerState) => ({
   signInModalVisible: state.signInModalVisible,
   signUpModalVisible: state.signUpModalVisible,
+  changePassModalVisible: state.changePassModalVisible,
   userName: state.userName,
   loggedIn: state.loggedIn,
 });
@@ -57,6 +59,11 @@ class AppContainer extends Component<AppProps, AppState> {
             {store.getState().signUpModalVisible ? (
               <Modal>
                 <SignUpModalBody />
+              </Modal>
+            ) : null}
+            {store.getState().changePassModalVisible ? (
+              <Modal>
+                <ChangePassModalBodyContainer />
               </Modal>
             ) : null}
           </>

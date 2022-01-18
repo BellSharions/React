@@ -2,14 +2,20 @@ import { NavLink } from "react-router-dom";
 import { FC } from "react";
 import { HeaderProps } from "@/types/types";
 import "./header.scss";
-import { multiLink, routes, routeType, singleLink } from "../../constants/constants";
+import {
+  logOutText,
+  multiLink,
+  routes,
+  routesMap,
+  routeType,
+  signInText,
+  signUpText,
+  singleLink,
+} from "../../constants/constants";
 import Dropdown from "./navbarDropdown/dropdown";
-import SignOutBtn from "../users/signOutBtnContainer";
-import SignInBtn from "../users/signInBtnContainer";
-import SignUpBtn from "../users/signUpBtnContainer";
-import UserName from "../users/userName";
+import BtnContainer from "../users/buttonContainer";
 
-const Header: FC<HeaderProps> = ({ userName, loggedIn }) => (
+const Header: FC<HeaderProps> = ({ userName, loggedIn, showSignInModal, showSignUpModal, logOut }) => (
   <header className="header">
     <h3 className="header__title">Game Market</h3>
     <div className="header__navlinks">
@@ -32,13 +38,15 @@ const Header: FC<HeaderProps> = ({ userName, loggedIn }) => (
       ))}
       {loggedIn ? (
         <>
-          <UserName userName={userName} />
-          <SignOutBtn />
+          <NavLink className="header__navlinks-link" to={routesMap.PROFILE}>
+            <span className="navtext">{userName}</span>
+          </NavLink>
+          <BtnContainer action={logOut} childrenProps={logOutText} />
         </>
       ) : (
         <>
-          <SignInBtn />
-          <SignUpBtn />
+          <BtnContainer action={showSignInModal} childrenProps={signInText} />
+          <BtnContainer action={showSignUpModal} childrenProps={signUpText} />
         </>
       )}
     </div>

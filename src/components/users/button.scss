@@ -1,12 +1,12 @@
 $primary-color: #131211;
 $secondary-color: #19191a;
 
-.signUp__container {
+.button__container {
   margin: 0;
   z-index: 1;
 }
 
-.signUp__btn {
+.btn {
   padding: 10px 20px;
   font-size: 20px;
   text-decoration: none;
@@ -15,24 +15,23 @@ $secondary-color: #19191a;
   border: 0;
 }
 
-.signUp__container:hover .signUp__btn {
+.button__container:hover .btn {
   background-color: $secondary-color;
   color: #ffffff;
   cursor: pointer;
 }
 
-.signUp__container:hover {
+.button__container:hover {
   background-color: #272727;
 }
 
-.signUp__title {
+.button__title {
   margin: 0;
   font-family: "OpenSans-Regular", sans-serif;
 }
 
-
 @media only screen and (max-width: 645px) {
-  .signUp__title {
+  .button__title {
     display: none;
   }
 }
