@@ -23,7 +23,7 @@ const ProfilePageContainer: FC = () => {
     setDescription(inputName);
   };
   const profilePicGetter = async () => {
-    await fetch(`http://localhost:8080/users/?login_like=${userName}`, {
+    await fetch(`http://localhost:8080/users/?login=${userName}`, {
       method: "GET",
     })
       .then((response) => response.json())

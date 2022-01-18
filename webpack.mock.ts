@@ -101,7 +101,7 @@ export default webpackMockServer.add((app, helper) => {
   });
   app.get("/users/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
-    if (_req.query.login_like !== undefined)
+    if (_req.query.login !== undefined)
       fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
         if (err) {
           console.log(err);
@@ -109,7 +109,7 @@ export default webpackMockServer.add((app, helper) => {
         } else {
           const obj = JSON.parse(data);
           console.log(_req.query);
-          const foundUser = obj.users.filter((x) => x.login === _req.query.login_like)[0];
+          const foundUser = obj.users.filter((x) => x.login === _req.query.login)[0];
           console.log(foundUser);
           if (foundUser !== undefined) {
             res.json(foundUser);
