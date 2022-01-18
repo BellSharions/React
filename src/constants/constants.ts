@@ -1,15 +1,14 @@
 import { faPlaystation, faXbox, faWindows } from "@fortawesome/free-brands-svg-icons";
 
-export const PRODUCTS = "/products";
-export const ABOUT = "/about";
-export const HOME = "/home";
-export const SIGNIN = "/sign-in";
-export const SIGNUP = "/sign-up";
-export const PC = "/PC";
-export const XBOX = "/XBOX";
-export const PS = "/PLAYSTATION";
-export const ERROR = "/error";
-export const PROFILE = "/profile";
+export const routesMap = {
+  PRODUCTS: "/products",
+  ABOUT: "/about",
+  HOME: "/home",
+  SIGNIN: "/sign-in",
+  SIGNUP: "/sign-up",
+  ERROR: "/error",
+  PROFILE: "/profile",
+};
 export const enum routeType {
   link,
   dropdown,
@@ -54,16 +53,16 @@ export const gameCompaniesIcons = [
 export const platformNames = {
   name: "Products",
   data: [
-    { routeName: "PC", route: `${PRODUCTS}/PC` },
-    { routeName: "XBOX", route: `${PRODUCTS}/XBOX` },
-    { routeName: "PlayStation", route: `${PRODUCTS}/PlayStation` },
+    { routeName: "PC", route: `${routesMap.PRODUCTS}/PC` },
+    { routeName: "XBOX", route: `${routesMap.PRODUCTS}/XBOX` },
+    { routeName: "PlayStation", route: `${routesMap.PRODUCTS}/PlayStation` },
   ],
 };
 
 export const routes: Array<singleLink | multiLink> = [
   {
     type: routeType.link,
-    item: { route: HOME, name: "Home", icon: "fa fa-home" },
+    item: { route: routesMap.HOME, name: "Home", icon: "fa fa-home" },
   },
   {
     type: routeType.dropdown,
@@ -71,7 +70,7 @@ export const routes: Array<singleLink | multiLink> = [
   },
   {
     type: routeType.link,
-    item: { route: ABOUT, name: "About", icon: "fa fa-info-circle" },
+    item: { route: routesMap.ABOUT, name: "About", icon: "fa fa-info-circle" },
   },
 ];
 

@@ -1,4 +1,4 @@
-import { HOME } from "@/constants/constants";
+import { routesMap } from "@/constants/constants";
 import { Component, ErrorInfo, ReactElement, ReactNode } from "react";
 
 interface ErrorBoundaryProps {
@@ -20,7 +20,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     alert("It seems you've caused an error! Click OK to redirect to home page.");
     console.error(errorInfo);
     console.error(error);
-    window.location.replace(HOME);
+    window.location.replace(routesMap.HOME);
   }
 
   static getDerivedStateFromError(): Partial<ErrorBoundaryState> {

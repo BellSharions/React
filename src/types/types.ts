@@ -1,4 +1,6 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { DebouncedFunc } from "lodash";
+import { ChangeEvent, ChangeEventHandler, Dispatch, FormEventHandler, SyntheticEvent } from "react";
 
 export interface ProductItemProps {
   id?: number;
@@ -15,8 +17,8 @@ export interface AppProps {
 }
 
 export interface AppState {
-  loggedIn: boolean;
-  userName: string;
+  loggedIn?: boolean;
+  userName?: string;
   showSignInModal: boolean;
   showSignUpModal: boolean;
 }
@@ -24,18 +26,44 @@ export interface AppState {
 export interface ProductParams {
   platform: string;
 }
+export interface SearchBarComponentProps {
+  list: ProductItemProps[];
+  isLoading: boolean;
+  debouncedOnChange: DebouncedFunc<(e: ChangeEvent<HTMLInputElement>) => Promise<void>>;
+}
 export interface ProtectedParams {
-  loggedIn: boolean;
   path: string;
-  logInFunc: (status: boolean, userName: string) => void;
 }
 export interface CategoryProp {
   title: string;
   path: string;
   icon: IconProp;
 }
+export interface SignInModalProps {
+  closeModal: () => void;
+  login: string;
+  password: string;
+  message: string;
+  postFunc: FormEventHandler<HTMLFormElement>;
+  loginGetter: (value: string) => void;
+  passwordGetter: (value: string) => void;
+  messageGetter: (value: string) => void;
+  verifyPassword: (value: string) => void;
+}
 
-export type LogInFunctionType = (status: boolean, userName: string) => void;
+export interface SignUpModalProps {
+  closeModal: () => void;
+  logup: string;
+  password: string;
+  repeatPassword: string;
+  message: string;
+  putFunc: (e: SyntheticEvent<Element, Event>) => Promise<unknown>;
+  logupGetter: (value: string) => void;
+  passwordGetter: (value: string) => void;
+  verifyPassword: (value: string) => void;
+  repeatPasswordGetter: (value: string) => void;
+}
+export type LogInFunctionType = (userName: string) => void;
 export type LogOutFunctionType = () => void;
 
 export interface InputProps {
@@ -45,53 +73,32 @@ export interface InputProps {
   value: string;
   onChange: (value: string) => void;
 }
+export interface InputComponentProps {
+  name: string;
+  id: string;
+  type: string;
+  value: string;
+  changeHandler: ChangeEventHandler<HTMLInputElement>;
+}
 
 export interface HeaderProps {
-  logOutFunc: LogOutFunctionType;
-  logInFunc: LogInFunctionType;
-  showSignInModalFunc: () => void;
-  showSignUpModalFunc: () => void;
-  closeModalFunc: () => void;
-  logInState?: boolean;
-  showSignInModal: boolean;
-  showSignUpModal: boolean;
   userName?: string;
+  loggedIn?: boolean;
 }
 
 export interface SignInBtnProps {
-  logInFunc: LogInFunctionType;
-  showSignInModalFunc: () => void;
-  closeModalFunc: () => void;
-  showSignInModal: boolean;
-}
-
-export interface LogInPageProps {
-  logInFunc: LogInFunctionType;
-  closeModalFunc: () => void;
-  showSignInModalFunc: () => void;
-  showSignInModal: boolean;
-  logInState: boolean;
-}
-
-export interface SignInModalBodyProps {
-  logInFunc: LogInFunctionType;
-  closeModalFunc: () => void;
+  showModal: () => void;
 }
 
 export interface SignUpBtnProps {
-  logInFunc: LogInFunctionType;
-  showSignUpModalFunc: () => void;
-  closeModalFunc: () => void;
-  showSignUpModal: boolean;
+  showModal: () => void;
 }
-
-export interface SignUpModalBodyProps {
-  logInFunc: LogInFunctionType;
-  closeModalFunc: () => void;
+export interface ProtectedRouteProps {
+  dispatch: Dispatch<unknown>;
 }
 
 export interface SignOutBtnProps {
-  logOutFunc: LogOutFunctionType;
+  logOut: () => void;
 }
 
 export interface LocationState {
@@ -101,5 +108,5 @@ export interface LocationState {
 }
 
 export interface UserNameProps {
-  userName: string;
+  userName: string | undefined;
 }

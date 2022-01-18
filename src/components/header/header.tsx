@@ -1,23 +1,15 @@
 import { NavLink } from "react-router-dom";
+import { FC } from "react";
+import { HeaderProps } from "@/types/types";
 import "./header.scss";
 import { multiLink, routes, routeType, singleLink } from "../../constants/constants";
 import Dropdown from "./navbarDropdown/dropdown";
-import { LoggedInConsumer, UserNameConsumer } from "../../context";
-import SignOutBtn from "../users/signOutBtn";
-import SignInBtn from "../users/signInBtn";
-import SignUpBtn from "../users/signUpBtn";
-import { HeaderProps } from "../../types/types";
+import SignOutBtn from "../users/signOutBtnContainer";
+import SignInBtn from "../users/signInBtnContainer";
+import SignUpBtn from "../users/signUpBtnContainer";
 import UserName from "../users/userName";
 
-const Header: React.FC<HeaderProps> = ({
-  showSignInModal,
-  showSignUpModal,
-  logInFunc,
-  logOutFunc,
-  showSignInModalFunc,
-  showSignUpModalFunc,
-  closeModalFunc,
-}) => (
+const Header: FC<HeaderProps> = ({ userName, loggedIn }) => (
   <header className="header">
     <h3 className="header__title">Game Market</h3>
     <div className="header__navlinks">
@@ -26,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({
           {object.type === routeType.link && (
             <NavLink className="header__navlinks-link" key={object.item.name} to={(object as singleLink).item.route}>
               <span className="navtext">{(object as singleLink).item.name}</span>
-              <i className={(object as singleLink).item.icon}></i>
+              <i className={(object as singleLink).item.icon} />
             </NavLink>
           )}
           {object.type === routeType.dropdown && (
@@ -38,34 +30,17 @@ const Header: React.FC<HeaderProps> = ({
           )}
         </>
       ))}
-      <LoggedInConsumer>
-        {(contextLogInState) => {
-          if (contextLogInState) {
-            return (
-              <>
-                <UserNameConsumer>{(contextUserName) => <UserName userName={contextUserName} />}</UserNameConsumer>
-                <SignOutBtn logOutFunc={logOutFunc} />
-              </>
-            );
-          }
-          return (
-            <>
-              <SignInBtn
-                logInFunc={logInFunc}
-                showSignInModalFunc={showSignInModalFunc}
-                closeModalFunc={closeModalFunc}
-                showSignInModal={showSignInModal}
-              />
-              <SignUpBtn
-                logInFunc={logInFunc}
-                showSignUpModalFunc={showSignUpModalFunc}
-                closeModalFunc={closeModalFunc}
-                showSignUpModal={showSignUpModal}
-              />
-            </>
-          );
-        }}
-      </LoggedInConsumer>
+      {loggedIn ? (
+        <>
+          <UserName userName={userName} />
+          <SignOutBtn />
+        </>
+      ) : (
+        <>
+          <SignInBtn />
+          <SignUpBtn />
+        </>
+      )}
     </div>
   </header>
 );
