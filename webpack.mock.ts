@@ -141,7 +141,7 @@ export default webpackMockServer.add((app, helper) => {
                 obj.users[i].login = _req.body.login;
                 obj.users[i].description = _req.body.description;
                 break;
-              } else res.status(400).json(_req.params.login);
+              }
             }
             fs.writeFile("./src/assets/users.json", JSON.stringify(obj), "utf8", (err2) => {
               if (err2) {
@@ -175,9 +175,14 @@ export default webpackMockServer.add((app, helper) => {
           if (foundUser !== undefined) {
             for (let i = 0; i < obj.users.length; i++) {
               if (obj.users[i].login === _req.params.login) {
+                if (obj.users[i].password === _req.body.repeatNewPassword) {
+                  res.status(406);
+                  res.end("Please don't use the same password as your old password");
+                  return;
+                }
                 obj.users[i].password = _req.body.repeatNewPassword;
                 break;
-              } else res.status(400).json(_req.params.login);
+              }
             }
             fs.writeFile("./src/assets/users.json", JSON.stringify(obj), "utf8", (err2) => {
               if (err2) {
@@ -215,7 +220,7 @@ export default webpackMockServer.add((app, helper) => {
               if (obj.users[i].login === _req.params.login) {
                 obj.users[i].profilePic = _req.body;
                 break;
-              } else res.status(400).json(_req.params.login);
+              }
             }
             fs.writeFile("./src/assets/users.json", JSON.stringify(obj), "utf8", (err2) => {
               if (err2) {

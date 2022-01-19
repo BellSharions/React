@@ -13,9 +13,6 @@ export const enum routeType {
   link,
   dropdown,
 }
-export const logOutText = { label: "", icon: "fas fa-door-open" };
-export const signInText = { label: "Sign In", icon: "fa fa-sign-in-alt" };
-export const signUpText = { label: "Sign Up", icon: "fa fa-user-plus" };
 export type singleLink = { type: routeType; item: { route: string; name: string; icon: string } };
 export type multiLink = { type: routeType; item: { name: string; data: Array<{ routeName: string; route: string }> } };
 export const gameCategories = [

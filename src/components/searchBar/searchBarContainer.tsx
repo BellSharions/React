@@ -4,7 +4,7 @@ import "./searchBar.scss";
 import { useLocation } from "react-router-dom";
 import { ProductItemProps, ProductParams } from "../../types/types";
 import { fetchGameLink, fetchGameQueryLink } from "../../constants/constants";
-import SearchBar from "./SearchBar";
+import SearchBar from "./searchBar";
 
 const SearchBarContainer: FC<ProductParams> = (platform) => {
   const [list, setList] = useState<Array<ProductItemProps>>([]);
