@@ -4,7 +4,7 @@ import { StrictMode, Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import Footer from "./components/footer/footer";
-import Home from "./components/home/home";
+import Home from "./components/home/homeContainer";
 import Products from "./components/products/productsContainer";
 import About from "./components/about/about";
 import { routesMap } from "./constants/constants";

@@ -10,11 +10,12 @@ const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, g
   const [isLoading, setIsLoading] = useState(false);
   const updateQuery = async (e: ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
-    if (platform === "")
+    if (platform === "" || platform === undefined)
       setList(
         await (
           await fetch(
             `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({
+              platform: "all games",
               text: e.target.value,
               age,
               sort,

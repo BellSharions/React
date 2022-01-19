@@ -33,6 +33,13 @@ export interface ProductParams {
   sortDir: string;
   genre: string;
 }
+export interface HomeProps {
+  platform: string;
+  age: string;
+  sort: string;
+  sortDir: string;
+  genre: string;
+}
 export interface CriteriaContainerProps {
   sort: string;
   sortDir: string;

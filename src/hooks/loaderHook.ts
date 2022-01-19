@@ -1,7 +1,6 @@
 import { useState } from "react";
-import Preloader from "@/components/UI/preloader/preloader";
 
-const useLoader: () => [any] = () => {
+const useLoader = () => {
   const [loading, setLoading] = useState(false);
   return [
     loading ? (
