@@ -1,0 +1,42 @@
+.selector__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.selector__input_container {
+  width: 100%;
+}
+
+.selector__input_radioButton {
+  margin-right: 5px;
+}
+
+.selector__label_container::after {
+  content: "+";
+}
+
+@media only screen and (max-width: 768px) {
+  .selector__label_container {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .selector__input_container {
+    line-height: 14px;
+  }
+
+  .selector__input_radioButton {
+    width: 10px;
+  }
+
+  .selector__label_container {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .selector__label_container {
+    font-size: 10px;
+  }
+}

@@ -23,8 +23,54 @@ export interface AppState {
   showSignUpModal: boolean;
 }
 
+export interface PlatformParams {
+  platform: string;
+}
 export interface ProductParams {
   platform: string;
+  age: string;
+  sort: string;
+  sortDir: string;
+  genre: string;
+}
+export interface CriteriaContainerProps {
+  sort: string;
+  sortDir: string;
+}
+export interface CriteriaProps {
+  setCriteria: (value: string) => void;
+  setType: (value: string) => void;
+  sort: string;
+  sortDir: string;
+}
+export interface Game {
+  title: string;
+  category: string;
+  price: number;
+  imgUrl: string;
+  description: string;
+  genre: string;
+  age: number;
+  rating?: number;
+  id?: number;
+  date?: string;
+}
+export interface FilterAction {
+  type: string;
+  payload: Game[];
+}
+export interface FilterState {
+  loading: boolean;
+  gamesList: Game[];
+}
+export interface RadioButtonProps {
+  setSelect: (value: string) => void;
+  array: Array<string>;
+  filter: string;
+}
+export interface RadioButtonContainerProps {
+  array: Array<string>;
+  filter: string;
 }
 export interface SearchBarComponentProps {
   list: ProductItemProps[];

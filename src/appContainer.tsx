@@ -27,6 +27,10 @@ const mapStateToProps = (state: ReducerState) => ({
   changePassModalVisible: state.changePassModalVisible,
   userName: state.userName,
   loggedIn: state.loggedIn,
+  age: state.age,
+  sort: state.sort,
+  sortDir: state.sortDir,
+  genre: state.genre,
 });
 class AppContainer extends Component<AppProps, AppState> {
   ["constructor"]: typeof AppContainer;

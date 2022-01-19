@@ -27,9 +27,11 @@ export default webpackMockServer.add((app, helper) => {
   });
   app.get("/api/search/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
-    if (_req.query.platform === undefined && _req.query.text !== undefined)
+    console.log(_req.query);
+
+    if (!_req.query.platform && _req.query.text !== undefined)
       res.json(mockGameList.filter(({ title }) => title.includes(_req.query.text)));
-    else if (_req.query.text === undefined && _req.query.platform !== undefined)
+    else if (!_req.query.text && _req.query.platform !== undefined)
       res.json(mockGameList.filter(({ category }) => category.includes(_req.query.platform)) || mockGameList);
     else
       res.json(
@@ -37,7 +39,6 @@ export default webpackMockServer.add((app, helper) => {
           .filter(({ category }) => category.includes(_req.query.platform))
           .filter(({ title }) => title.includes(_req.query.text))
       );
-    const response = mockGameList;
   });
   app.put("/api/auth/signUp/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
@@ -174,10 +175,11 @@ export default webpackMockServer.add((app, helper) => {
           console.log(foundUser);
           if (foundUser !== undefined) {
             for (let i = 0; i < obj.users.length; i++) {
+              console.log(obj.users[i]);
               if (obj.users[i].login === _req.params.login) {
                 obj.users[i].password = _req.body.repeatNewPassword;
                 break;
-              } else res.status(400).json(_req.params.login);
+              }
             }
             fs.writeFile("./src/assets/users.json", JSON.stringify(obj), "utf8", (err2) => {
               if (err2) {
@@ -189,10 +191,16 @@ export default webpackMockServer.add((app, helper) => {
                 res.end();
               }
             });
-          } else res.status(400).json(_req.params.login);
+          } else {
+            res.status(400).json(_req.params.login);
+            res.end();
+          }
         }
       });
-    else res.status(400).json(_req.params.login);
+    else {
+      res.status(400).json(_req.params.login);
+      res.end();
+    }
   });
   app.post("/upload/:login", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");

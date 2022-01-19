@@ -7,6 +7,16 @@ import {
   showChangePassModal,
   changeUsernameType,
 } from "./actionTypes";
+import {
+  filterByAgeType,
+  filterByGenreType,
+  filterByPriceAscending,
+  filterByPriceDescending,
+  filterByRatingAscending,
+  filterByRatingDescending,
+  filterBySelection,
+  filterBySelectionDirection,
+} from "./filter/filterActionTypes";
 
 export const initialState = {
   loggedIn: false,
@@ -14,6 +24,10 @@ export const initialState = {
   changePassModalVisible: false,
   signInModalVisible: false,
   signUpModalVisible: false,
+  age: "all ages",
+  sort: "rating",
+  sortDir: "asc",
+  genre: "all genres",
 };
 
 const reducer = (
@@ -25,6 +39,10 @@ const reducer = (
   changePassModalVisible: boolean;
   signInModalVisible: boolean;
   signUpModalVisible: boolean;
+  age: string;
+  sort: string;
+  sortDir: string;
+  genre: string;
 } => {
   switch (action.type) {
     case logInType:
@@ -71,6 +89,50 @@ const reducer = (
         changePassModalVisible: false,
         signInModalVisible: false,
         signUpModalVisible: false,
+      };
+    case filterByRatingDescending:
+      return {
+        ...state,
+        sort: "rating",
+        sortDir: "desc",
+      };
+    case filterByRatingAscending:
+      return {
+        ...state,
+        sort: "rating",
+        sortDir: "asc",
+      };
+    case filterByPriceDescending:
+      return {
+        ...state,
+        sort: "price",
+        sortDir: "desc",
+      };
+    case filterByPriceAscending:
+      return {
+        ...state,
+        sort: "price",
+        sortDir: "asc",
+      };
+    case filterBySelection:
+      return {
+        ...state,
+        sort: action.payload,
+      };
+    case filterBySelectionDirection:
+      return {
+        ...state,
+        sortDir: action.payload,
+      };
+    case filterByAgeType:
+      return {
+        ...state,
+        age: action.payload,
+      };
+    case filterByGenreType:
+      return {
+        ...state,
+        genre: action.payload,
       };
     default:
       return state;

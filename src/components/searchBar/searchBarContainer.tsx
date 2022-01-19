@@ -1,36 +1,34 @@
 import { useState, useEffect, FC, ChangeEvent } from "react";
 import debounce from "lodash.debounce";
 import "./searchBar.scss";
-import { useLocation } from "react-router-dom";
 import { ProductItemProps, ProductParams } from "../../types/types";
 import { fetchGameLink, fetchGameQueryLink } from "../../constants/constants";
-import SearchBar from "./SearchBar";
+import SearchBar from "./searchBar";
 
-const SearchBarContainer: FC<ProductParams> = (platform) => {
+const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, genre }) => {
   const [list, setList] = useState<Array<ProductItemProps>>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const plat = useLocation();
-  const search = plat.pathname.split("/")[2];
-  useEffect(() => {
-    (async () => {
-      if (search === "" || search === ":platform" || search === "home" || search === undefined)
-        setList(await (await fetch(`${fetchGameLink}`)).json());
-      else
-        setList(
-          await (await fetch(`${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ platform: search })}`)).json()
-        );
-    })();
-  }, [platform]);
-
   const updateQuery = async (e: ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
-    if (platform.platform === "")
+    if (platform === "")
       setList(
-        await (await fetch(`${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ text: e.target.value })}`)).json()
+        await (
+          await fetch(
+            `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({
+              text: e.target.value,
+              age,
+              sort,
+              sortDir,
+              genre,
+            })}`
+          )
+        ).json()
       );
     else if (e.target.value === "")
       setList(
-        await (await fetch(`${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ platform: search })}`)).json()
+        await (
+          await fetch(`${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ platform, age, sort, sortDir, genre })}`)
+        ).json()
       );
     else
       setList(
@@ -38,7 +36,11 @@ const SearchBarContainer: FC<ProductParams> = (platform) => {
           await fetch(
             `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({
               text: e.target.value,
-              platform: search,
+              platform,
+              age,
+              sort,
+              sortDir,
+              genre,
             })}`
           )
         ).json()
@@ -47,6 +49,20 @@ const SearchBarContainer: FC<ProductParams> = (platform) => {
   };
 
   const debouncedOnChange = debounce(updateQuery, 300);
+  useEffect(() => {
+    (async () => {
+      if (platform === "" || platform === ":platform" || platform === "home" || platform === undefined)
+        setList(await (await fetch(`${fetchGameLink}`)).json());
+      else
+        setList(
+          await (
+            await fetch(
+              `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ platform, age, sort, sortDir, genre })}`
+            )
+          ).json()
+        );
+    })();
+  }, [platform, age, sort, sortDir, genre]);
 
   return <SearchBar list={list} isLoading={isLoading} debouncedOnChange={debouncedOnChange} />;
 };
