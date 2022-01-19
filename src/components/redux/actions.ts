@@ -6,6 +6,7 @@ import {
   closeModal,
   showChangePassModal,
   changeUsernameType,
+  changeLoading,
 } from "./actionTypes";
 
 export const logInAction = (userName: string): { type: string; payload: string } => ({
@@ -34,4 +35,8 @@ export const showChangePassModalAction = (): { type: string } => ({
 
 export const closeModalAction = (): { type: string } => ({
   type: closeModal,
+});
+export const changeLoadingAction = (value: boolean): { type: string; payload: boolean } => ({
+  type: changeLoading,
+  payload: value,
 });

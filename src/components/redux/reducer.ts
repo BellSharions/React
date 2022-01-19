@@ -6,6 +6,7 @@ import {
   closeModal,
   showChangePassModal,
   changeUsernameType,
+  changeLoading,
 } from "./actionTypes";
 import {
   filterByAgeType,
@@ -20,6 +21,7 @@ import {
 
 export const initialState = {
   loggedIn: false,
+  isLoading: false,
   userName: "",
   changePassModalVisible: false,
   signInModalVisible: false,
@@ -35,6 +37,7 @@ const reducer = (
   action: { type: string; payload: string }
 ): {
   loggedIn: boolean;
+  isLoading: boolean;
   userName: string;
   changePassModalVisible: boolean;
   signInModalVisible: boolean;
@@ -82,6 +85,11 @@ const reducer = (
         changePassModalVisible: true,
         signInModalVisible: false,
         signUpModalVisible: false,
+      };
+    case changeLoading:
+      return {
+        ...state,
+        isLoading: action.payload,
       };
     case closeModal:
       return {
