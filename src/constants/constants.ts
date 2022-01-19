@@ -193,9 +193,3 @@ export const mockGameList = [
     logo: "https://res.cloudinary.com/dev3afzlt/image/upload/v1638370431/game-steam-enter-the-gungeon-cover_khtkc3.jpg",
   },
 ];
-export const users = [
-  {
-    userName: "YuryChertko",
-    password: "12345678a",
-  },
-];

@@ -51,7 +51,7 @@ export default webpackMockServer.add((app, helper) => {
 
   app.get("/api/search/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
-    const { platform, genre, age, sort, sortDir, text } = _req.query; // * currentPath has either "All Games" | "PC" | "Xbox" | "PlayStation"
+    const { platform, genre, age, sort, sortDir, text } = _req.query;
     console.log(_req.query);
     console.log(text);
 
@@ -59,10 +59,10 @@ export default webpackMockServer.add((app, helper) => {
     const response = mockGameList
       .filter((game) => {
         if (!text) {
-          if (game.genres === genre && game.age === age) return game; // Filters are specified
-          if (genre === "all genres" && game.age === age) return game; // Genre filter is not specified
-          if (game.genres === genre && age === "all ages") return game; // Age filter is not specified
-          if (genre === "all genres" && age === "all ages") return game; // Both filters are not specified
+          if (game.genres === genre && game.age === age) return game;
+          if (genre === "all genres" && game.age === age) return game;
+          if (game.genres === genre && age === "all ages") return game;
+          if (genre === "all genres" && age === "all ages") return game;
         } else if (game.title.toLowerCase().includes(text.toLowerCase())) return game;
         return 0;
       })
