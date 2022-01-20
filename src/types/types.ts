@@ -10,6 +10,8 @@ export interface ProductItemProps {
   date: string;
   category: string;
   logo?: string;
+  rating: string;
+  price: number;
 }
 
 export interface AppProps {

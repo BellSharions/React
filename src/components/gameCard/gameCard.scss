@@ -23,7 +23,6 @@
   transform: rotateY(180deg);
 }
 
-
 .gameCard__front,
 .gameCard__back {
   position: absolute;
@@ -44,6 +43,33 @@
   background-color: #100f10;
   color: white;
   transform: rotateY(180deg);
+}
+.gameCard__front-text {
+  font-size: 13px;
+  background-color: #100f10;
+  color: white;
+}
+.gameCard__front-text-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.gameCard__front-price {
+  font-size: 13px;
+  background-color: #100f10;
+  color: white;
+}
+.gamecard__platform-icons {
+  padding: 2px 4px 2px 4px;
+  display: flex;
+  border-radius: 2px;
+  flex-direction: row;
+  max-width: fit-content;
+  gap: 5px;
+  position: absolute;
+  justify-content: left;
+  background-color: #303030;
+  color: white;
 }
 .gameCard__back-description {
   height: 80%;

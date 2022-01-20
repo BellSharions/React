@@ -64,6 +64,7 @@ const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, g
           );
         setLoading(false);
       }, 1000);
+      console.log(list);
     })();
   }, [platform, age, sort, sortDir, genre, search]);
 
