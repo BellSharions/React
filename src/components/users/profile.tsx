@@ -13,6 +13,7 @@ const ProfilePage: FC<ProfileProps> = ({
   profilePicHandler,
   name,
   message,
+  message2,
   descriptionGetter,
   description,
   formValid,
@@ -26,6 +27,9 @@ const ProfilePage: FC<ProfileProps> = ({
       <div className="profilePage__picSection">
         <img className="profilePage__picSection_pic" src={profilePic} alt="" />
         <input type="file" className="profilePage__picSection_changePicBtn" onChange={(e) => profilePicHandler(e)} />
+        <div>
+          <span className="error__message">{message2}</span>
+        </div>
       </div>
       <div className="profilePage__editSection">
         <InputTextContainer name="Username" id="UserName" type="text" onChange={userNameGetter} value={name} />

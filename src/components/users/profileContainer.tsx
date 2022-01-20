@@ -10,6 +10,7 @@ const ProfilePageContainer: FC = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
+  const [message2, setUploadMessage] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [formValid, setFormValid] = useState(false);
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const ProfilePageContainer: FC = () => {
       .catch((err) => console.log(err))
       .then(async (data) => {
         if (data.error !== undefined) {
-          setMessage("An error has been encountered while uploading the image");
+          setUploadMessage("An error has been encountered while uploading the image");
         } else {
           const { url } = data;
           await fetch(`http://localhost:8080/upload/${userName}`, {
@@ -105,6 +106,7 @@ const ProfilePageContainer: FC = () => {
       profilePicHandler={profilePicHandler}
       name={name}
       message={message}
+      message2={message2}
       descriptionGetter={descriptionGetter}
       description={description}
       formValid={formValid}

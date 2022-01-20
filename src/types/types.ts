@@ -136,6 +136,7 @@ export interface ProfileProps {
   profilePicHandler: (e: ChangeEvent<HTMLInputElement>) => void;
   name: string;
   message: string;
+  message2: string;
   descriptionGetter: (value: string) => void;
   description: string;
   formValid: boolean;
