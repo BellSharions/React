@@ -16,7 +16,7 @@ const ProtectedRoute: FC<RouteProps> = ({ children, location }) => {
 
   return (
     <>
-      {loggedIn ? (
+      {localStorage.getItem("login") ? (
         location !== undefined ? (
           <Route path={location?.pathname} render={() => children} />
         ) : (

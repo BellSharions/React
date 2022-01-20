@@ -55,12 +55,12 @@ class AppContainer extends Component<AppProps, AppState> {
           </Switch>
           <Footer />
           <>
-            {store.getState().signInModalVisible ? (
+            {store.getState().signInModalVisible && !localStorage.getItem("login") ? (
               <Modal>
                 <SignInModalBody />
               </Modal>
             ) : null}
-            {store.getState().signUpModalVisible ? (
+            {store.getState().signUpModalVisible && !localStorage.getItem("login") ? (
               <Modal>
                 <SignUpModalBody />
               </Modal>

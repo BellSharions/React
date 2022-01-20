@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { HomeProps } from "@/types/types";
 import Categories from "./categories/categories";
 import SearchBarContainer from "../searchBar/searchBarContainer";
 import NewGames from "./newGames/newGames";

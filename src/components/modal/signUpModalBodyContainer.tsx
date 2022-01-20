@@ -71,6 +71,7 @@ const SignUpModalBodyContainer: FC = () => {
 
       if (res.status === 201) {
         dispatch(logInAction(logup));
+        localStorage.setItem("login", logup);
         dispatch(closeModalAction());
         history.push("/profile");
       } else {
