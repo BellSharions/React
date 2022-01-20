@@ -1,6 +1,7 @@
 import { FilterAction, Game } from "@/types/types";
 import { Dispatch } from "redux";
 import {
+  changeSearchType,
   fetchGamesRequest,
   fetchGamesSuccess,
   filterByAgeType,
@@ -67,4 +68,8 @@ export const filterByAgeAction = (age: string): { type: string; payload: string 
 export const filterByGenreAction = (genre: string): { type: string; payload: string } => ({
   type: filterByGenreType,
   payload: genre,
+});
+export const changeSearchAction = (term: string): { type: string; payload: string } => ({
+  type: changeSearchType,
+  payload: term,
 });

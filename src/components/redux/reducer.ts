@@ -9,6 +9,7 @@ import {
   changeLoading,
 } from "./actionTypes";
 import {
+  changeSearchType,
   filterByAgeType,
   filterByGenreType,
   filterByPriceAscending,
@@ -30,6 +31,7 @@ export const initialState = {
   sort: "rating",
   sortDir: "asc",
   genre: "all genres",
+  term: "",
 };
 
 const reducer = (
@@ -46,6 +48,7 @@ const reducer = (
   sort: string;
   sortDir: string;
   genre: string;
+  term: string;
 } => {
   switch (action.type) {
     case logInType:
@@ -141,6 +144,11 @@ const reducer = (
       return {
         ...state,
         genre: action.payload,
+      };
+    case changeSearchType:
+      return {
+        ...state,
+        term: action.payload,
       };
     default:
       return state;
