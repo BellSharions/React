@@ -182,7 +182,7 @@ export default webpackMockServer.add((app, helper) => {
                 obj.users[i].login = _req.body.login;
                 obj.users[i].description = _req.body.description;
                 break;
-              } else res.status(400).json(_req.params.login);
+              }
             }
             fs.writeFile("./src/assets/users.json", JSON.stringify(obj), "utf8", (err2) => {
               if (err2) {
@@ -215,8 +215,12 @@ export default webpackMockServer.add((app, helper) => {
           console.log(foundUser);
           if (foundUser !== undefined) {
             for (let i = 0; i < obj.users.length; i++) {
-              console.log(obj.users[i]);
               if (obj.users[i].login === _req.params.login) {
+                if (obj.users[i].password === _req.body.repeatNewPassword) {
+                  res.status(406);
+                  res.end("Please don't use the same password as your old password");
+                  return;
+                }
                 obj.users[i].password = _req.body.repeatNewPassword;
                 break;
               }
@@ -231,16 +235,10 @@ export default webpackMockServer.add((app, helper) => {
                 res.end();
               }
             });
-          } else {
-            res.status(400).json(_req.params.login);
-            res.end();
-          }
+          } else res.status(400).json(_req.params.login);
         }
       });
-    else {
-      res.status(400).json(_req.params.login);
-      res.end();
-    }
+    else res.status(400).json(_req.params.login);
   });
   app.post("/upload/:login", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
@@ -263,7 +261,7 @@ export default webpackMockServer.add((app, helper) => {
               if (obj.users[i].login === _req.params.login) {
                 obj.users[i].profilePic = _req.body;
                 break;
-              } else res.status(400).json(_req.params.login);
+              }
             }
             fs.writeFile("./src/assets/users.json", JSON.stringify(obj), "utf8", (err2) => {
               if (err2) {
