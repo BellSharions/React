@@ -50,6 +50,17 @@ export interface SignInModalProps {
   messageGetter: (value: string) => void;
   verifyPassword: (value: string) => void;
 }
+export interface PasswordModalProps {
+  closeModal: () => void;
+  changeFunc: (e: SyntheticEvent<Element, Event>) => Promise<null>;
+  newPassword: string;
+  passMessage: string;
+  formValid: boolean;
+  passwordGetter: (value: string) => void;
+  repeatPasswordGetter: (passwordData: string) => void;
+  repeatNewPassword: string;
+  repeatPassMessage: string;
+}
 
 export interface SignUpModalProps {
   closeModal: () => void;
@@ -63,6 +74,20 @@ export interface SignUpModalProps {
   verifyPassword: (value: string) => void;
   repeatPasswordGetter: (value: string) => void;
 }
+export interface ProfileProps {
+  userName: string;
+  profilePic: string;
+  saveHandler: (e: React.SyntheticEvent) => Promise<void>;
+  userNameGetter: (value: string) => void;
+  profilePicGetter: () => void;
+  profilePicHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+  name: string;
+  message: string;
+  descriptionGetter: (value: string) => void;
+  description: string;
+  formValid: boolean;
+  action: () => void;
+}
 export type LogInFunctionType = (userName: string) => void;
 export type LogOutFunctionType = () => void;
 
@@ -70,6 +95,18 @@ export interface InputProps {
   name: string;
   id: string;
   type: string;
+  value: string;
+  onChange: (value: string) => void;
+}
+export interface TextAreaProps {
+  name: string;
+  id: string;
+  value: string;
+  onChange: ChangeEventHandler<HTMLTextAreaElement>;
+}
+export interface TextAreaContainerProps {
+  name: string;
+  id: string;
   value: string;
   onChange: (value: string) => void;
 }
@@ -84,6 +121,9 @@ export interface InputComponentProps {
 export interface HeaderProps {
   userName?: string;
   loggedIn?: boolean;
+  showSignInModal: () => void;
+  showSignUpModal: () => void;
+  logOut: () => void;
 }
 
 export interface SignInBtnProps {
@@ -92,6 +132,14 @@ export interface SignInBtnProps {
 
 export interface SignUpBtnProps {
   showModal: () => void;
+}
+export interface BtnProps {
+  action: () => void;
+  text: { label: string; icon: string };
+}
+export interface BtnContainerProps {
+  action: () => void;
+  childrenProps: { label: string; icon: string };
 }
 export interface ProtectedRouteProps {
   dispatch: Dispatch<unknown>;

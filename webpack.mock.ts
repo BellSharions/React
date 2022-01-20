@@ -100,6 +100,143 @@ export default webpackMockServer.add((app, helper) => {
       }
     });
   });
+  app.get("/users/", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    if (_req.query.login !== undefined)
+      fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
+        if (err) {
+          console.log(err);
+          res.status(400).json(1);
+        } else {
+          const obj = JSON.parse(data);
+          console.log(_req.query);
+          const foundUser = obj.users.filter((x) => x.login === _req.query.login)[0];
+          console.log(foundUser);
+          if (foundUser !== undefined) {
+            res.json(foundUser);
+            res.end();
+          } else res.status(400).json(1);
+        }
+      });
+    else res.status(400).json(1);
+  });
+  app.patch("/users/:login", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    console.log(_req.params);
+    console.log(_req.body);
+    if (_req.params.login !== undefined)
+      fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
+        if (err) {
+          console.log(err);
+          res.status(400).json(1);
+        } else {
+          const obj = JSON.parse(data);
+          console.log(obj.users.length);
+          const foundUser = obj.users.filter((x) => x.login === _req.params.login)[0];
+          const existingUser = obj.users.filter((x) => x.login === _req.body.login)[0];
+          console.log(foundUser);
+          console.log(existingUser);
+          if (foundUser !== undefined && existingUser === undefined) {
+            for (let i = 0; i < obj.users.length; i++) {
+              if (obj.users[i].login === _req.params.login) {
+                obj.users[i].login = _req.body.login;
+                obj.users[i].description = _req.body.description;
+                break;
+              }
+            }
+            fs.writeFile("./src/assets/users.json", JSON.stringify(obj), "utf8", (err2) => {
+              if (err2) {
+                console.log(err2);
+                res.status(400).json(_req.params.login);
+                res.end();
+              } else {
+                res.status(201).json(_req.body.login);
+                res.end();
+              }
+            });
+          } else res.status(400).json(_req.params.login);
+        }
+      });
+    else res.status(400).json(_req.params.login);
+  });
+  app.patch("/passwordChange/:login", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    console.log(_req.params);
+    console.log(_req.body);
+    if (_req.params.login !== undefined)
+      fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
+        if (err) {
+          console.log(err);
+          res.status(400).json(1);
+        } else {
+          const obj = JSON.parse(data);
+          console.log(obj.users.length);
+          const foundUser = obj.users.filter((x) => x.login === _req.params.login)[0];
+          console.log(foundUser);
+          if (foundUser !== undefined) {
+            for (let i = 0; i < obj.users.length; i++) {
+              if (obj.users[i].login === _req.params.login) {
+                if (obj.users[i].password === _req.body.repeatNewPassword) {
+                  res.status(406);
+                  res.end("Please don't use the same password as your old password");
+                  return;
+                }
+                obj.users[i].password = _req.body.repeatNewPassword;
+                break;
+              }
+            }
+            fs.writeFile("./src/assets/users.json", JSON.stringify(obj), "utf8", (err2) => {
+              if (err2) {
+                console.log(err2);
+                res.status(400).json(_req.params.login);
+                res.end();
+              } else {
+                res.status(201).json(_req.body.login);
+                res.end();
+              }
+            });
+          } else res.status(400).json(_req.params.login);
+        }
+      });
+    else res.status(400).json(_req.params.login);
+  });
+  app.post("/upload/:login", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    console.log(_req.params);
+    console.log(_req.body);
+    if (_req.params.login === undefined) res.status(400).json(_req.params.login);
+    else
+      fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
+        if (err) {
+          console.log(err);
+          res.status(400).json(1);
+        } else {
+          const obj = JSON.parse(data);
+          console.log(obj.users.length);
+          const foundUser = obj.users.filter((x) => x.login === _req.params.login)[0];
+          console.log(foundUser);
+          if (foundUser === undefined) res.status(400).json(_req.params.login);
+          else {
+            for (let i = 0; i < obj.users.length; i++) {
+              if (obj.users[i].login === _req.params.login) {
+                obj.users[i].profilePic = _req.body;
+                break;
+              }
+            }
+            fs.writeFile("./src/assets/users.json", JSON.stringify(obj), "utf8", (err2) => {
+              if (err2) {
+                console.log(err2);
+                res.status(400).json(_req.params.login);
+                res.end();
+              } else {
+                res.status(201).json(_req.body.login);
+                res.end();
+              }
+            });
+          }
+        }
+      });
+  });
   app.options("/api/auth/signUp/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     res.set("Access-Control-Allow-Methods", "PUT, POST, GET, OPTIONS");
@@ -110,6 +247,20 @@ export default webpackMockServer.add((app, helper) => {
   app.options("/api/auth/signIn/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "http://localhost:8080");
     res.set("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS");
+    res.set("Access-Control-Allow-Headers", "content-type");
+    res.json(1);
+    res.end();
+  });
+  app.options("/users/", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.set("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, PATCH");
+    res.set("Access-Control-Allow-Headers", "content-type");
+    res.json(1);
+    res.end();
+  });
+  app.options("/passwordChange/", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.set("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, PATCH");
     res.set("Access-Control-Allow-Headers", "content-type");
     res.json(1);
     res.end();

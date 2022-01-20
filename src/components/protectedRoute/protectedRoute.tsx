@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route, RouteProps } from "react-router-dom";
@@ -8,8 +9,6 @@ const ProtectedRoute: FC<RouteProps> = ({ children, location }) => {
   const [loggedIn] = useSelector((state: ReducerState) => [state.loggedIn]);
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(location);
-
     if (!loggedIn) {
       dispatch(showSignInModalAction());
     }
@@ -17,7 +16,11 @@ const ProtectedRoute: FC<RouteProps> = ({ children, location }) => {
   return (
     <>
       {loggedIn ? (
-        <Route path={location?.pathname} render={() => children} />
+        location !== undefined ? (
+          <Route path={location?.pathname} render={() => children} />
+        ) : (
+          <Route path="/home" render={() => children} />
+        )
       ) : (
         <Redirect
           to={{

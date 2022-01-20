@@ -1,0 +1,130 @@
+.profilePage__container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: #131211;
+  max-width: 70%;
+  padding: 15px;
+  margin: auto;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+.profilePage__upperSectiopn {
+  border-bottom: 1px solid white;
+  margin: 0 0 55px 0;
+}
+
+.profilePage__userName_title {
+  margin: 0;
+  padding: 0 0 15px 30px;
+  color: white;
+}
+
+.profilePage__lowerSection {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.profilePage__picSection {
+  max-width: 30%;
+  box-sizing: border-box;
+}
+
+.profilePage__picSection_pic {
+  max-width: 100%;
+  max-height: 100%;
+  background-color: #ababab;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  height: 450px;
+  color: white;
+}
+
+.profilePage__picSection_changePicBtn,
+.profilePage__btnsSection_saveBtn,
+.profilePage__btnsSection_changePassBtn {
+  max-width: 100%;
+  font-size: 1rem;
+  color: white;
+  background-color: #9933cc;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 10px;
+  margin: 0;
+}
+
+.profilePage__btnsSection_saveBtn {
+  margin-bottom: 15px;
+}
+
+.profilePage__btnsSection_saveBtn:disabled {
+  background-color: #ad7cc5;
+  cursor: default;
+}
+
+.profilePage__picSection_changePicBtn > p,
+.profilePage__btnsSection_changePassBtn > p {
+  margin: 0;
+}
+
+@media only screen and (max-width: 832px) {
+  .profilePage__lowerSection {
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .profilePage__picSection {
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+  .profilePage__btnsSection {
+    margin-top: 10px;
+    min-width: 100%;
+  }
+}
+@media only screen and (min-width: 589px) {
+  .profilePage__editSection {
+    max-width: 40%;
+  }
+  .inputText__label {
+    font-size: 0.2em;
+  }
+  .profileTextArea__textarea {
+    max-width: 100%;
+  }
+  .profileTextArea__label {
+    max-width: 100%;
+  }
+  .inputText__container {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .profilePage__btnsSection {
+    max-width: 18%;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .profilePage__editSection {
+    min-width: 40%;
+  }
+  .inputText__label {
+    font-size: 0.2em;
+  }
+  .profileTextArea__textarea {
+    min-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .profilePage__lowerSection {
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+  }
+}

@@ -4,7 +4,7 @@ import "./searchBar.scss";
 import { useLocation } from "react-router-dom";
 import { ProductItemProps, ProductParams } from "../../types/types";
 import { fetchGameLink, fetchGameQueryLink } from "../../constants/constants";
-import SearchBar from "./SearchBar";
+import SearchBar from "./searchBar";
 
 const SearchBarContainer: FC<ProductParams> = (platform) => {
   const [list, setList] = useState<Array<ProductItemProps>>([]);
@@ -13,7 +13,6 @@ const SearchBarContainer: FC<ProductParams> = (platform) => {
   const search = plat.pathname.split("/")[2];
   useEffect(() => {
     (async () => {
-      console.log(search);
       if (search === "" || search === ":platform" || search === "home" || search === undefined)
         setList(await (await fetch(`${fetchGameLink}`)).json());
       else
@@ -24,7 +23,6 @@ const SearchBarContainer: FC<ProductParams> = (platform) => {
   }, [platform]);
 
   const updateQuery = async (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(platform.platform);
     setIsLoading(true);
     if (platform.platform === "")
       setList(
