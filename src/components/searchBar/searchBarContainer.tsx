@@ -66,44 +66,48 @@ const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, g
   const debouncedOnChange = debounce(changeSearch, 300);
   useEffect(() => {
     (async () => {
-      if (platform === "" || platform === ":platform" || platform === "home" || platform === undefined)
-        setList(
-          await (
-            await fetch(
-              `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({
-                text: search,
-                platform: "all games",
-                age,
-                sort,
-                sortDir,
-                genre,
-              })}`
-            )
-          ).json()
-        );
-      else if (search === "")
-        setList(
-          await (
-            await fetch(
-              `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ platform, age, sort, sortDir, genre })}`
-            )
-          ).json()
-        );
-      else
-        setList(
-          await (
-            await fetch(
-              `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({
-                text: search,
-                platform,
-                age,
-                sort,
-                sortDir,
-                genre,
-              })}`
-            )
-          ).json()
-        );
+      setLoading(true);
+      setTimeout(async () => {
+        if (platform === "" || platform === ":platform" || platform === "home" || platform === undefined)
+          setList(
+            await (
+              await fetch(
+                `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({
+                  text: search,
+                  platform: "all games",
+                  age,
+                  sort,
+                  sortDir,
+                  genre,
+                })}`
+              )
+            ).json()
+          );
+        else if (search === "")
+          setList(
+            await (
+              await fetch(
+                `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ platform, age, sort, sortDir, genre })}`
+              )
+            ).json()
+          );
+        else
+          setList(
+            await (
+              await fetch(
+                `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({
+                  text: search,
+                  platform,
+                  age,
+                  sort,
+                  sortDir,
+                  genre,
+                })}`
+              )
+            ).json()
+          );
+        setLoading(false);
+      }, 1000);
     })();
   }, [platform, age, sort, sortDir, genre, search]);
 
