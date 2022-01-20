@@ -58,8 +58,8 @@ export default webpackMockServer.add((app, helper) => {
     const currentPlatform = platform.toUpperCase();
     const response = mockGameList
       .filter((game) => {
-        if (game.genres === genre && game.age === age) return game;
-        if (genre === "all genres" && game.age === age) return game;
+        if (game.genres === genre && game.age <= +age) return game;
+        if (genre === "all genres" && game.age <= +age) return game;
         if (game.genres === genre && age === "all ages") return game;
         if (genre === "all genres" && age === "all ages") return game;
         return 0;

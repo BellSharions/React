@@ -9,10 +9,10 @@ const ProtectedRoute: FC<RouteProps> = ({ children, location }) => {
   const [loggedIn] = useSelector((state: ReducerState) => [state.loggedIn]);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!loggedIn) {
+    if (!localStorage.getItem("login")) {
       dispatch(showSignInModalAction());
     }
-  }, [loggedIn]);
+  }, [localStorage.getItem("login")]);
 
   return (
     <>

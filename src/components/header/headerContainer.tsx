@@ -18,8 +18,8 @@ const HeaderContainer: FC = () => {
     dispatch(logOutAction());
   };
   useEffect(() => {
-    if (localStorage.getItem("login")) dispatch(logInAction(localStorage.getItem("login")));
-  });
+    if (localStorage && localStorage.getItem("login")) dispatch(logInAction(localStorage.getItem("login")));
+  }, [localStorage.getItem("login")]);
   return (
     <Header
       userName={name}
