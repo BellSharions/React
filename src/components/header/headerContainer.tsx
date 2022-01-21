@@ -1,8 +1,8 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import "./header.scss";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "./header";
-import { logInAction, logOutAction, showSignInModalAction, showSignUpModalAction } from "../redux/actions";
+import { logOutAction, showSignInModalAction, showSignUpModalAction } from "../redux/actions";
 
 const HeaderContainer: FC = () => {
   const [name, loggedIn] = useSelector((state) => [state.userName, state.loggedIn]);
@@ -17,9 +17,6 @@ const HeaderContainer: FC = () => {
     localStorage.removeItem("login");
     dispatch(logOutAction());
   };
-  useEffect(() => {
-    if (localStorage && localStorage.getItem("login")) dispatch(logInAction(localStorage.getItem("login")));
-  }, [localStorage.getItem("login")]);
   return (
     <Header
       userName={name}

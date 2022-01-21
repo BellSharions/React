@@ -1,6 +1,6 @@
 import "./styles/main.css";
 import "./styles/main.scss";
-import { StrictMode, Component } from "react";
+import { StrictMode, Component, Dispatch } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import Footer from "./components/footer/footer";
@@ -20,6 +20,7 @@ import SignUpModalBody from "./components/modal/signUpModalBodyContainer";
 import { ReducerState } from "./components/redux/reducer";
 import HeaderContainer from "./components/header/headerContainer";
 import ChangePassModalBodyContainer from "./components/modal/passwordModalBodyContainer";
+import { logInAction } from "./components/redux/actions";
 
 const mapStateToProps = (state: ReducerState) => ({
   signInModalVisible: state.signInModalVisible,
@@ -32,8 +33,25 @@ const mapStateToProps = (state: ReducerState) => ({
   sortDir: state.sortDir,
   genre: state.genre,
 });
+const mapDispatchToProps = (
+  dispatch: Dispatch<{
+    type: string;
+    payload: string;
+  }>
+) => ({
+  getLogin: (value: string) => dispatch(logInAction(value)),
+});
 class AppContainer extends Component<AppProps, AppState> {
   ["constructor"]: typeof AppContainer;
+
+  constructor(props: AppProps) {
+    super(props);
+    if (localStorage && localStorage.getItem("login")) this.props.getLogin(localStorage.getItem("login"));
+    const goExlcude = true;
+    if (!goExlcude) {
+      console.warn("class-dead-code doesn't work");
+    }
+  }
 
   render() {
     return (
@@ -55,12 +73,12 @@ class AppContainer extends Component<AppProps, AppState> {
           </Switch>
           <Footer />
           <>
-            {store.getState().signInModalVisible && !localStorage.getItem("login") ? (
+            {store.getState().signInModalVisible && !store.getState().loggedIn ? (
               <Modal>
                 <SignInModalBody />
               </Modal>
             ) : null}
-            {store.getState().signUpModalVisible && !localStorage.getItem("login") ? (
+            {store.getState().signUpModalVisible && !store.getState().loggedIn ? (
               <Modal>
                 <SignUpModalBody />
               </Modal>
@@ -77,4 +95,4 @@ class AppContainer extends Component<AppProps, AppState> {
   }
 }
 
-export default connect(mapStateToProps)(AppContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);

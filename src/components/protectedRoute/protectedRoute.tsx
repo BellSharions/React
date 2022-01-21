@@ -9,14 +9,14 @@ const ProtectedRoute: FC<RouteProps> = ({ children, location }) => {
   const [loggedIn] = useSelector((state: ReducerState) => [state.loggedIn]);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!localStorage.getItem("login")) {
+    if (!loggedIn) {
       dispatch(showSignInModalAction());
     }
-  }, [localStorage.getItem("login")]);
+  }, [loggedIn]);
 
   return (
     <>
-      {localStorage.getItem("login") ? (
+      {loggedIn ? (
         location !== undefined ? (
           <Route path={location?.pathname} render={() => children} />
         ) : (
