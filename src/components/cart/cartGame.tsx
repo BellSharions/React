@@ -1,0 +1,46 @@
+import { CartGameProps } from "@/types/types";
+import { FC, memo } from "react";
+import "./cartGame.scss";
+
+const CartGame: FC<CartGameProps> = ({
+  title,
+  platforms,
+  today,
+  totalPerGameCut,
+  keyHandler,
+  amountHandler,
+  number,
+  checked,
+  checkHandler,
+}) => (
+  <div className="cartGame__container">
+    <div className="cartGame__data_name cartGame__data_container">
+      <p className="cartGame__data_paragraphName">{title}</p>
+    </div>
+    <div className="cartGame__data_platform cartGame__data_container">
+      <select className="cartGame__platform_selector">
+        {platforms.map((platform) => (
+          <option value={platform} key={platform}>
+            {platform}
+          </option>
+        ))}
+      </select>
+    </div>
+    <div className="cartGame__data_date cartGame__data_container">
+      <p className="cartGame__data_paragraphDate">
+        {`${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`}
+      </p>
+    </div>
+    <div className="cartGame__data_amount cartGame__data_container">
+      <input type="number" value={number} onChange={(e) => amountHandler(e)} className="cartGame__amount_input" />
+    </div>
+    <div className="cartGame__data_price cartGame__data_container">
+      <p className="cartGame__data_paragraphPrice">{totalPerGameCut}</p>
+    </div>
+    <div className="cartGame__data_check cartGame__data_container">
+      <input type="checkbox" checked={checked} onChange={() => checkHandler()} onKeyUp={keyHandler} />
+    </div>
+  </div>
+);
+
+export default memo(CartGame);

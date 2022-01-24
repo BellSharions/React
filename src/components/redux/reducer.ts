@@ -1,3 +1,4 @@
+import { combineReducers } from "redux";
 import {
   logInType,
   logOutType,
@@ -7,7 +8,9 @@ import {
   showChangePassModal,
   changeUsernameType,
   changeLoading,
+  showBuyModal,
 } from "./actionTypes";
+import CartReducer from "./cart/cartReducer";
 import {
   changeSearchType,
   filterByAgeType,
@@ -27,6 +30,7 @@ export const initialState = {
   changePassModalVisible: false,
   signInModalVisible: false,
   signUpModalVisible: false,
+  buyModalVisible: false,
   age: "all ages",
   sort: "rating",
   sortDir: "asc",
@@ -44,6 +48,7 @@ const reducer = (
   changePassModalVisible: boolean;
   signInModalVisible: boolean;
   signUpModalVisible: boolean;
+  buyModalVisible: boolean;
   age: string;
   sort: string;
   sortDir: string;
@@ -100,6 +105,12 @@ const reducer = (
         changePassModalVisible: false,
         signInModalVisible: false,
         signUpModalVisible: false,
+        buyModalVisible: false,
+      };
+    case showBuyModal:
+      return {
+        ...state,
+        buyModalVisible: true,
       };
     case filterByRatingDescending:
       return {
@@ -154,6 +165,9 @@ const reducer = (
       return state;
   }
 };
-
+export const rootReducer = combineReducers({
+  reducer,
+  cart: CartReducer,
+});
 export default reducer;
-export type ReducerState = ReturnType<typeof reducer>;
+export type ReducerState = ReturnType<typeof rootReducer>;

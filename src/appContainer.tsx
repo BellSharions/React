@@ -3,6 +3,8 @@ import "./styles/main.scss";
 import { StrictMode, Component, Dispatch } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Footer from "./components/footer/footer";
 import Home from "./components/home/homeContainer";
 import Products from "./components/products/productsContainer";
@@ -21,17 +23,21 @@ import { ReducerState } from "./components/redux/reducer";
 import HeaderContainer from "./components/header/headerContainer";
 import ChangePassModalBodyContainer from "./components/modal/passwordModalBodyContainer";
 import { logInAction } from "./components/redux/actions";
+import CartPage from "./components/cart/cartPageContainer";
+import BuyModalBody from "./components/modal/buyModalBody";
 
 const mapStateToProps = (state: ReducerState) => ({
-  signInModalVisible: state.signInModalVisible,
-  signUpModalVisible: state.signUpModalVisible,
-  changePassModalVisible: state.changePassModalVisible,
-  userName: state.userName,
-  loggedIn: state.loggedIn,
-  age: state.age,
-  sort: state.sort,
-  sortDir: state.sortDir,
-  genre: state.genre,
+  signInModalVisible: state.reducer.signInModalVisible,
+  signUpModalVisible: state.reducer.signUpModalVisible,
+  buyModalVisible: state.reducer.buyModalVisible,
+  changePassModalVisible: state.reducer.changePassModalVisible,
+  userName: state.reducer.userName,
+  loggedIn: state.reducer.loggedIn,
+  age: state.reducer.age,
+  sort: state.reducer.sort,
+  sortDir: state.reducer.sortDir,
+  genre: state.reducer.genre,
+  isLoading: state.reducer.isLoading,
 });
 const mapDispatchToProps = (
   dispatch: Dispatch<{
@@ -62,6 +68,9 @@ class AppContainer extends Component<AppProps, AppState> {
             <ProtectedRoute path={`${routesMap.PRODUCTS}/:platform`}>
               <Products />
             </ProtectedRoute>
+            <ProtectedRoute path="/cart">
+              <CartPage />
+            </ProtectedRoute>
             <ProtectedRoute path={routesMap.ABOUT}>
               <About />
             </ProtectedRoute>
@@ -73,20 +82,30 @@ class AppContainer extends Component<AppProps, AppState> {
           </Switch>
           <Footer />
           <>
-            {store.getState().signInModalVisible && !store.getState().loggedIn ? (
+            {store.getState().reducer.signInModalVisible && !store.getState().reducer.loggedIn ? (
               <Modal>
                 <SignInModalBody />
               </Modal>
             ) : null}
-            {store.getState().signUpModalVisible && !store.getState().loggedIn ? (
+            {store.getState().reducer.signUpModalVisible && !store.getState().reducer.loggedIn ? (
               <Modal>
                 <SignUpModalBody />
               </Modal>
             ) : null}
-            {store.getState().changePassModalVisible ? (
+            {store.getState().reducer.changePassModalVisible ? (
               <Modal>
                 <ChangePassModalBodyContainer />
               </Modal>
+            ) : null}
+            {store.getState().reducer.buyModalVisible ? (
+              <Modal>
+                <BuyModalBody />
+              </Modal>
+            ) : null}
+            {store.getState().reducer.isLoading ? (
+              <div className="loading-icon">
+                <FontAwesomeIcon icon={faSpinner} className="loading__loading-icon" />
+              </div>
             ) : null}
           </>
         </ErrorBoundary>

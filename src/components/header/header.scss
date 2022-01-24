@@ -60,3 +60,39 @@ $secondary-color: #19191a;
     display: none;
   }
 }
+
+.header__btn_cart {
+  min-width: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 17px;
+  background-color: #121212;
+  font-weight: normal;
+  transition: font-weight 0.2s ease-in-out;
+  text-decoration: none;
+}
+
+.header__btn_cart:hover {
+  background-color: #272727;
+  font-weight: bold;
+  transition: font-weight 0.2s ease-in-out;
+}
+
+.header__btn_cart-active {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 17px;
+  background-color: #272727;
+  font-weight: bolder;
+  transition: font-weight 0.2s ease-in-out;
+  text-decoration: none;
+  box-shadow: 0px -6px 0px 0px #9933cc inset;
+}
+
+.header__btn-title {
+  margin: 0;
+  font-size: 16px;
+  color: #d1d1d1;
+}

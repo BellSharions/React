@@ -5,7 +5,7 @@ import { ReducerState } from "../redux/reducer";
 import ChangePassModalBody from "./passwordModalBody";
 
 const ChangePassModalBodyContainer: FC = () => {
-  const userName = useSelector((state: ReducerState) => state.userName);
+  const userName = useSelector((state: ReducerState) => state.reducer.userName);
   const [newPassword, setNewPassword] = useState<string>("");
   const [repeatNewPassword, setRepeatNewPassword] = useState<string>("");
   const [passMessage, setPassMessage] = useState("Please enter new password");

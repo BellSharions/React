@@ -8,10 +8,10 @@ const ProductsContainer: React.FC = () => {
   const plat = useLocation();
   const search = plat.pathname.split("/")[2];
   const [sort, age, genre, sortDir] = useSelector((state: ReducerState) => [
-    state.sort,
-    state.age,
-    state.genre,
-    state.sortDir,
+    state.reducer.sort,
+    state.reducer.age,
+    state.reducer.genre,
+    state.reducer.sortDir,
   ]);
   return <Products platform={search} sort={sort} age={age} genre={genre} sortDir={sortDir} />;
 };

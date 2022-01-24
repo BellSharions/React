@@ -1,5 +1,5 @@
 import { FC } from "react";
-import GameCard from "../../gameCard/gameCard";
+import GameCard from "../../gameCard/gameCardContainer";
 import { ProductItemProps } from "../../../types/types";
 import "./productsOutput.scss";
 

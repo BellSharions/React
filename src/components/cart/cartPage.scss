@@ -1,0 +1,233 @@
+.cartPage__container {
+  padding: 0 15px;
+  background-color: transparent;
+  z-index: 0;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.cartPage__title_section,
+.cartPage__content_section {
+  width: 80%;
+  padding: 10px;
+}
+
+.cartPage__title_container {
+  width: 100%;
+  box-shadow: 0px 2px 0px 0px rgb(255, 255, 255);
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 15px;
+}
+
+.cartPage__title {
+  margin: 0;
+  color: white;
+}
+
+.cartPage__content_section {
+  display: flex;
+  flex-direction: column;
+}
+
+.cartPage__content_titlesContainer {
+  width: 100%;
+  box-shadow: 0px 2px 0px 0px rgb(255, 255, 255);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 0 10px 0;
+}
+
+.cartPage__content_titleContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.cartPage__content_containerName {
+  width: 30%;
+}
+
+.cartPage__content_containerPlatform {
+  width: 23%;
+}
+
+.cartPage__content_containerDate {
+  width: 13%;
+}
+
+.cartPage__content_containerAmount {
+  width: 10%;
+}
+
+.cartPage__content_containerPrice {
+  width: 14%;
+}
+
+.cartPage__content_containerEmpty {
+  width: 10%;
+}
+
+.cartPage__content_title {
+  color: white;
+  margin: 0;
+}
+
+.cartPage__content_gamesContainer {
+  max-height: 73vh;
+}
+
+.cartPage__content_gamesListed {
+  max-height: 59vh;
+  overflow: scroll;
+}
+
+.cartPage__formRemove_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 15px;
+  align-items: center;
+  box-shadow: 0px 2px 0px 0px rgba(255, 255, 255, 0.4);
+}
+
+.cartPage__formSubmit_container {
+  padding: 0 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0px 2px 0px 0px rgba(255, 255, 255, 0.4);
+  color: white;
+}
+
+.cartPage__formRemove_btn {
+  width: 20%;
+  padding: 10px;
+  font-size: 1rem;
+  color: white;
+  background-color: #9933cc;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cartPage__formSubmit_submitBtn {
+  width: 20%;
+}
+
+.cartPage__formSubmit_btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  color: white;
+  background-color: #9933cc;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  .cartPage__container {
+    padding: 0 10px;
+  }
+
+  .cartPage__title_section,
+  .cartPage__content_section {
+    width: 90%;
+  }
+
+  .cartPage__content_title {
+    font-size: 12px;
+  }
+
+  .cartPage__formRemove_container {
+    padding: 15px 0 15px 15px;
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  .cartPage__container {
+    padding: 0 5px;
+  }
+
+  .cartPage__title_section,
+  .cartPage__content_section {
+    width: 95%;
+  }
+
+  .cartPage__title_section {
+    padding: 5px 5px 0 5px;
+  }
+
+  .cartPage__content_section {
+    padding: 0 5px 5px 5px;
+  }
+
+  .cartPage__title_container {
+    margin-bottom: 5px;
+  }
+
+  .cartPage__title {
+    font-size: 16px;
+  }
+
+  .cartPage__content_titlesContainer {
+    padding: 0 0 5px 0;
+  }
+
+  .cartPage__content_title {
+    font-size: 12px;
+  }
+
+  .cartPage__formRemove_container {
+    padding: 5px 0 5px 5px;
+  }
+
+  .cartPage__formRemove_btn,
+  .cartPage__formSubmit_btn {
+    padding: 5px;
+    font-size: 0.8rem;
+  }
+
+  .cartPage__gamesCost,
+  .cartPage__yourBalance {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .cartPage__content_title,
+  .cartPage__gamesCost,
+  .cartPage__yourBalance {
+    font-size: 11px;
+  }
+}
+@media only screen and (max-width: 320px) {
+  .cartPage__container {
+    padding: 0 3px;
+  }
+
+  .cartPage__title_section,
+  .cartPage__content_section {
+    width: 100%;
+    padding: 3px;
+  }
+
+  .cartPage__content_title,
+  .cartPage__gamesCost,
+  .cartPage__yourBalance {
+    font-size: 9px;
+  }
+
+  .cartPage__formRemove_btn,
+  .cartPage__formSubmit_btn {
+    margin: 3px 0;
+    padding: 3px;
+    font-size: 0.6rem;
+  }
+}

@@ -12,7 +12,7 @@ import { ReducerState } from "../redux/reducer";
 const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, genre }) => {
   const [list, setList] = useState<Array<ProductItemProps>>([]);
   const [isLoading, setLoading] = loaderHook(false);
-  const [search] = useSelector((state: ReducerState) => [state.term]);
+  const [search] = useSelector((state: ReducerState) => [state.reducer.term]);
   const dispatch = useDispatch();
 
   const changeSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +63,7 @@ const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, g
             ).json()
           );
         setLoading(false);
-      }, 1000);
+      }, 500);
       console.log(list);
     })();
   }, [platform, age, sort, sortDir, genre, search]);

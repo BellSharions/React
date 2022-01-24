@@ -2,6 +2,8 @@ import { NavLink } from "react-router-dom";
 import { FC } from "react";
 import { HeaderProps } from "@/types/types";
 import "./header.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import {
   logOutText,
   multiLink,
@@ -15,7 +17,7 @@ import {
 import Dropdown from "./navbarDropdown/dropdown";
 import BtnContainer from "../users/buttonContainer";
 
-const Header: FC<HeaderProps> = ({ userName, loggedIn, showSignInModal, showSignUpModal, logOut }) => (
+const Header: FC<HeaderProps> = ({ userName, loggedIn, showSignInModal, showSignUpModal, logOut, cartNum }) => (
   <header className="header">
     <h3 className="header__title">Game Market</h3>
     <div className="header__navlinks">
@@ -38,6 +40,17 @@ const Header: FC<HeaderProps> = ({ userName, loggedIn, showSignInModal, showSign
       ))}
       {loggedIn ? (
         <>
+          <NavLink
+            key="/cart"
+            exact
+            to="/cart"
+            className="header__btn_cart"
+            activeClassName="header__btn_cart-active"
+            role="button"
+          >
+            <FontAwesomeIcon icon={faShoppingCart} className="header__btn-title" />
+            <p className="header__btn-title">{cartNum}</p>
+          </NavLink>
           <NavLink className="header__navlinks-link" to={routesMap.PROFILE}>
             <span className="navtext">{userName}</span>
           </NavLink>

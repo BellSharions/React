@@ -6,7 +6,7 @@ import { showSignInModalAction } from "../redux/actions";
 import { ReducerState } from "../redux/reducer";
 
 const ProtectedRoute: FC<RouteProps> = ({ children, location }) => {
-  const [loggedIn] = useSelector((state: ReducerState) => [state.loggedIn]);
+  const [loggedIn] = useSelector((state: ReducerState) => [state.reducer.loggedIn]);
   const dispatch = useDispatch();
   useEffect(() => {
     if (!loggedIn) {

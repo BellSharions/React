@@ -1,3 +1,31 @@
 body {
   color: $basicColor;
 }
+.loading-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+}
+.loading__loading-icon {
+  color: #efedf1;
+  font-size: 150px;
+  animation: loadingSpin 4s linear infinite;
+}
+
+@keyframes loadingSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
