@@ -52,7 +52,9 @@ const ChangePassModalBodyContainer: FC = () => {
       body: JSON.stringify({ repeatNewPassword }),
     });
     if (patchResponse.status === 404) throw new Error(`HTTP status: ${patchResponse.status}`);
-    dispatch(closeModalAction());
+    else if (patchResponse.status === 406) {
+      setPassMessage("Please don't use the same password as your old password");
+    } else dispatch(closeModalAction());
     return null;
   }
 
