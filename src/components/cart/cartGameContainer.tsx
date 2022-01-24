@@ -30,14 +30,7 @@ const CartGameContainer: FC<CartGameContainerProps> = ({ title, category, price 
     dispatch(changeGameCheckAction(checkedGame));
   };
 
-  const keyHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      checkHandler();
-    }
-  };
-
   const totalPerGame = number * price;
-  const totalPerGameCut = Math.floor(totalPerGame * 100) / 100;
 
   const today = new Date();
 
@@ -46,8 +39,7 @@ const CartGameContainer: FC<CartGameContainerProps> = ({ title, category, price 
       title={title}
       platforms={platforms}
       today={today}
-      totalPerGameCut={totalPerGameCut}
-      keyHandler={keyHandler}
+      totalPerGameCut={totalPerGame}
       amountHandler={amountHandler}
       number={number}
       checked={checked}

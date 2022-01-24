@@ -216,7 +216,6 @@ export interface CartGameProps {
   platforms: string[];
   today: Date;
   totalPerGameCut: number;
-  keyHandler: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   amountHandler: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   number: number;
   checked: boolean;

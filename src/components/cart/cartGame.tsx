@@ -7,7 +7,6 @@ const CartGame: FC<CartGameProps> = ({
   platforms,
   today,
   totalPerGameCut,
-  keyHandler,
   amountHandler,
   number,
   checked,
@@ -38,7 +37,7 @@ const CartGame: FC<CartGameProps> = ({
       <p className="cartGame__data_paragraphPrice">{totalPerGameCut}</p>
     </div>
     <div className="cartGame__data_check cartGame__data_container">
-      <input type="checkbox" checked={checked} onChange={() => checkHandler()} onKeyUp={keyHandler} />
+      <input type="checkbox" checked={checked} onChange={() => checkHandler()} />
     </div>
   </div>
 );
