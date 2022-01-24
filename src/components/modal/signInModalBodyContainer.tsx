@@ -65,6 +65,7 @@ const SignInModalBodyContainer: FC = () => {
 
       if (res.status === 200) {
         dispatch(logInAction(login));
+        localStorage.setItem("login", login);
         if (history.location.state !== null) history.push(history.location.state);
         closeModal();
       } else {

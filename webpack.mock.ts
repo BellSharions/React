@@ -3,6 +3,29 @@ import webpackMockServer from "webpack-mock-server";
 import fs from "fs";
 import { mockGameList } from "./src/constants/constants";
 
+function compareGames(game1, game2, key: string, type: string) {
+  const isDescending = type;
+  if (key === "rating") {
+    if (game1.rating > game2.rating) {
+      return isDescending === "asc" ? 1 : -1;
+    }
+    if (game1.rating < game2.rating) {
+      return isDescending === "desc" ? -1 : 1;
+    }
+    return 0;
+  }
+  console.log(game1.price > game2.price);
+  if (key === "price") {
+    if (game1.price > game2.price) {
+      return isDescending === "asc" ? 1 : -1;
+    }
+    if (game1.price < game2.price) {
+      return isDescending === "desc" ? -1 : 1;
+    }
+    return 0;
+  }
+  return undefined;
+}
 export default webpackMockServer.add((app, helper) => {
   app.get("/testMock", (_req, res) => {
     const response = {
@@ -25,21 +48,38 @@ export default webpackMockServer.add((app, helper) => {
     res.json(response);
     res.end();
   });
+
   app.get("/api/search/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
-    if (_req.query.platform === undefined && _req.query.text !== undefined)
-      res.json(mockGameList.filter(({ title }) => title.includes(_req.query.text)));
-    else if (_req.query.text === undefined && _req.query.platform !== undefined)
-      res.json(mockGameList.filter(({ category }) => category.includes(_req.query.platform)) || mockGameList);
-    else if (_req.query.text === undefined && _req.query.platform === undefined) res.json(mockGameList);
-    else
-      res.json(
-        mockGameList
-          .filter(({ category }) => category.includes(_req.query.platform))
-          .filter(({ title }) => title.includes(_req.query.text))
-      );
-    const response = mockGameList;
+    const { platform, genre, age, sort, sortDir, text } = _req.query;
+    console.log(_req.query);
+    console.log(text);
+
+    const currentPlatform = platform.toUpperCase();
+    const response = mockGameList
+      .filter((game) => {
+        if (game.genres === genre && game.age <= +age) return game;
+        if (genre === "all genres" && game.age <= +age) return game;
+        if (game.genres === genre && age === "all ages") return game;
+        if (genre === "all genres" && age === "all ages") return game;
+        return 0;
+      })
+      .filter((filteredGame) => {
+        if (text !== "" && text) {
+          if (filteredGame.title.toLowerCase().includes(text.toLowerCase())) return filteredGame;
+        } else return filteredGame;
+      })
+      .filter((filteredGame) => {
+        if (platform === "all games") return filteredGame;
+        if (filteredGame.category.toLocaleUpperCase().includes(currentPlatform)) return filteredGame;
+        return 0;
+      })
+      .sort((game1, game2) => compareGames(game1, game2, sort, sortDir));
+    if (platform) {
+      res.json(response);
+    } else res.json(platform);
   });
+
   app.put("/api/auth/signUp/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
@@ -238,6 +278,13 @@ export default webpackMockServer.add((app, helper) => {
       });
   });
   app.options("/api/auth/signUp/", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Methods", "PUT, POST, GET, OPTIONS");
+    res.set("Access-Control-Allow-Headers", "content-type");
+    res.json(1);
+    res.end();
+  });
+  app.options("/api/search", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     res.set("Access-Control-Allow-Methods", "PUT, POST, GET, OPTIONS");
     res.set("Access-Control-Allow-Headers", "content-type");

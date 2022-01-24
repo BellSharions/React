@@ -13,6 +13,7 @@ const ProtectedRoute: FC<RouteProps> = ({ children, location }) => {
       dispatch(showSignInModalAction());
     }
   }, [loggedIn]);
+
   return (
     <>
       {loggedIn ? (

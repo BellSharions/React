@@ -1,10 +1,11 @@
+import { FC } from "react";
+import "./home.scss";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import "./products.scss";
-import Products from "./products";
+import Home from "./home";
 import { ReducerState } from "../redux/reducer";
 
-const ProductsContainer: React.FC = () => {
+const HomeContainer: FC = () => {
   const plat = useLocation();
   const search = plat.pathname.split("/")[2];
   const [sort, age, genre, sortDir] = useSelector((state: ReducerState) => [
@@ -13,7 +14,7 @@ const ProductsContainer: React.FC = () => {
     state.genre,
     state.sortDir,
   ]);
-  return <Products platform={search} sort={sort} age={age} genre={genre} sortDir={sortDir} />;
+  return <Home platform={search} sort={sort} age={age} genre={genre} sortDir={sortDir} />;
 };
 
-export default ProductsContainer;
+export default HomeContainer;

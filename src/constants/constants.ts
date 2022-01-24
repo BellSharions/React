@@ -15,6 +15,8 @@ export const enum routeType {
 }
 export type singleLink = { type: routeType; item: { route: string; name: string; icon: string } };
 export type multiLink = { type: routeType; item: { name: string; data: Array<{ routeName: string; route: string }> } };
+export const ageArr = ["all ages", "3", "12", "16", "18"];
+export const genreArr = ["all genres", "sandbox", "action-adventure", "first-person shooter", "rogue-like", "roleplay"];
 export const gameCategories = [
   {
     title: "PC",
@@ -87,8 +89,12 @@ export const mockGameList = [
     description:
       "ULTRAKILL is a fast-paced ultraviolent old school FPS that fuses together classic shooters like Quake, modern shooters like Doom (2016) and character action games like Devil May Cry.",
     timestamp: 1638379038,
+    genres: "first-person shooter",
+    age: "18",
+    rating: "1",
     date: "01.09.2020",
     category: "PC",
+    price: 1,
     logo: "https://res.cloudinary.com/dev3afzlt/image/upload/v1638370435/NBPosters_Ultrakill-NoBorder_2021_nsneoa.png",
   },
   {
@@ -96,8 +102,12 @@ export const mockGameList = [
     title: "OverWatch",
     developer: "Blizzard Entertainment",
     timestamp: 1638379038,
+    genres: "first-person shooter",
+    age: "12",
+    rating: "1",
     date: "03.04.2016",
     category: "PC, XBOX, PlayStation",
+    price: 2,
     logo: "https://res.cloudinary.com/dev3afzlt/image/upload/v1638370431/81ifhSOpkTL_qjzmux.jpg",
   },
   {
@@ -105,8 +115,12 @@ export const mockGameList = [
     title: "Halo Infinite",
     developer: "343 Industries",
     timestamp: 1638379038,
+    genres: "first-person shooter",
+    age: "16",
+    rating: "2",
     date: "15.11.2021",
     category: "PC",
+    price: 3,
     logo: "https://res.cloudinary.com/dev3afzlt/image/upload/v1638370431/911GAl_yrGL_jm7sxk.jpg",
   },
   {
@@ -114,8 +128,12 @@ export const mockGameList = [
     title: "Batllefield 1",
     developer: "DICE",
     timestamp: 1638379038,
+    genres: "first-person shooter",
+    age: "18",
+    rating: "2",
     date: "21.10.2016",
     category: "PC, XBOX, PlayStation",
+    price: 4,
     logo: "https://res.cloudinary.com/dev3afzlt/image/upload/v1638370435/battlefield-1-pc-game-origin-cover_mcrkpl.jpg",
   },
   {
@@ -123,8 +141,12 @@ export const mockGameList = [
     title: "Genshin Impact",
     developer: "miHoYo",
     timestamp: 1638379038,
+    genres: "action-adventure",
+    age: "3",
+    rating: "3",
     date: "28.09.2020",
     category: "PC, PlayStation",
+    price: 5,
     logo: "https://res.cloudinary.com/dev3afzlt/image/upload/v1638370432/genshin-impact-pc-game-epic-games-cover_rvbidw.webp",
   },
   {
@@ -132,8 +154,12 @@ export const mockGameList = [
     title: "Minecraft",
     developer: "Mojang",
     timestamp: 1638379038,
+    genres: "sandbox",
+    age: "3",
+    rating: "3",
     date: "18.11.2011",
     category: "PC",
+    price: 6,
     logo: "https://res.cloudinary.com/dev3afzlt/image/upload/v1638370431/minecraft-java-edition-pc-game-cover_g2roeu.webp",
   },
   {
@@ -141,8 +167,12 @@ export const mockGameList = [
     title: "Until Dawn",
     developer: "Supermassive Games",
     timestamp: 1638379038,
+    genres: "roleplay",
+    age: "16",
+    rating: "4",
     date: "20.09.2015",
     category: "PlayStation",
+    price: 7,
     logo: "https://res.cloudinary.com/dev3afzlt/image/upload/v1638370431/MV5BOTVlYWVmOTYtNGI3OS00YWUyLTlkZDItMDA4ZWZiNjVmZmZmXkEyXkFqcGdeQXVyMjM5NzU3OTM_._V1_FMjpg_UX1000__z2jwbt.jpg",
   },
   {
@@ -150,14 +180,12 @@ export const mockGameList = [
     title: "Enter the gungeon",
     developer: "Dodge Roll",
     timestamp: 1638379038,
+    genres: "rogue-like",
+    age: "12",
+    rating: "5",
     date: "05.04.2016",
     category: "PC",
+    price: 8,
     logo: "https://res.cloudinary.com/dev3afzlt/image/upload/v1638370431/game-steam-enter-the-gungeon-cover_khtkc3.jpg",
-  },
-];
-export const users = [
-  {
-    userName: "YuryChertko",
-    password: "12345678a",
   },
 ];
