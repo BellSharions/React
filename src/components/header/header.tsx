@@ -41,9 +41,9 @@ const Header: FC<HeaderProps> = ({ userName, loggedIn, showSignInModal, showSign
       {loggedIn ? (
         <>
           <NavLink
-            key="/cart"
+            key={routesMap.CART}
             exact
-            to="/cart"
+            to={routesMap.CART}
             className="header__btn_cart"
             activeClassName="header__btn_cart-active"
             role="button"

@@ -7,7 +7,7 @@ const CartPage: FC<CartPageProps> = ({ games, clickHandler, totalAmount, userBal
   <div className="cartPage__container">
     <section className="cartPage__title_section">
       <div className="cartPage__title_container">
-        <h1 className="cartPage__title">Cart page</h1>
+        <p className="cartPage__title">Cart page</p>
       </div>
     </section>
     <section className="cartPage__content_section">

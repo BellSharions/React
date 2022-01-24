@@ -68,7 +68,7 @@ class AppContainer extends Component<AppProps, AppState> {
             <ProtectedRoute path={`${routesMap.PRODUCTS}/:platform`}>
               <Products />
             </ProtectedRoute>
-            <ProtectedRoute path="/cart">
+            <ProtectedRoute path={routesMap.CART}>
               <CartPage />
             </ProtectedRoute>
             <ProtectedRoute path={routesMap.ABOUT}>

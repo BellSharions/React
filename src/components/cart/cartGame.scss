@@ -25,6 +25,8 @@
   font-family: inherit;
   font-size: inherit;
   padding-left: 5px;
+  background-color: #1a2525;
+  color: #dddddc;
 }
 
 .cartGame__platform_selector::after {
@@ -42,8 +44,8 @@
 
 .cartGame__amount_input {
   width: 60%;
-  background-color: transparent;
-  color: white;
+  background-color: #1a2525;
+  color: #dddddc;
   border: 1px solid white;
   padding-left: 5px;
 }
