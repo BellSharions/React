@@ -10,6 +10,7 @@ const CartPageContainer: FC = () => {
   const games = useSelector((state: ReducerState) => state.cart.gamesList);
   const userBalance = useSelector((state: ReducerState) => state.cart.userBalance);
   const [totalAmount, setTotalAmount] = useState<number>(0);
+  const [valid, setValid] = useState<boolean>(false);
   const dispatch = useDispatch();
   const clickHandler = () => {
     dispatch(removeGameFromCartAction());
@@ -19,6 +20,9 @@ const CartPageContainer: FC = () => {
     const total = Number(games.map((game) => game.amount * game.price).reduce((sum, current) => sum + current, 0));
     setTotalAmount(total);
   }, [games]);
+  useEffect(() => {
+    setValid(games.map((game) => game.check).some((check) => check === true));
+  }, [games.map((game) => game.check).some((check) => check === true)]);
 
   const buyFunc = () => {
     if (totalAmount <= userBalance) {
@@ -36,6 +40,7 @@ const CartPageContainer: FC = () => {
       totalAmount={totalAmount}
       userBalance={userBalance}
       buyFunc={buyFunc}
+      valid={valid}
     />
   );
 };

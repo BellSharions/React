@@ -3,7 +3,7 @@ import { FC } from "react";
 import CartGame from "./cartGameContainer";
 import "./cartPage.scss";
 
-const CartPage: FC<CartPageProps> = ({ games, clickHandler, totalAmount, userBalance, buyFunc }) => (
+const CartPage: FC<CartPageProps> = ({ games, clickHandler, totalAmount, userBalance, buyFunc, valid }) => (
   <div className="cartPage__container">
     <section className="cartPage__title_section">
       <div className="cartPage__title_container">
@@ -37,7 +37,7 @@ const CartPage: FC<CartPageProps> = ({ games, clickHandler, totalAmount, userBal
         </div>
         {games.length > 0 ? (
           <div className="cartPage__formRemove_container">
-            <button className="cartPage__formRemove_btn" type="button" onClick={() => clickHandler()}>
+            <button className="cartPage__formRemove_btn" type="button" onClick={() => clickHandler()} disabled={!valid}>
               Remove
             </button>
           </div>

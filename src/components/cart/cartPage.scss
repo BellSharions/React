@@ -116,6 +116,10 @@
   border-radius: 8px;
   cursor: pointer;
 }
+.cartPage__formRemove_btn:disabled {
+  background-color: #ad7cc5;
+  cursor: default;
+}
 
 .cartPage__formSubmit_submitBtn {
   width: 20%;

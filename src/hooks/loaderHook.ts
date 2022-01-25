@@ -11,9 +11,6 @@ function loaderHook(defaultVal: boolean) {
     setIsOnline(val);
   }
   useEffect(() => {
-    console.log(IsLoading);
-    console.log(isLoading);
-
     dispatch(changeLoadingAction(IsLoading));
   }, [IsLoading]);
 

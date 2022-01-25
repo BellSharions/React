@@ -30,7 +30,7 @@ const CartGameContainer: FC<CartGameContainerProps> = ({ title, category, price 
     dispatch(changeGameCheckAction(checkedGame));
   };
 
-  const totalPerGame = number * price;
+  const totalPerGame = games.filter((game) => game.title === title)[0].amount * price;
 
   const today = new Date();
 
@@ -41,7 +41,7 @@ const CartGameContainer: FC<CartGameContainerProps> = ({ title, category, price 
       today={today}
       totalPerGameCut={totalPerGame}
       amountHandler={amountHandler}
-      number={number}
+      number={games.filter((game) => game.title === title)[0].amount}
       checked={checked}
       checkHandler={checkHandler}
     />

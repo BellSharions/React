@@ -35,6 +35,7 @@ export interface ProductParams {
   sort: string;
   sortDir: string;
   genre: string;
+  search?: string;
 }
 export interface GameCart {
   title: string;
@@ -58,6 +59,7 @@ export interface HomeProps {
   sort: string;
   sortDir: string;
   genre: string;
+  search: string;
 }
 export interface CriteriaContainerProps {
   sort: string;
@@ -205,6 +207,7 @@ export interface CartPageProps {
   totalAmount: number;
   userBalance: number;
   buyFunc: () => void;
+  valid: boolean;
 }
 export interface CartGameContainerProps {
   title: string;

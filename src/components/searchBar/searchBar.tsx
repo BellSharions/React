@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import "./searchBar.scss";
 import { SearchBarComponentProps } from "@/types/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,4 +19,4 @@ const SearchBar: FC<SearchBarComponentProps> = ({ list, isLoading, debouncedOnCh
   </>
 );
 
-export default SearchBar;
+export default memo(SearchBar);
