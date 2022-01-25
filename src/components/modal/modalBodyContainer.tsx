@@ -38,8 +38,15 @@ const ModalBodyContainer: FC = () => {
   const newPasswordGetter = (passwordData: string) => {
     setNewPassword(passwordData);
   };
-  const confirmHandler = () => {
+  const confirmHandler = async () => {
+    const postResponse = await fetch(`http://localhost:8080/api/buy/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userName, cartGames, amount }),
+    });
+    if (postResponse.status === 404) throw new Error(`HTTP status: ${postResponse.status}`);
     dispatch(buyGamesAction(amount));
+
     dispatch(closeModalAction());
   };
   const repeatNewPasswordGetter = (passwordData: string) => {

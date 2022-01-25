@@ -7,6 +7,7 @@ import { showBuyModalAction } from "../redux/actions";
 import CartPage from "./cartPage";
 
 const CartPageContainer: FC = () => {
+  const userName = useSelector((state: ReducerState) => state.reducer.userName);
   const games = useSelector((state: ReducerState) => state.cart.gamesList);
   const userBalance = useSelector((state: ReducerState) => state.cart.userBalance);
   const [totalAmount, setTotalAmount] = useState<number>(0);
@@ -24,7 +25,7 @@ const CartPageContainer: FC = () => {
     setValid(games.map((game) => game.check).some((check) => check === true));
   }, [games.map((game) => game.check).some((check) => check === true)]);
 
-  const buyFunc = () => {
+  const buyFunc = async () => {
     if (totalAmount <= userBalance) {
       dispatch(IncreaseTotalAmountAction(totalAmount));
       dispatch(showBuyModalAction());

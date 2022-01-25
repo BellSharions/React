@@ -115,6 +115,30 @@ export default webpackMockServer.add((app, helper) => {
       }
     });
   });
+  app.post("/api/buy", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    fs.readFile("./src/assets/orders.json", "utf8", (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(400).json(1);
+        res.end();
+      } else {
+        const obj = JSON.parse(data);
+        console.log(_req.body);
+        obj.orders.push(_req.body);
+        fs.writeFile("./src/assets/orders.json", JSON.stringify(obj), "utf8", (err2) => {
+          if (err2) {
+            console.log(err2);
+            res.status(400).json(1);
+            res.end();
+          } else {
+            res.status(201).json(_req.body);
+            res.end();
+          }
+        });
+      }
+    });
+  });
   app.post("/api/auth/signIn/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
