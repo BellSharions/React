@@ -3,8 +3,8 @@ import "./gameCard.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductItemProps } from "../../types/types";
 import GameCard from "./gameCard";
-import { addGameToCartAction } from "../redux/cart/cartActions";
-import { ReducerState } from "../redux/reducer";
+import { addGameToCartAction } from "../../components/redux/cart/cartActions";
+import { ReducerState } from "../../components/redux/reducer";
 
 const GameCardContainer: FC<ProductItemProps> = ({ title, description, category, logo, rating, price }) => {
   const dispatch = useDispatch();

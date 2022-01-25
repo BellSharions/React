@@ -3,7 +3,7 @@ import "./signupmodalbody.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { SignUpModalProps } from "@/types/types";
-import InputText from "./inputTextContainer";
+import InputText from "@/elements/inputTextContainer";
 
 const SignUpModal: FC<SignUpModalProps> = ({
   closeModal,

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import "./username.scss";
-import { UserNameProps } from "../../types/types";
+import { UserNameProps } from "../types/types";
 
 const UserName: FC<UserNameProps> = ({ userName }) => (
   <div className="userName__container">

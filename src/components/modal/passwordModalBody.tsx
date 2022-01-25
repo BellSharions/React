@@ -3,7 +3,7 @@ import "./passwordModalBody.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { PasswordModalProps } from "@/types/types";
-import InputTextContainer from "./inputTextContainer";
+import InputTextContainer from "@/elements/inputTextContainer";
 
 const ChangePassModalBody: FC<PasswordModalProps> = ({
   closeModal,

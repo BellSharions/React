@@ -221,6 +221,13 @@ export interface CartGameProps {
   checked: boolean;
   checkHandler: () => void;
 }
+export interface BuyModalProps {
+  userName: string;
+  cartGames: GameCart[];
+  amount: number;
+  closeHandler: () => void;
+  confirmHandler: () => void;
+}
 
 export interface SignInBtnProps {
   showModal: () => void;

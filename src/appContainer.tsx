@@ -16,15 +16,11 @@ import { AppProps, AppState } from "./types/types";
 import ProtectedRoute from "./components/protectedRoute/protectedRoute";
 import Profile from "./components/users/profileContainer";
 import store from "./components/redux/store";
-import Modal from "./components/modal/modal";
-import SignInModalBody from "./components/modal/signInModalBodyContainer";
-import SignUpModalBody from "./components/modal/signUpModalBodyContainer";
 import { ReducerState } from "./components/redux/reducer";
 import HeaderContainer from "./components/header/headerContainer";
-import ChangePassModalBodyContainer from "./components/modal/passwordModalBodyContainer";
 import { logInAction } from "./components/redux/actions";
 import CartPage from "./components/cart/cartPageContainer";
-import BuyModalBody from "./components/modal/buyModalBody";
+import ModalBodyContainer from "./components/modal/modalBodyContainer";
 
 const mapStateToProps = (state: ReducerState) => ({
   signInModalVisible: state.reducer.signInModalVisible,
@@ -81,27 +77,8 @@ class AppContainer extends Component<AppProps, AppState> {
             <Route path={["/", routesMap.HOME]} render={() => <Home />} />
           </Switch>
           <Footer />
+          <ModalBodyContainer />
           <>
-            {store.getState().reducer.signInModalVisible && !store.getState().reducer.loggedIn ? (
-              <Modal>
-                <SignInModalBody />
-              </Modal>
-            ) : null}
-            {store.getState().reducer.signUpModalVisible && !store.getState().reducer.loggedIn ? (
-              <Modal>
-                <SignUpModalBody />
-              </Modal>
-            ) : null}
-            {store.getState().reducer.changePassModalVisible ? (
-              <Modal>
-                <ChangePassModalBodyContainer />
-              </Modal>
-            ) : null}
-            {store.getState().reducer.buyModalVisible ? (
-              <Modal>
-                <BuyModalBody />
-              </Modal>
-            ) : null}
             {store.getState().reducer.isLoading ? (
               <div className="loading-icon">
                 <FontAwesomeIcon icon={faSpinner} className="loading__loading-icon" />

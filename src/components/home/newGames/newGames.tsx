@@ -1,4 +1,4 @@
-import GameCard from "@/components/gameCard/gameCardContainer";
+import GameCard from "@/elements/gameCard/gameCardContainer";
 import { fetchNewProductsLink } from "@/constants/constants";
 import { useState, useEffect, FC } from "react";
 import "./newGames.scss";

@@ -15,7 +15,7 @@ import {
   singleLink,
 } from "../../constants/constants";
 import Dropdown from "./navbarDropdown/dropdown";
-import BtnContainer from "../users/buttonContainer";
+import BtnContainer from "../../elements/buttonContainer";
 
 const Header: FC<HeaderProps> = ({ userName, loggedIn, showSignInModal, showSignUpModal, logOut, cartNum }) => (
   <header className="header">
