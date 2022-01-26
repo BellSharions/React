@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import "./editGameModal.scss";
 
-const EditGameModal: React.FC<EditGameModalProps> = ({
+const AddGameModal: React.FC<EditGameModalProps> = ({
   closeHandler,
   imgUrlInp,
   titleInp,
@@ -89,4 +89,4 @@ const EditGameModal: React.FC<EditGameModalProps> = ({
   </div>
 );
 
-export default EditGameModal;
+export default AddGameModal;

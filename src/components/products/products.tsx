@@ -6,7 +6,7 @@ import CriteriaSelector from "./options/criteriaSelectorContainer";
 import RadioButtons from "./options/radioButtonsContainer";
 import "./products.scss";
 
-const Products: FC<ProductParams> = ({ platform, sort, age, genre, sortDir }) => (
+const Products: FC<ProductParams> = ({ platform, sort, age, genre, sortDir, search }) => (
   <div className="productsPage__container">
     <section className="productsPage__leftContent_container">
       <form className="productsPage__sortTable">
@@ -39,7 +39,7 @@ const Products: FC<ProductParams> = ({ platform, sort, age, genre, sortDir }) =>
         </div>
       </form>
     </section>
-    <SearchBar platform={platform} sort={sort} age={age} genre={genre} sortDir={sortDir} />
+    <SearchBar platform={platform} sort={sort} age={age} genre={genre} sortDir={sortDir} search={search} />
   </div>
 );
 

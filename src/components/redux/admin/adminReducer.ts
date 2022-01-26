@@ -1,16 +1,11 @@
-import { Game } from "@/types/types";
+import { AdminStateType, GameToEdit } from "@/types/types";
 import { addGameToEditType } from "./adminActionTypes";
 
-export const initialState = {
-  gametoEdit: { title: "", category: "", price: 0, imgUrl: "", description: "", genre: "", age: 0, rating: 0 },
+export const initialState: AdminStateType = {
+  gametoEdit: { id: 0, title: "", category: "", price: 0, imgUrl: "", description: "", genre: "", age: 0, rating: 0 },
 };
 
-export const adminReducer = (
-  state = initialState,
-  action: { type: string; payload: Game }
-): {
-  gametoEdit: Game;
-} => {
+const adminReducer = (state = initialState, action: { type: string; payload: GameToEdit }): AdminStateType => {
   switch (action.type) {
     case addGameToEditType:
       return {
@@ -21,3 +16,4 @@ export const adminReducer = (
       return state;
   }
 };
+export default adminReducer;

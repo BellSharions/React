@@ -4,10 +4,12 @@ import { ChangeEvent, ChangeEventHandler, Dispatch, FormEventHandler, SyntheticE
 
 export interface ProductItemProps {
   id?: number;
+  age: number;
   title: string;
   description?: string;
   developer?: string;
   date?: string;
+  genre: string;
   category: string;
   logo?: string;
   rating: string;
@@ -78,7 +80,20 @@ export interface Game {
   category: string;
   price: number;
   imgUrl: string;
-  description: string;
+  description?: string;
+  genre: string;
+  age: number;
+  rating?: number;
+  id?: number;
+  date?: string;
+}
+export interface GameToEdit {
+  id: number;
+  title: string;
+  category: string;
+  price: number;
+  imgUrl: string;
+  description?: string;
   genre: string;
   age: number;
   rating?: number;
@@ -104,7 +119,6 @@ export interface RadioButtonContainerProps {
 }
 export interface SearchBarComponentProps {
   list: ProductItemProps[];
-  isLoading: boolean;
   debouncedOnChange: DebouncedFunc<(e: ChangeEvent<HTMLInputElement>) => Promise<void>>;
 }
 export interface ProtectedParams {
@@ -202,6 +216,8 @@ export interface HeaderProps {
   showSignUpModal: () => void;
   logOut: () => void;
   cartNum?: number;
+  visible: boolean;
+  addAction: () => void;
 }
 export interface CartPageProps {
   games: GameCart[];
@@ -268,13 +284,12 @@ export interface UserNameProps {
 }
 export interface EditGameModalProps {
   closeHandler: () => void;
+  gameToEdit: Game;
   imgUrlInp: string;
   titleInp: string;
   titleGetter: (nameData: string) => void;
   categoryInp: string;
   setCategory: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  ageArr: number[];
-  genreArr: string[];
   priceGetter: (price: number) => void;
   priceInp: number;
   imgUrlGetter: (imgUrlData: string) => void;
@@ -288,9 +303,11 @@ export interface EditGameModalProps {
   psCheckHandler: () => void;
   xbxCheckedInp: boolean;
   xbxCheckHandler: () => void;
-  gameData: string;
   formValid: boolean;
   submitHandlerEdit: () => void;
   deleteHandler: () => void;
-  submitHandlerCreate: () => void;
+}
+
+export interface AdminStateType {
+  gametoEdit: GameToEdit;
 }

@@ -2,14 +2,26 @@ import { FC, useEffect, useState } from "react";
 import "./gameCard.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { showEditGameModalAction } from "@/components/redux/actions";
-import { ProductItemProps } from "../../types/types";
+import { addGameToEditAction } from "@/components/redux/admin/adminActions";
+import { GameToEdit, ProductItemProps } from "../../types/types";
 import GameCard from "./gameCard";
 import { addGameToCartAction, changeGameAmountAction } from "../../components/redux/cart/cartActions";
 import { ReducerState } from "../../components/redux/reducer";
 
-const GameCardContainer: FC<ProductItemProps> = ({ title, description, category, logo, rating, price }) => {
+const GameCardContainer: FC<ProductItemProps> = ({
+  id,
+  title,
+  age,
+  description,
+  genre,
+  category,
+  logo,
+  rating,
+  price,
+}) => {
   const dispatch = useDispatch();
   const gamesList = useSelector((state: ReducerState) => state.cart.gamesList);
+  const game = useSelector((state: ReducerState) => state.admin.gametoEdit);
   const role = useSelector((state: ReducerState) => state.reducer.role);
   const [visible, setVisible] = useState<boolean>(false);
   const userName = useSelector((state: ReducerState) => state.reducer.userName);
@@ -50,6 +62,10 @@ const GameCardContainer: FC<ProductItemProps> = ({ title, description, category,
     });
   };
   const editAction = () => {
+    const rate = +rating;
+    dispatch(
+      addGameToEditAction({ id, title, description, age, category, genre, imgUrl: logo, rate, price } as GameToEdit)
+    );
     dispatch(showEditGameModalAction());
   };
   useEffect(() => {

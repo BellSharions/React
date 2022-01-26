@@ -63,7 +63,7 @@ const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, g
       console.log(list);
     })();
   }, [platform, age, sort, sortDir, genre, search]);
-  return <SearchBar list={list} isLoading={isLoading} debouncedOnChange={debouncedOnChange} />;
+  return <SearchBar list={list} debouncedOnChange={debouncedOnChange} />;
 };
 
 export default SearchBarContainer;

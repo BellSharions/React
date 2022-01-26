@@ -9,7 +9,6 @@ import { changeGameAmountAction, changeGameCheckAction } from "../redux/cart/car
 const CartGameContainer: FC<CartGameContainerProps> = ({ title, category, price }) => {
   const games = useSelector((state: ReducerState) => state.cart.gamesList);
   const userName = useSelector((state: ReducerState) => state.reducer.userName);
-  const role = useSelector((state: ReducerState) => state.reducer.role);
   const [checked, setChecked] = useState<boolean>(false);
   const [number, setNumber] = useState<number>(1);
   const dispatch = useDispatch();

@@ -11,17 +11,14 @@ import {
   showBuyModal,
   setRoleType,
   showEditGameModal,
+  showAddGameModal,
 } from "./actionTypes";
-import { adminReducer } from "./admin/adminReducer";
+import adminReducer from "./admin/adminReducer";
 import CartReducer from "./cart/cartReducer";
 import {
   changeSearchType,
   filterByAgeType,
   filterByGenreType,
-  filterByPriceAscending,
-  filterByPriceDescending,
-  filterByRatingAscending,
-  filterByRatingDescending,
   filterBySelection,
   filterBySelectionDirection,
 } from "./filter/filterActionTypes";
@@ -33,6 +30,7 @@ export const initialState = {
   role: "user",
   changePassModalVisible: false,
   editGameModalVisible: false,
+  addGameModalVisible: false,
   signInModalVisible: false,
   signUpModalVisible: false,
   buyModalVisible: false,
@@ -53,6 +51,7 @@ const reducer = (
   role: string;
   changePassModalVisible: boolean;
   editGameModalVisible: boolean;
+  addGameModalVisible: boolean;
   signInModalVisible: boolean;
   signUpModalVisible: boolean;
   buyModalVisible: boolean;
@@ -114,6 +113,15 @@ const reducer = (
         signInModalVisible: false,
         signUpModalVisible: false,
       };
+    case showAddGameModal:
+      return {
+        ...state,
+        addGameModalVisible: true,
+        editGameModalVisible: false,
+        changePassModalVisible: false,
+        signInModalVisible: false,
+        signUpModalVisible: false,
+      };
     case changeLoading:
       return {
         ...state,
@@ -122,7 +130,9 @@ const reducer = (
     case closeModal:
       return {
         ...state,
+        addGameModalVisible: false,
         changePassModalVisible: false,
+        editGameModalVisible: false,
         signInModalVisible: false,
         signUpModalVisible: false,
         buyModalVisible: false,
@@ -131,30 +141,6 @@ const reducer = (
       return {
         ...state,
         buyModalVisible: true,
-      };
-    case filterByRatingDescending:
-      return {
-        ...state,
-        sort: "rating",
-        sortDir: "desc",
-      };
-    case filterByRatingAscending:
-      return {
-        ...state,
-        sort: "rating",
-        sortDir: "asc",
-      };
-    case filterByPriceDescending:
-      return {
-        ...state,
-        sort: "price",
-        sortDir: "desc",
-      };
-    case filterByPriceAscending:
-      return {
-        ...state,
-        sort: "price",
-        sortDir: "asc",
       };
     case filterBySelection:
       return {

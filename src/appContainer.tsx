@@ -21,6 +21,7 @@ import HeaderContainer from "./components/header/headerContainer";
 import { logInAction, setRoleAction } from "./components/redux/actions";
 import CartPage from "./components/cart/cartPageContainer";
 import ModalBodyContainer from "./components/modal/modalBodyContainer";
+import { setCartGamesAction } from "./components/redux/cart/cartActions";
 
 const mapStateToProps = (state: ReducerState) => ({
   signInModalVisible: state.reducer.signInModalVisible,

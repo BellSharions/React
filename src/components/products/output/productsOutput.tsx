@@ -12,10 +12,13 @@ const ProductsOutput: FC<Props> = ({ productList }) => (
     {!productList || productList.length === 0 ? (
       <p>No games have been found</p>
     ) : (
-      productList.map(({ id, title, description, developer, date, category, logo, rating, price }) => (
+      productList.map(({ id, title, description, developer, date, category, logo, rating, price, age, genres }) => (
         <GameCard
           key={id}
+          id={id}
           title={title}
+          age={age}
+          genre={genres}
           description={description}
           developer={developer}
           date={date}

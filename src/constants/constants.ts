@@ -20,6 +20,7 @@ export const signUpText = { label: "Sign Up", icon: "fa fa-user-plus" };
 export type singleLink = { type: routeType; item: { route: string; name: string; icon: string } };
 export type multiLink = { type: routeType; item: { name: string; data: Array<{ routeName: string; route: string }> } };
 export const ageArr = ["all ages", "3", "12", "16", "18"];
+export const availableAges = ["3", "12", "16", "18"];
 export const genreArr = ["all genres", "sandbox", "action-adventure", "first-person shooter", "rogue-like", "roleplay"];
 export const availableGenres = ["sandbox", "action-adventure", "first-person shooter", "rogue-like", "roleplay"];
 export const gameCategories = [

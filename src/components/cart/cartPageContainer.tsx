@@ -13,8 +13,13 @@ const CartPageContainer: FC = () => {
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [valid, setValid] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const clickHandler = () => {
+  const clickHandler = async () => {
     dispatch(removeGameFromCartAction());
+    const postResponse = await fetch(`http://localhost:8080/api/cart/${userName}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ gamesList: games.filter((game) => game.check === false) }),
+    });
   };
 
   useEffect(() => {

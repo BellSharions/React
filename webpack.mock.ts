@@ -54,32 +54,39 @@ export default webpackMockServer.add((app, helper) => {
     const { platform, genre, age, sort, sortDir, text } = _req.query;
     console.log(_req.query);
     console.log(text);
-
     const currentPlatform = platform.toUpperCase();
-    const response = mockGameList
-      .filter((game) => {
-        if (game.genres === genre && game.age <= +age) return game;
-        if (genre === "all genres" && game.age <= +age) return game;
-        if (game.genres === genre && age === "all ages") return game;
-        if (genre === "all genres" && age === "all ages") return game;
-        return 0;
-      })
-      .filter((filteredGame) => {
-        if (text !== "" && text) {
-          if (filteredGame.title.toLowerCase().includes(text.toLowerCase())) return filteredGame;
-        } else return filteredGame;
-      })
-      .filter((filteredGame) => {
-        if (platform === "all games") return filteredGame;
-        if (filteredGame.category.toLocaleUpperCase().includes(currentPlatform)) return filteredGame;
-        return 0;
-      })
-      .sort((game1, game2) => compareGames(game1, game2, sort, sortDir));
-    if (platform) {
-      res.json(response);
-    } else res.json(platform);
+    fs.readFile("./src/assets/products.json", "utf8", (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(400).json(1);
+        res.end();
+      } else {
+        const obj = JSON.parse(data);
+        const response = obj
+          .filter((game) => {
+            if (game.genres === genre && game.age <= +age) return game;
+            if (genre === "all genres" && game.age <= +age) return game;
+            if (game.genres === genre && age === "all ages") return game;
+            if (genre === "all genres" && age === "all ages") return game;
+            return 0;
+          })
+          .filter((filteredGame) => {
+            if (text !== "" && text) {
+              if (filteredGame.title.toLowerCase().includes(text.toLowerCase())) return filteredGame;
+            } else return filteredGame;
+          })
+          .filter((filteredGame) => {
+            if (platform === "all games") return filteredGame;
+            if (filteredGame.category.toLocaleUpperCase().includes(currentPlatform)) return filteredGame;
+            return 0;
+          })
+          .sort((game1, game2) => compareGames(game1, game2, sort, sortDir));
+        if (platform) {
+          res.json(response);
+        } else res.json(platform);
+      }
+    });
   });
-
   app.put("/api/auth/signUp/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
@@ -404,7 +411,49 @@ export default webpackMockServer.add((app, helper) => {
         }
       });
   });
+  app.put("/api/product/", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    console.log(_req.body);
+    fs.readFile("./src/assets/products.json", "utf8", (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(400).json(1);
+        res.end();
+      } else {
+        const obj = JSON.parse(data);
+        obj.map((game) => {
+          if (game.id === _req.body.id) {
+            console.log(game);
+            game.title = _req.body.title;
+            game.age = _req.body.age;
+            game.category = _req.body.category;
+            game.description = _req.body.description;
+            game.genres = _req.body.genre;
+            game.logo = _req.body.imgUrl;
+            game.price = _req.body.price;
+          }
+        });
+        fs.writeFile("./src/assets/products.json", JSON.stringify(obj), "utf8", (err2) => {
+          if (err2) {
+            console.log(err2);
+            res.status(400).json();
+            res.end();
+          } else {
+            res.status(200).json(obj);
+            res.end();
+          }
+        });
+      }
+    });
+  });
   app.options("/api/auth/signUp/", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Methods", "PUT, POST, GET, OPTIONS");
+    res.set("Access-Control-Allow-Headers", "content-type");
+    res.json(1);
+    res.end();
+  });
+  app.options("/api/product/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     res.set("Access-Control-Allow-Methods", "PUT, POST, GET, OPTIONS");
     res.set("Access-Control-Allow-Headers", "content-type");
