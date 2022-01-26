@@ -6,11 +6,16 @@ import {
   buyGames,
   increaseTotalAmount,
   decreaseTotalAmount,
+  setCartGames,
 } from "./cartActionTypes";
 import { GameCart, CartAction } from "../../../types/types";
 
 export const addGameToCartAction = (game: GameCart): CartAction => ({
   type: addGameToCart,
+  payload: game,
+});
+export const setCartGamesAction = (game: GameCart[]): CartAction => ({
+  type: setCartGames,
   payload: game,
 });
 

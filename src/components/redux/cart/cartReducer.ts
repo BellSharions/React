@@ -6,6 +6,7 @@ import {
   buyGames,
   increaseTotalAmount,
   decreaseTotalAmount,
+  setCartGames,
 } from "./cartActionTypes";
 import { CartAction, CartStateType, GameCart } from "../../../types/types";
 
@@ -21,6 +22,13 @@ const CartReducer = (state = InitialCartState, action: CartAction): CartStateTyp
       return {
         ...state,
         gamesList: state.gamesList.concat(action.payload as GameCart[]),
+        totalPurchase: state.totalPurchase,
+        userBalance: state.userBalance,
+      };
+    case setCartGames:
+      return {
+        ...state,
+        gamesList: action.payload as GameCart[],
         totalPurchase: state.totalPurchase,
         userBalance: state.userBalance,
       };

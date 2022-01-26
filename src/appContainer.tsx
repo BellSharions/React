@@ -12,7 +12,7 @@ import About from "./components/about/about";
 import { routesMap } from "./constants/constants";
 import ErrorCase from "./components/errorHandler/errorTest";
 import ErrorBoundary from "./components/errorHandler/errorBoundary";
-import { AppProps, AppState } from "./types/types";
+import { AppProps, AppState, GameCart } from "./types/types";
 import ProtectedRoute from "./components/protectedRoute/protectedRoute";
 import Profile from "./components/users/profileContainer";
 import store from "./components/redux/store";
@@ -21,6 +21,7 @@ import HeaderContainer from "./components/header/headerContainer";
 import { logInAction } from "./components/redux/actions";
 import CartPage from "./components/cart/cartPageContainer";
 import ModalBodyContainer from "./components/modal/modalBodyContainer";
+import { setCartGamesAction } from "./components/redux/cart/cartActions";
 
 const mapStateToProps = (state: ReducerState) => ({
   signInModalVisible: state.reducer.signInModalVisible,
@@ -38,10 +39,11 @@ const mapStateToProps = (state: ReducerState) => ({
 const mapDispatchToProps = (
   dispatch: Dispatch<{
     type: string;
-    payload: string;
+    payload: string | GameCart[];
   }>
 ) => ({
   getLogin: (value: string) => dispatch(logInAction(value)),
+  setCart: (value: GameCart[]) => dispatch(setCartGamesAction(value)),
 });
 class AppContainer extends Component<AppProps, AppState> {
   ["constructor"]: typeof AppContainer;
@@ -52,6 +54,20 @@ class AppContainer extends Component<AppProps, AppState> {
     const goExlcude = true;
     if (!goExlcude) {
       console.warn("class-dead-code doesn't work");
+    }
+  }
+
+  async componentDidMount() {
+    const getResponse = await (
+      await fetch(`http://localhost:8080/api/getCart/${store.getState().reducer.userName}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+    ).json();
+
+    if (getResponse) {
+      console.log(getResponse);
+      if (getResponse.gamesList) this.props.setCart(getResponse.gamesList);
     }
   }
 

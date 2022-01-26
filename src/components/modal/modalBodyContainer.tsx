@@ -1,9 +1,10 @@
 import { signInUrl, signUpUrl } from "@/constants/constants";
+import { GameCart } from "@/types/types";
 import { FC, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { closeModalAction, logInAction } from "../redux/actions";
-import { buyGamesAction } from "../redux/cart/cartActions";
+import { buyGamesAction, setCartGamesAction } from "../redux/cart/cartActions";
 import { ReducerState } from "../redux/reducer";
 import BuyModalBody from "./buyModalBody";
 import "./buyModalBody.scss";
@@ -13,7 +14,7 @@ import SignInModalBody from "./signInModalBody";
 import SignUpModal from "./signUpModalBody";
 
 const ModalBodyContainer: FC = () => {
-  const [userName, cartGames, amount] = useSelector((state: ReducerState) => [
+  const [userName, cartGames, totalPurchase] = useSelector((state: ReducerState) => [
     state.reducer.userName,
     state.cart.gamesList,
     state.cart.totalPurchase,
@@ -42,10 +43,10 @@ const ModalBodyContainer: FC = () => {
     const postResponse = await fetch(`http://localhost:8080/api/buy/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userName, cartGames, amount }),
+      body: JSON.stringify({ userName, cartGames, totalPurchase }),
     });
     if (postResponse.status === 404) throw new Error(`HTTP status: ${postResponse.status}`);
-    dispatch(buyGamesAction(amount));
+    dispatch(buyGamesAction(totalPurchase));
 
     dispatch(closeModalAction());
   };
@@ -148,7 +149,15 @@ const ModalBodyContainer: FC = () => {
         setMessage("An error has appeared! Check your credentials and try again.");
         throw new Error(`HTTP status: ${res.status}`);
       }
-
+      const getResponse = await (
+        await fetch(`http://localhost:8080/api/getCart/${login}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
+      ).json();
+      console.log(getResponse.gamesList);
+      if (getResponse.gamesList) dispatch(setCartGamesAction(getResponse.gamesList));
+      else dispatch(setCartGamesAction([] as GameCart[]));
       const response = await res.json();
       return response;
     }
@@ -178,6 +187,15 @@ const ModalBodyContainer: FC = () => {
         dispatch(logInAction(login));
         localStorage.setItem("login", login);
         dispatch(closeModalAction());
+        const getResponse = await (
+          await fetch(`http://localhost:8080/api/getCart/${login}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          })
+        ).json();
+        console.log(getResponse.gamesList);
+        if (getResponse) dispatch(setCartGamesAction(getResponse.gamesList));
+        else dispatch(setCartGamesAction([] as GameCart[]));
         history.push("/profile");
       } else {
         setMessage("This login is already in use, please use another one");
@@ -196,7 +214,7 @@ const ModalBodyContainer: FC = () => {
           <BuyModalBody
             userName={userName}
             cartGames={cartGames}
-            amount={amount}
+            amount={totalPurchase}
             closeHandler={closeModal}
             confirmHandler={confirmHandler}
           />
