@@ -8,11 +8,17 @@ import {
   changeUsernameType,
   changeLoading,
   showBuyModal,
+  setRoleType,
+  showEditGameModal,
 } from "./actionTypes";
 
 export const logInAction = (userName: string): { type: string; payload: string } => ({
   type: logInType,
   payload: userName,
+});
+export const setRoleAction = (role: string): { type: string; payload: string } => ({
+  type: setRoleType,
+  payload: role,
 });
 export const changeUsernameAction = (userName: string): { type: string; payload: string } => ({
   type: changeUsernameType,
@@ -35,6 +41,9 @@ export const showBuyModalAction = (): { type: string } => ({
 });
 export const showChangePassModalAction = (): { type: string } => ({
   type: showChangePassModal,
+});
+export const showEditGameModalAction = (): { type: string } => ({
+  type: showEditGameModal,
 });
 
 export const closeModalAction = (): { type: string } => ({

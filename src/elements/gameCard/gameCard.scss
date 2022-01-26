@@ -87,6 +87,12 @@
   color: #dddddc;
   border: 0;
 }
+.gameCard__back-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
 .gameCard__back-button:hover {
   padding: 10px 10px;
   font-size: 12px;

@@ -13,6 +13,8 @@ export interface ProductItemProps {
   rating: string;
   price: number;
   action?: (gameTitle: string, gameCategory: string, gamePrice: number, gameCheck: boolean, gameAmount: number) => void;
+  editAction?: () => void;
+  visible: boolean;
 }
 
 export interface AppProps {
@@ -170,8 +172,8 @@ export interface InputProps {
   name: string;
   id: string;
   type: string;
-  value: string;
-  onChange: (value: string) => void;
+  value: string | number;
+  onChange: (value: string | number) => void;
 }
 export interface TextAreaProps {
   name: string;
@@ -245,7 +247,7 @@ export interface BtnProps {
 }
 export interface BtnContainerProps {
   action: () => void;
-  childrenProps: { label: string; icon: string };
+  childrenProps: { label: string; icon?: string };
 }
 export interface ProtectedRouteProps {
   dispatch: Dispatch<unknown>;
@@ -263,4 +265,32 @@ export interface LocationState {
 
 export interface UserNameProps {
   userName: string | undefined;
+}
+export interface EditGameModalProps {
+  closeHandler: () => void;
+  imgUrlInp: string;
+  titleInp: string;
+  titleGetter: (nameData: string) => void;
+  categoryInp: string;
+  setCategory: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  ageArr: number[];
+  genreArr: string[];
+  priceGetter: (price: number) => void;
+  priceInp: number;
+  imgUrlGetter: (imgUrlData: string) => void;
+  descriptionGetter: (inputName: string) => void;
+  descriptionInp: string;
+  ageInp: number;
+  setAge: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  pcCheckedInp: boolean;
+  pcCheckHandler: () => void;
+  psCheckedInp: boolean;
+  psCheckHandler: () => void;
+  xbxCheckedInp: boolean;
+  xbxCheckHandler: () => void;
+  gameData: string;
+  formValid: boolean;
+  submitHandlerEdit: () => void;
+  deleteHandler: () => void;
+  submitHandlerCreate: () => void;
 }

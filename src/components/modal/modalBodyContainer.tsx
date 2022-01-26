@@ -1,28 +1,31 @@
 import { signInUrl, signUpUrl } from "@/constants/constants";
+import { GameCart } from "@/types/types";
 import { FC, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { closeModalAction, logInAction } from "../redux/actions";
-import { buyGamesAction } from "../redux/cart/cartActions";
+import { closeModalAction, logInAction, setRoleAction } from "../redux/actions";
+import { buyGamesAction, setCartGamesAction } from "../redux/cart/cartActions";
 import { ReducerState } from "../redux/reducer";
 import BuyModalBody from "./buyModalBody";
 import "./buyModalBody.scss";
+import EditGameModal from "./editGameModal";
 import Modal from "./modal";
 import ChangePassModalBody from "./passwordModalBody";
 import SignInModalBody from "./signInModalBody";
 import SignUpModal from "./signUpModalBody";
 
 const ModalBodyContainer: FC = () => {
-  const [userName, cartGames, amount] = useSelector((state: ReducerState) => [
+  const [userName, cartGames, totalPurchase] = useSelector((state: ReducerState) => [
     state.reducer.userName,
     state.cart.gamesList,
     state.cart.totalPurchase,
   ]);
-  const [signup, signin, changePassword, buy] = useSelector((state: ReducerState) => [
+  const [signup, signin, changePassword, buy, edit] = useSelector((state: ReducerState) => [
     state.reducer.signUpModalVisible,
     state.reducer.signInModalVisible,
     state.reducer.changePassModalVisible,
     state.reducer.buyModalVisible,
+    state.reducer.editGameModalVisible,
   ]);
   const [newPassword, setNewPassword] = useState<string>("");
   const [repeatNewPassword, setRepeatNewPassword] = useState<string>("");
@@ -42,10 +45,10 @@ const ModalBodyContainer: FC = () => {
     const postResponse = await fetch(`http://localhost:8080/api/buy/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userName, cartGames, amount }),
+      body: JSON.stringify({ userName, cartGames, totalPurchase }),
     });
     if (postResponse.status === 404) throw new Error(`HTTP status: ${postResponse.status}`);
-    dispatch(buyGamesAction(amount));
+    dispatch(buyGamesAction(totalPurchase));
 
     dispatch(closeModalAction());
   };
@@ -148,8 +151,19 @@ const ModalBodyContainer: FC = () => {
         setMessage("An error has appeared! Check your credentials and try again.");
         throw new Error(`HTTP status: ${res.status}`);
       }
-
+      const getResponse = await (
+        await fetch(`http://localhost:8080/api/getCart/${login}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
+      ).json();
+      console.log(getResponse.gamesList);
+      if (getResponse.gamesList) dispatch(setCartGamesAction(getResponse.gamesList));
+      else dispatch(setCartGamesAction([] as GameCart[]));
       const response = await res.json();
+      console.log(response);
+      dispatch(setRoleAction(response.role));
+      localStorage.setItem("role", response.role);
       return response;
     }
     return null;
@@ -171,13 +185,23 @@ const ModalBodyContainer: FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ login, password }),
+        body: JSON.stringify({ login, password, role: "user" }),
       });
 
       if (res.status === 201) {
         dispatch(logInAction(login));
+        dispatch(setRoleAction("user"));
         localStorage.setItem("login", login);
         dispatch(closeModalAction());
+        const getResponse = await (
+          await fetch(`http://localhost:8080/api/getCart/${login}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          })
+        ).json();
+        console.log(getResponse.gamesList);
+        if (getResponse) dispatch(setCartGamesAction(getResponse.gamesList));
+        else dispatch(setCartGamesAction([] as GameCart[]));
         history.push("/profile");
       } else {
         setMessage("This login is already in use, please use another one");
@@ -196,7 +220,7 @@ const ModalBodyContainer: FC = () => {
           <BuyModalBody
             userName={userName}
             cartGames={cartGames}
-            amount={amount}
+            amount={totalPurchase}
             closeHandler={closeModal}
             confirmHandler={confirmHandler}
           />
@@ -246,6 +270,11 @@ const ModalBodyContainer: FC = () => {
             repeatPassword={repeatPassword}
             repeatPasswordGetter={repeatPasswordGetter}
           />
+        </Modal>
+      ) : null}
+      {edit ? (
+        <Modal>
+          <EditGameModal />
         </Modal>
       ) : null}
     </>

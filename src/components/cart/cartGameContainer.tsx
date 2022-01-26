@@ -8,18 +8,25 @@ import { changeGameAmountAction, changeGameCheckAction } from "../redux/cart/car
 
 const CartGameContainer: FC<CartGameContainerProps> = ({ title, category, price }) => {
   const games = useSelector((state: ReducerState) => state.cart.gamesList);
+  const userName = useSelector((state: ReducerState) => state.reducer.userName);
+  const role = useSelector((state: ReducerState) => state.reducer.role);
   const [checked, setChecked] = useState<boolean>(false);
   const [number, setNumber] = useState<number>(1);
   const dispatch = useDispatch();
   const platforms = category.split(", ");
 
-  const amountHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const amountHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(e.target.value) > 0) {
       const num = Math.floor(Number(e.target.value));
       setNumber(num);
       const amountGame = games.filter((game) => game.title === title);
       amountGame[0].amount = num;
       dispatch(changeGameAmountAction(amountGame));
+      const postResponse = await fetch(`http://localhost:8080/api/cart/${userName}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ gamesList: games }),
+      });
     }
   };
 

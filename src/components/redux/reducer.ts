@@ -9,7 +9,10 @@ import {
   changeUsernameType,
   changeLoading,
   showBuyModal,
+  setRoleType,
+  showEditGameModal,
 } from "./actionTypes";
+import { adminReducer } from "./admin/adminReducer";
 import CartReducer from "./cart/cartReducer";
 import {
   changeSearchType,
@@ -27,7 +30,9 @@ export const initialState = {
   loggedIn: false,
   isLoading: false,
   userName: "",
+  role: "user",
   changePassModalVisible: false,
+  editGameModalVisible: false,
   signInModalVisible: false,
   signUpModalVisible: false,
   buyModalVisible: false,
@@ -45,7 +50,9 @@ const reducer = (
   loggedIn: boolean;
   isLoading: boolean;
   userName: string;
+  role: string;
   changePassModalVisible: boolean;
+  editGameModalVisible: boolean;
   signInModalVisible: boolean;
   signUpModalVisible: boolean;
   buyModalVisible: boolean;
@@ -61,6 +68,11 @@ const reducer = (
         ...state,
         loggedIn: true,
         userName: action.payload,
+      };
+    case setRoleType:
+      return {
+        ...state,
+        role: action.payload,
       };
     case changeUsernameType:
       return {
@@ -91,6 +103,14 @@ const reducer = (
       return {
         ...state,
         changePassModalVisible: true,
+        signInModalVisible: false,
+        signUpModalVisible: false,
+      };
+    case showEditGameModal:
+      return {
+        ...state,
+        editGameModalVisible: true,
+        changePassModalVisible: false,
         signInModalVisible: false,
         signUpModalVisible: false,
       };
@@ -167,6 +187,7 @@ const reducer = (
 };
 export const rootReducer = combineReducers({
   reducer,
+  admin: adminReducer,
   cart: CartReducer,
 });
 export default reducer;

@@ -1,9 +1,11 @@
 export const logInType = "logIn";
+export const setRoleType = "setRole";
 export const changeUsernameType = "changeUsername";
 export const logOutType = "logOut";
 export const showSignInModal = "showSignInModal";
 export const showSignUpModal = "showSignUpModal";
 export const showBuyModal = "showBuyModal";
 export const showChangePassModal = "showChangePassModal";
+export const showEditGameModal = "showEditGameModal";
 export const closeModal = "closeModal";
 export const changeLoading = "changeLoading";

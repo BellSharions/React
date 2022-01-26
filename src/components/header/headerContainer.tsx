@@ -17,6 +17,7 @@ const HeaderContainer: FC = () => {
   };
   const logOut = () => {
     localStorage.removeItem("login");
+    localStorage.removeItem("role");
     dispatch(logOutAction());
   };
   return (
