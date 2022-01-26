@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { closeModalAction, logInAction, setRoleAction, showDeleteGameModalAction } from "../redux/actions";
 import { buyGamesAction, setCartGamesAction } from "../redux/cart/cartActions";
+import { fetchGamesAction } from "../redux/filter/filterActions";
 import { ReducerState } from "../redux/reducer";
 import AddGameModal from "./addGameModal";
 import BuyModalBody from "./buyModalBody";
@@ -21,6 +22,13 @@ const ModalBodyContainer: FC = () => {
     state.reducer.userName,
     state.cart.gamesList,
     state.cart.totalPurchase,
+  ]);
+  const [sort, age, genre, sortDir, search] = useSelector((state: ReducerState) => [
+    state.reducer.sort,
+    state.reducer.age,
+    state.reducer.genre,
+    state.reducer.sortDir,
+    state.reducer.term,
   ]);
   const [signup, signin, changePassword, buy, edit, add, del] = useSelector((state: ReducerState) => [
     state.reducer.signUpModalVisible,
@@ -122,7 +130,21 @@ const ModalBodyContainer: FC = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(gameObj),
     });
-    if (putResponse.status === 200) dispatch(closeModalAction());
+    if (putResponse.status === 200) {
+      dispatch(
+        fetchGamesAction(
+          `${new URLSearchParams({
+            text: search,
+            platform: "all games",
+            age,
+            sort,
+            sortDir,
+            genre,
+          })}`
+        )
+      );
+      dispatch(closeModalAction());
+    }
   };
 
   const submitHandlerCreate = async () => {
@@ -132,6 +154,18 @@ const ModalBodyContainer: FC = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(gameObj),
     });
+    dispatch(
+      fetchGamesAction(
+        `${new URLSearchParams({
+          text: search,
+          platform: "all games",
+          age,
+          sort,
+          sortDir,
+          genre,
+        })}`
+      )
+    );
     dispatch(closeModalAction());
   };
   const deleteGame = async () => {
@@ -141,6 +175,18 @@ const ModalBodyContainer: FC = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: gameObj.id }),
     });
+    dispatch(
+      fetchGamesAction(
+        `${new URLSearchParams({
+          text: search,
+          platform: "all games",
+          age,
+          sort,
+          sortDir,
+          genre,
+        })}`
+      )
+    );
     dispatch(closeModalAction());
   };
 

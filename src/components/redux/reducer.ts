@@ -1,3 +1,4 @@
+import { Game } from "@/types/types";
 import { combineReducers } from "redux";
 import {
   logInType,
@@ -13,11 +14,13 @@ import {
   showEditGameModal,
   showAddGameModal,
   showDeleteGameModal,
+  fetchGames,
 } from "./actionTypes";
 import adminReducer from "./admin/adminReducer";
 import CartReducer from "./cart/cartReducer";
 import {
   changeSearchType,
+  fetchGamesSuccess,
   filterByAgeType,
   filterByGenreType,
   filterBySelection,
@@ -27,8 +30,10 @@ import {
 export const initialState = {
   loggedIn: false,
   isLoading: false,
+  fetch: false,
   userName: "",
   role: "user",
+  searchResult: [] as Game[],
   changePassModalVisible: false,
   editGameModalVisible: false,
   addGameModalVisible: false,
@@ -45,12 +50,14 @@ export const initialState = {
 
 const reducer = (
   state = initialState,
-  action: { type: string; payload: string }
+  action: { type: string; payload: string | boolean | Game[] }
 ): {
   loggedIn: boolean;
   isLoading: boolean;
+  fetch: boolean;
   userName: string;
   role: string;
+  searchResult: Game[];
   changePassModalVisible: boolean;
   editGameModalVisible: boolean;
   addGameModalVisible: boolean;
@@ -69,17 +76,17 @@ const reducer = (
       return {
         ...state,
         loggedIn: true,
-        userName: action.payload,
+        userName: action.payload as string,
       };
     case setRoleType:
       return {
         ...state,
-        role: action.payload,
+        role: action.payload as string,
       };
     case changeUsernameType:
       return {
         ...state,
-        userName: action.payload,
+        userName: action.payload as string,
       };
     case logOutType:
       return {
@@ -138,7 +145,7 @@ const reducer = (
     case changeLoading:
       return {
         ...state,
-        isLoading: action.payload,
+        isLoading: action.payload as boolean,
       };
     case closeModal:
       return {
@@ -159,27 +166,37 @@ const reducer = (
     case filterBySelection:
       return {
         ...state,
-        sort: action.payload,
+        sort: action.payload as string,
       };
     case filterBySelectionDirection:
       return {
         ...state,
-        sortDir: action.payload,
+        sortDir: action.payload as string,
       };
     case filterByAgeType:
       return {
         ...state,
-        age: action.payload,
+        age: action.payload as string,
       };
     case filterByGenreType:
       return {
         ...state,
-        genre: action.payload,
+        genre: action.payload as string,
+      };
+    case fetchGames:
+      return {
+        ...state,
+        fetch: action.payload as boolean,
+      };
+    case fetchGamesSuccess:
+      return {
+        ...state,
+        searchResult: action.payload as Game[],
       };
     case changeSearchType:
       return {
         ...state,
-        term: action.payload,
+        term: action.payload as string,
       };
     default:
       return state;

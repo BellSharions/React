@@ -2,17 +2,25 @@ import { FilterAction, Game } from "@/types/types";
 import { Dispatch } from "redux";
 import {
   changeSearchType,
+  fetchGamesSuccess,
   filterByAgeType,
   filterByGenreType,
   filterBySelection,
   filterBySelectionDirection,
 } from "./filterActionTypes";
 
+export const fetchGamesSuccessAction = (games: Game[]): FilterAction => ({
+  type: fetchGamesSuccess,
+  payload: games,
+});
 export const fetchGamesAction =
   (partOfUrl: string) =>
   async (dispatch: Dispatch<{ type: string } | FilterAction>): Promise<Game[]> => {
-    const response = await fetch(`http://localhost:8080/games${partOfUrl}`, { method: "GET" });
+    console.log(partOfUrl);
+
+    const response = await fetch(`http://localhost:8080/api/search?${partOfUrl}`, { method: "GET" });
     const games: Game[] = await response.json();
+    dispatch(fetchGamesSuccessAction(games));
     return games;
   };
 export const filterBySelectionAction = (select: string): { type: string; payload: string } => ({

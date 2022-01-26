@@ -2,14 +2,16 @@ import { useState, useEffect, FC, ChangeEvent } from "react";
 import debounce from "lodash.debounce";
 import "./searchBar.scss";
 import loaderHook from "@/hooks/loaderHook";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ProductItemProps, ProductParams } from "../../types/types";
-import { fetchGameQueryLink } from "../../constants/constants";
 import SearchBar from "./searchBar";
-import { changeSearchAction } from "../redux/filter/filterActions";
+import { changeSearchAction, fetchGamesAction } from "../redux/filter/filterActions";
+import { ReducerState } from "../redux/reducer";
 
 const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, genre, search }) => {
   const [list, setList] = useState<Array<ProductItemProps>>([]);
+  const fetchFlag = useSelector((state: ReducerState) => state.reducer.fetch);
+  const searchResult = useSelector((state: ReducerState) => state.reducer.searchResult);
   const [isLoading, setLoading] = loaderHook(false);
   const dispatch = useDispatch();
   const changeSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,49 +23,38 @@ const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, g
       setLoading(true);
       setTimeout(async () => {
         if (platform === "" || platform === ":platform" || platform === "home" || platform === undefined)
-          setList(
-            await (
-              await fetch(
-                `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({
-                  text: search,
-                  platform: "all games",
-                  age,
-                  sort,
-                  sortDir,
-                  genre,
-                })}`
-              )
-            ).json()
-          );
-        else if (search === "")
-          setList(
-            await (
-              await fetch(
-                `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({ platform, age, sort, sortDir, genre })}`
-              )
-            ).json()
+          dispatch(
+            fetchGamesAction(
+              `${new URLSearchParams({
+                text: search,
+                platform: "all games",
+                age,
+                sort,
+                sortDir,
+                genre,
+              })}`
+            )
           );
         else
-          setList(
-            await (
-              await fetch(
-                `${`${fetchGameQueryLink}` + "?"}${new URLSearchParams({
-                  text: search,
-                  platform,
-                  age,
-                  sort,
-                  sortDir,
-                  genre,
-                })}`
-              )
-            ).json()
+          dispatch(
+            fetchGamesAction(
+              `${new URLSearchParams({
+                text: search,
+                platform,
+                age,
+                sort,
+                sortDir,
+                genre,
+              })}`
+            )
           );
         setLoading(false);
       }, 500);
+
       console.log(list);
     })();
   }, [platform, age, sort, sortDir, genre, search]);
-  return <SearchBar list={list} debouncedOnChange={debouncedOnChange} />;
+  return <SearchBar list={searchResult} debouncedOnChange={debouncedOnChange} />;
 };
 
 export default SearchBarContainer;
