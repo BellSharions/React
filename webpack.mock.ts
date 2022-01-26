@@ -80,6 +80,10 @@ export default webpackMockServer.add((app, helper) => {
             if (filteredGame.category.toLocaleUpperCase().includes(currentPlatform)) return filteredGame;
             return 0;
           })
+          .filter((filteredGame) => {
+            if (filteredGame.deleted === false) return filteredGame;
+            return 0;
+          })
           .sort((game1, game2) => compareGames(game1, game2, sort, sortDir));
         if (platform) {
           res.json(response);
@@ -449,6 +453,7 @@ export default webpackMockServer.add((app, helper) => {
   app.post("/api/product/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     console.log(_req.body);
+    let flag = false;
     fs.readFile("./src/assets/products.json", "utf8", (err, data) => {
       if (err) {
         console.log(err);
@@ -456,8 +461,46 @@ export default webpackMockServer.add((app, helper) => {
         res.end();
       } else {
         const obj = JSON.parse(data);
-        _req.body.id = obj.length + 1;
-        obj.push(_req.body);
+        obj.map((game) => {
+          if (game.title === _req.body.title && game.deleted === false) {
+            res.status(400).json();
+            res.end();
+            flag = true;
+          }
+        });
+        if (!flag) {
+          _req.body.id = obj.length + 1;
+          obj.push(_req.body);
+          fs.writeFile("./src/assets/products.json", JSON.stringify(obj), "utf8", (err2) => {
+            if (err2) {
+              console.log(err2);
+              res.status(400).json();
+              res.end();
+            } else {
+              res.status(200).json(obj);
+              res.end();
+            }
+          });
+        }
+      }
+    });
+  });
+  app.delete("/api/product/", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    console.log(_req.body);
+    fs.readFile("./src/assets/products.json", "utf8", (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(400).json(1);
+        res.end();
+      } else {
+        const obj = JSON.parse(data);
+        obj.map((game) => {
+          if (game.id === _req.body.id) {
+            console.log(game);
+            game.deleted = true;
+          }
+        });
         fs.writeFile("./src/assets/products.json", JSON.stringify(obj), "utf8", (err2) => {
           if (err2) {
             console.log(err2);

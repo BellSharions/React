@@ -3,12 +3,13 @@ import { GameCart } from "@/types/types";
 import { FC, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { closeModalAction, logInAction, setRoleAction } from "../redux/actions";
+import { closeModalAction, logInAction, setRoleAction, showDeleteGameModalAction } from "../redux/actions";
 import { buyGamesAction, setCartGamesAction } from "../redux/cart/cartActions";
 import { ReducerState } from "../redux/reducer";
 import AddGameModal from "./addGameModal";
 import BuyModalBody from "./buyModalBody";
 import "./buyModalBody.scss";
+import DeleteGameModal from "./deleteGameModal";
 import EditGameModal from "./editGameModal";
 import Modal from "./modal";
 import ChangePassModalBody from "./passwordModalBody";
@@ -21,13 +22,14 @@ const ModalBodyContainer: FC = () => {
     state.cart.gamesList,
     state.cart.totalPurchase,
   ]);
-  const [signup, signin, changePassword, buy, edit, add] = useSelector((state: ReducerState) => [
+  const [signup, signin, changePassword, buy, edit, add, del] = useSelector((state: ReducerState) => [
     state.reducer.signUpModalVisible,
     state.reducer.signInModalVisible,
     state.reducer.changePassModalVisible,
     state.reducer.buyModalVisible,
     state.reducer.editGameModalVisible,
     state.reducer.addGameModalVisible,
+    state.reducer.deleteGameModalVisible,
   ]);
   const [newPassword, setNewPassword] = useState<string>("");
   const [repeatNewPassword, setRepeatNewPassword] = useState<string>("");
@@ -63,6 +65,7 @@ const ModalBodyContainer: FC = () => {
     age: Number(ageInp),
     genre: categoryInp,
     category: finalCategory,
+    deleted: false,
   };
   useEffect(() => {
     if (add) {
@@ -89,8 +92,7 @@ const ModalBodyContainer: FC = () => {
   }, [gameToEdit, add]);
 
   const deleteHandler = () => {
-    dispatch(showDelConfModalAction());
-    dispatch(wantDelGameAction(delGameObj));
+    dispatch(showDeleteGameModalAction());
   };
 
   const titleGetter = (nameData: string) => {
@@ -129,6 +131,15 @@ const ModalBodyContainer: FC = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(gameObj),
+    });
+    dispatch(closeModalAction());
+  };
+  const deleteGame = async () => {
+    console.log(gameObj);
+    const deleteResponse = await fetch(`http://localhost:8080/api/product/`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: gameObj.id }),
     });
     dispatch(closeModalAction());
   };
@@ -443,6 +454,11 @@ const ModalBodyContainer: FC = () => {
             submitHandlerEdit={submitHandlerCreate}
             deleteHandler={deleteHandler}
           />
+        </Modal>
+      ) : null}
+      {del ? (
+        <Modal>
+          <DeleteGameModal closeHandler={closeModal} deleteHandler={deleteGame} />
         </Modal>
       ) : null}
     </>

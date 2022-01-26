@@ -81,8 +81,8 @@ const EditGameModal: React.FC<EditGameModalProps> = ({
             control={<Checkbox value="XBox" checked={xbxCheckedInp} onChange={() => xbxCheckHandler()} />}
             label="XBox"
           />
-          <BtnContainer action={submitHandlerEdit} childrenProps={{ label: "Submit" }} />
-          <BtnContainer action={deleteHandler} childrenProps={{ label: "Delete" }} />
+          <BtnContainer action={() => submitHandlerEdit()} childrenProps={{ label: "Submit" }} />
+          <BtnContainer action={() => deleteHandler()} childrenProps={{ label: "Delete" }} />
         </form>
       </div>
     </div>

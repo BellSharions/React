@@ -82,7 +82,6 @@ const AddGameModal: React.FC<EditGameModalProps> = ({
             label="XBox"
           />
           <BtnContainer action={submitHandlerEdit} childrenProps={{ label: "Submit" }} />
-          <BtnContainer action={deleteHandler} childrenProps={{ label: "Delete" }} />
         </form>
       </div>
     </div>

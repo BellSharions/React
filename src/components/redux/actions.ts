@@ -11,6 +11,7 @@ import {
   setRoleType,
   showEditGameModal,
   showAddGameModal,
+  showDeleteGameModal,
 } from "./actionTypes";
 
 export const logInAction = (userName: string): { type: string; payload: string } => ({
@@ -48,6 +49,9 @@ export const showEditGameModalAction = (): { type: string } => ({
 });
 export const showAddGameModalAction = (): { type: string } => ({
   type: showAddGameModal,
+});
+export const showDeleteGameModalAction = (): { type: string } => ({
+  type: showDeleteGameModal,
 });
 
 export const closeModalAction = (): { type: string } => ({

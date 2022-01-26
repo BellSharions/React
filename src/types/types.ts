@@ -307,6 +307,10 @@ export interface EditGameModalProps {
   submitHandlerEdit: () => void;
   deleteHandler: () => void;
 }
+export interface DeleteGameModalProps {
+  closeHandler: () => void;
+  deleteHandler: () => Promise<void>;
+}
 
 export interface AdminStateType {
   gametoEdit: GameToEdit;

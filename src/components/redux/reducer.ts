@@ -12,6 +12,7 @@ import {
   setRoleType,
   showEditGameModal,
   showAddGameModal,
+  showDeleteGameModal,
 } from "./actionTypes";
 import adminReducer from "./admin/adminReducer";
 import CartReducer from "./cart/cartReducer";
@@ -31,6 +32,7 @@ export const initialState = {
   changePassModalVisible: false,
   editGameModalVisible: false,
   addGameModalVisible: false,
+  deleteGameModalVisible: false,
   signInModalVisible: false,
   signUpModalVisible: false,
   buyModalVisible: false,
@@ -52,6 +54,7 @@ const reducer = (
   changePassModalVisible: boolean;
   editGameModalVisible: boolean;
   addGameModalVisible: boolean;
+  deleteGameModalVisible: boolean;
   signInModalVisible: boolean;
   signUpModalVisible: boolean;
   buyModalVisible: boolean;
@@ -122,6 +125,16 @@ const reducer = (
         signInModalVisible: false,
         signUpModalVisible: false,
       };
+    case showDeleteGameModal:
+      return {
+        ...state,
+        deleteGameModalVisible: true,
+        addGameModalVisible: false,
+        editGameModalVisible: false,
+        changePassModalVisible: false,
+        signInModalVisible: false,
+        signUpModalVisible: false,
+      };
     case changeLoading:
       return {
         ...state,
@@ -131,6 +144,7 @@ const reducer = (
       return {
         ...state,
         addGameModalVisible: false,
+        deleteGameModalVisible: false,
         changePassModalVisible: false,
         editGameModalVisible: false,
         signInModalVisible: false,
