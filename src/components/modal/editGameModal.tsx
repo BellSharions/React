@@ -44,30 +44,25 @@ const EditGameModal: React.FC<EditGameModalProps> = ({
         <p className="editModal__contentForm_title">Information</p>
         <form className="editModal__contentForm_form">
           <InputText name="Name" id="titleInput" type="text" onChange={titleGetter} value={titleInp} />
-          <label htmlFor="criteria" className="criteriaSelector__label">
-            <p className="criteriaSelector__item_title">Genre</p>
-            <select
-              className="criteriaSelector__selector"
-              id="criteria"
-              value={categoryInp}
-              onChange={(e) => setCategory(e)}
-            >
+          <div className="criteria__label">
+            <p className="criteria__title">Genre</p>
+            <select className="criteria__selector" id="criteria" value={categoryInp} onChange={(e) => setCategory(e)}>
               {availableGenres.map((genre) => (
                 <option value={genre}>{genre}</option>
               ))}
             </select>
-          </label>
+          </div>
           <InputText name="Price" id="priceInput" type="number" onChange={priceGetter} value={priceInp} />
           <InputText name="Image" id="imgUrlInput" type="text" onChange={imgUrlGetter} value={imgUrlInp} />
           <TextAreaContainer name="Description" id="Description" onChange={descriptionGetter} value={descriptionInp} />
-          <label htmlFor="criteria" className="criteriaSelector__label">
-            <p className="criteriaSelector__item_title">Age</p>
-            <select className="criteriaSelector__selector" id="age" onChange={setAge} value={ageInp}>
+          <div className="criteria__label">
+            <p className="criteria__title">Age</p>
+            <select className="criteria__selector" id="age" onChange={setAge} value={ageInp}>
               {availableAges.map((age) => (
                 <option value={age}>{age}</option>
               ))}
             </select>
-          </label>
+          </div>
           <p className="editModal__contentForm_platformTitle">Platform</p>
           <FormControlLabel
             control={<Checkbox checked={pcCheckedInp} onChange={() => pcCheckHandler()} />}
@@ -81,8 +76,10 @@ const EditGameModal: React.FC<EditGameModalProps> = ({
             control={<Checkbox value="XBox" checked={xbxCheckedInp} onChange={() => xbxCheckHandler()} />}
             label="XBox"
           />
-          <BtnContainer action={() => submitHandlerEdit()} childrenProps={{ label: "Submit" }} />
-          <BtnContainer action={() => deleteHandler()} childrenProps={{ label: "Delete" }} />
+          <div className="form-btn-container">
+            <BtnContainer action={() => submitHandlerEdit()} childrenProps={{ label: "Submit" }} />
+            <BtnContainer action={() => deleteHandler()} childrenProps={{ label: "Delete" }} />
+          </div>
         </form>
       </div>
     </div>

@@ -49,11 +49,7 @@ const Header: FC<HeaderProps> = ({
       ))}
       {loggedIn ? (
         <>
-          {visible ? (
-            <button type="button" className="gameCard__back-button" onClick={() => addAction()}>
-              Add Game
-            </button>
-          ) : null}
+          {visible ? <BtnContainer action={addAction} childrenProps={{ label: "Add Game" }} /> : null}
           <NavLink
             key={routesMap.CART}
             exact
