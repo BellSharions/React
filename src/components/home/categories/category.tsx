@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { Link } from "react-router-dom";
 import "./category.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,4 +17,4 @@ const Category: FC<CategoryProp> = ({ icon, title, path }) => (
   </Link>
 );
 
-export default Category;
+export default memo(Category);

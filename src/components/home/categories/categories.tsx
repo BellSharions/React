@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { gameCategories } from "../../../constants/constants";
 import Category from "./category";
 import "./categories.scss";
@@ -18,4 +18,4 @@ const Categories: FC = () => (
   </div>
 );
 
-export default Categories;
+export default memo(Categories);

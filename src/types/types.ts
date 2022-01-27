@@ -4,19 +4,19 @@ import { ChangeEvent, ChangeEventHandler, Dispatch, FormEventHandler, SyntheticE
 
 export interface ProductItemProps {
   id?: number;
-  age: number;
+  age?: number;
   title: string;
   description?: string;
   developer?: string;
   date?: string;
-  genre: string;
+  genre?: string;
   category: string;
   logo?: string;
-  rating: string;
+  rating?: string;
   price: number;
   action?: (gameTitle: string, gameCategory: string, gamePrice: number, gameCheck: boolean, gameAmount: number) => void;
   editAction?: () => void;
-  visible: boolean;
+  visible?: boolean;
 }
 
 export interface AppProps {
@@ -88,7 +88,6 @@ export interface Game {
   date?: string;
 }
 export interface GameToEdit {
-  id: number;
   title: string;
   category: string;
   price: number;
@@ -169,7 +168,6 @@ export interface ProfileProps {
   profilePic: string;
   saveHandler: (e: React.SyntheticEvent) => Promise<void>;
   userNameGetter: (value: string) => void;
-  profilePicGetter: () => void;
   profilePicHandler: (e: ChangeEvent<HTMLInputElement>) => void;
   name: string;
   message: string;
@@ -237,7 +235,7 @@ export interface CartGameProps {
   platforms: string[];
   today: Date;
   totalPerGameCut: number;
-  amountHandler: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  amountHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
   number: number;
   checked: boolean;
   checkHandler: () => void;
@@ -287,12 +285,12 @@ export interface EditGameModalProps {
   gameToEdit: Game;
   imgUrlInp: string;
   titleInp: string;
-  titleGetter: (nameData: string) => void;
+  titleGetter: (nameData: string | number) => void;
   categoryInp: string;
   setCategory: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  priceGetter: (price: number) => void;
+  priceGetter: (price: number | string) => void;
   priceInp: number;
-  imgUrlGetter: (imgUrlData: string) => void;
+  imgUrlGetter: (imgUrlData: string | number) => void;
   descriptionGetter: (inputName: string) => void;
   descriptionInp: string;
   ageInp: number;
@@ -305,7 +303,8 @@ export interface EditGameModalProps {
   xbxCheckHandler: () => void;
   formValid: boolean;
   submitHandlerEdit: () => void;
-  deleteHandler: () => void;
+  deleteHandler?: () => void;
+  visible: boolean;
 }
 export interface DeleteGameModalProps {
   closeHandler: () => void;

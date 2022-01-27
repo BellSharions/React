@@ -14,9 +14,6 @@ export const enum routeType {
   link,
   dropdown,
 }
-export const logOutText = { label: "", icon: "fas fa-door-open" };
-export const signInText = { label: "Sign In", icon: "fa fa-sign-in-alt" };
-export const signUpText = { label: "Sign Up", icon: "fa fa-user-plus" };
 export type singleLink = { type: routeType; item: { route: string; name: string; icon: string } };
 export type multiLink = { type: routeType; item: { name: string; data: Array<{ routeName: string; route: string }> } };
 export const ageArr = ["all ages", "3", "12", "16", "18"];
@@ -82,8 +79,6 @@ export const routes: Array<singleLink | multiLink> = [
   },
 ];
 
-export const fetchGameLink = "http://localhost:8079/games";
-export const fetchNewProductsLink = "http://localhost:8079/api/getTopProducts";
 export const fetchGameQueryLink = "http://localhost:8079/api/search/";
 export const signInUrl = "http://localhost:8079/api/auth/signIn/";
 export const signUpUrl = "http://localhost:8079/api/auth/signUp/";

@@ -1,28 +1,26 @@
 import "./styles/main.css";
 import "./styles/main.scss";
-import { StrictMode, Component, Dispatch } from "react";
+import { StrictMode, Component, Dispatch, lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Footer from "./components/footer/footer";
 import Home from "./components/home/homeContainer";
-import Products from "./components/products/productsContainer";
-import About from "./components/about/about";
 import { routesMap } from "./constants/constants";
-import ErrorCase from "./components/errorHandler/errorTest";
-import ErrorBoundary from "./components/errorHandler/errorBoundary";
 import { AppProps, AppState, GameCart } from "./types/types";
 import ProtectedRoute from "./components/protectedRoute/protectedRoute";
-import Profile from "./components/users/profileContainer";
+import CartPage from "./components/cart/cartPageContainer";
 import store from "./components/redux/store";
 import { ReducerState } from "./components/redux/reducer";
 import HeaderContainer from "./components/header/headerContainer";
 import { logInAction, setRoleAction } from "./components/redux/actions";
-import CartPage from "./components/cart/cartPageContainer";
 import ModalBodyContainer from "./components/modal/modalBodyContainer";
 import { setCartGamesAction } from "./components/redux/cart/cartActions";
 
+const Profile = lazy(() => import("./components/users/profileContainer"));
+const About = lazy(() => import("./components/about/about"));
+const Products = lazy(() => import("./components/products/productsContainer"));
 const mapStateToProps = (state: ReducerState) => ({
   signInModalVisible: state.reducer.signInModalVisible,
   signUpModalVisible: state.reducer.signUpModalVisible,
@@ -61,14 +59,13 @@ class AppContainer extends Component<AppProps, AppState> {
 
   async componentDidMount() {
     const getResponse = await (
-      await fetch(`http://localhost:8080/api/getCart/${store.getState().reducer.userName}`, {
+      await fetch(`http://localhost:8080/api/user/cart/${store.getState().reducer.userName}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       })
     ).json();
 
     if (getResponse) {
-      console.log(getResponse);
       if (getResponse.gamesList) this.props.setCart(getResponse.gamesList);
     }
   }
@@ -76,7 +73,7 @@ class AppContainer extends Component<AppProps, AppState> {
   render() {
     return (
       <StrictMode>
-        <ErrorBoundary>
+        <Suspense fallback={<div>Loading...</div>}>
           <HeaderContainer />
           <Switch>
             <ProtectedRoute path={`${routesMap.PRODUCTS}/:platform`}>
@@ -91,7 +88,6 @@ class AppContainer extends Component<AppProps, AppState> {
             <ProtectedRoute path={routesMap.PROFILE}>
               <Profile />
             </ProtectedRoute>
-            <Route path={routesMap.ERROR} render={() => <ErrorCase />} />
             <Route path={["/", routesMap.HOME]} render={() => <Home />} />
           </Switch>
           <Footer />
@@ -103,7 +99,7 @@ class AppContainer extends Component<AppProps, AppState> {
               </div>
             ) : null}
           </>
-        </ErrorBoundary>
+        </Suspense>
       </StrictMode>
     );
   }

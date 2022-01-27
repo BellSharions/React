@@ -6,6 +6,7 @@ import { EditGameModalProps } from "@/types/types";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
+import { memo } from "react";
 import "./editGameModal.scss";
 
 const AddGameModal: React.FC<EditGameModalProps> = ({
@@ -29,7 +30,6 @@ const AddGameModal: React.FC<EditGameModalProps> = ({
   xbxCheckedInp,
   xbxCheckHandler,
   submitHandlerEdit,
-  deleteHandler,
 }) => (
   <div className="editModal__container">
     <button className="modal_close-btn" type="button" onClick={() => closeHandler()}>
@@ -48,7 +48,9 @@ const AddGameModal: React.FC<EditGameModalProps> = ({
             <p className="criteria__title">Genre</p>
             <select className="criteria__selector" id="criteria" value={categoryInp} onChange={(e) => setCategory(e)}>
               {availableGenres.map((genre) => (
-                <option value={genre}>{genre}</option>
+                <option key={genre} value={genre}>
+                  {genre}
+                </option>
               ))}
             </select>
           </div>
@@ -59,7 +61,9 @@ const AddGameModal: React.FC<EditGameModalProps> = ({
             <p className="criteria__title">Age</p>
             <select className="criteria__selector" id="age" onChange={setAge} value={ageInp}>
               {availableAges.map((age) => (
-                <option value={age}>{age}</option>
+                <option key={age} value={age}>
+                  {age}
+                </option>
               ))}
             </select>
           </div>
@@ -83,4 +87,4 @@ const AddGameModal: React.FC<EditGameModalProps> = ({
   </div>
 );
 
-export default AddGameModal;
+export default memo(AddGameModal);

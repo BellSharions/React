@@ -16,8 +16,6 @@ export const fetchGamesSuccessAction = (games: Game[]): FilterAction => ({
 export const fetchGamesAction =
   (partOfUrl: string) =>
   async (dispatch: Dispatch<{ type: string } | FilterAction>): Promise<Game[]> => {
-    console.log(partOfUrl);
-
     const response = await fetch(`http://localhost:8080/api/search?${partOfUrl}`, { method: "GET" });
     const games: Game[] = await response.json();
     dispatch(fetchGamesSuccessAction(games));

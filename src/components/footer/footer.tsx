@@ -1,4 +1,5 @@
 import "./footer.scss";
+import { memo } from "react";
 import { gameCompaniesIcons } from "../../constants/constants";
 
 const Footer: React.FC = () => (
@@ -14,4 +15,4 @@ const Footer: React.FC = () => (
   </footer>
 );
 
-export default Footer;
+export default memo(Footer);

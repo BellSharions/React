@@ -1,4 +1,4 @@
-import { ageArr, availableGenres, signInUrl, signUpUrl } from "@/constants/constants";
+import { ageArr, availableGenres, routesMap, signInUrl, signUpUrl } from "@/constants/constants";
 import { GameCart } from "@/types/types";
 import { FC, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,7 +7,6 @@ import { closeModalAction, logInAction, setRoleAction, showDeleteGameModalAction
 import { buyGamesAction, setCartGamesAction } from "../redux/cart/cartActions";
 import { fetchGamesAction } from "../redux/filter/filterActions";
 import { ReducerState } from "../redux/reducer";
-import AddGameModal from "./addGameModal";
 import BuyModalBody from "./buyModalBody";
 import "./buyModalBody.scss";
 import DeleteGameModal from "./deleteGameModal";
@@ -52,9 +51,9 @@ const ModalBodyContainer: FC = () => {
   const history = useHistory();
   const gameToEdit = useSelector((state: ReducerState) => state.admin.gametoEdit);
   const incomGenreArr = gameToEdit.genre ? gameToEdit.genre.split(", ") : availableGenres;
-  const [titleInp, setTitleInp] = useState<string>(gameToEdit.title || "");
+  const [titleInp, setTitleInp] = useState<string>("");
   const [categoryInp, setCategoryInp] = useState(incomGenreArr[0]);
-  const [priceInp, setPriceInp] = useState<number>(gameToEdit.price || 0.99);
+  const [priceInp, setPriceInp] = useState<number>(0.99);
   const [imgUrlInp, setImgUrlInp] = useState<string>("");
   const [descriptionInp, setDescriptionInp] = useState<string>(gameToEdit.description || "");
   const [ageInp, setAgeInp] = useState<number>(gameToEdit.age || +ageArr[0]);
@@ -64,6 +63,7 @@ const ModalBodyContainer: FC = () => {
   const finalCategory = [pcCheckedInp ? "PC" : null, psCheckedInp ? "PlayStation" : null, xbxCheckedInp ? "XBOX" : null]
     .filter((categor) => Boolean(categor))
     .join(", ");
+  const visible = !!edit;
   const gameObj = {
     id: gameToEdit.id,
     title: titleInp,
@@ -91,7 +91,7 @@ const ModalBodyContainer: FC = () => {
       setCategoryInp(incomGenreArr[0]);
       setPriceInp(gameToEdit.price);
       setImgUrlInp(gameToEdit.imgUrl);
-      setDescriptionInp(gameToEdit.description);
+      setDescriptionInp(gameToEdit.description || "");
       setAgeInp(gameToEdit.age);
       setPcCheckedInp(gameToEdit.category.includes("PC"));
       setPsCheckedInp(gameToEdit.category.includes("PlayStation"));
@@ -103,20 +103,20 @@ const ModalBodyContainer: FC = () => {
     dispatch(showDeleteGameModalAction());
   };
 
-  const titleGetter = (nameData: string) => {
-    setTitleInp(nameData);
+  const titleGetter = (nameData: string | number) => {
+    setTitleInp(nameData as string);
   };
 
-  const priceGetter = (priceData: number) => {
-    if (Number(priceData) <= 0.01 && Number(priceData) > 999) {
+  const priceGetter = (priceData: number | string) => {
+    if (Number(priceData as number) <= 0.01 && Number(priceData as number) > 999) {
       return;
     }
-    const num = Number(Math.round(priceData * 100) / 100);
+    const num = Number(Math.round((priceData as number) * 100) / 100);
     setPriceInp(num);
   };
 
-  const imgUrlGetter = (imgUrlData: string) => {
-    setImgUrlInp(imgUrlData);
+  const imgUrlGetter = (imgUrlData: string | number) => {
+    setImgUrlInp(imgUrlData as string);
   };
 
   const descriptionGetter = (inputName: string) => {
@@ -124,7 +124,6 @@ const ModalBodyContainer: FC = () => {
   };
 
   const submitHandlerEdit = async () => {
-    console.log(gameObj);
     const putResponse = await fetch(`http://localhost:8080/api/product/`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -148,8 +147,7 @@ const ModalBodyContainer: FC = () => {
   };
 
   const submitHandlerCreate = async () => {
-    console.log(gameObj);
-    const postResponse = await fetch(`http://localhost:8080/api/product/`, {
+    await fetch(`http://localhost:8080/api/product/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(gameObj),
@@ -169,11 +167,9 @@ const ModalBodyContainer: FC = () => {
     dispatch(closeModalAction());
   };
   const deleteGame = async () => {
-    console.log(gameObj);
-    const deleteResponse = await fetch(`http://localhost:8080/api/product/`, {
+    await fetch(`http://localhost:8080/api/product/${gameObj.id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: gameObj.id }),
     });
     dispatch(
       fetchGamesAction(
@@ -220,7 +216,7 @@ const ModalBodyContainer: FC = () => {
       body: JSON.stringify({ userName, cartGames, totalPurchase }),
     });
     if (postResponse.status === 404) throw new Error(`HTTP status: ${postResponse.status}`);
-    dispatch(buyGamesAction(totalPurchase));
+    dispatch(buyGamesAction(totalPurchase as number));
 
     dispatch(closeModalAction());
   };
@@ -289,7 +285,7 @@ const ModalBodyContainer: FC = () => {
 
   async function changeFunc(e: React.SyntheticEvent) {
     if (e) e.preventDefault();
-    const patchResponse = await fetch(`http://localhost:8080/passwordChange/${userName}`, {
+    const patchResponse = await fetch(`http://localhost:8080/user/passwordChange/${userName}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ repeatNewPassword }),
@@ -324,16 +320,14 @@ const ModalBodyContainer: FC = () => {
         throw new Error(`HTTP status: ${res.status}`);
       }
       const getResponse = await (
-        await fetch(`http://localhost:8080/api/getCart/${login}`, {
+        await fetch(`http://localhost:8080/api/user/cart/${login}`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         })
       ).json();
-      console.log(getResponse.gamesList);
       if (getResponse.gamesList) dispatch(setCartGamesAction(getResponse.gamesList));
       else dispatch(setCartGamesAction([] as GameCart[]));
       const response = await res.json();
-      console.log(response);
       dispatch(setRoleAction(response.role));
       localStorage.setItem("role", response.role);
       return response;
@@ -366,15 +360,14 @@ const ModalBodyContainer: FC = () => {
         localStorage.setItem("login", login);
         dispatch(closeModalAction());
         const getResponse = await (
-          await fetch(`http://localhost:8080/api/getCart/${login}`, {
+          await fetch(`http://localhost:8080/api/user/cart/${login}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
           })
         ).json();
-        console.log(getResponse.gamesList);
         if (getResponse) dispatch(setCartGamesAction(getResponse.gamesList));
         else dispatch(setCartGamesAction([] as GameCart[]));
-        history.push("/profile");
+        history.push(routesMap.PROFILE);
       } else {
         setMessage("This login is already in use, please use another one");
         throw new Error(`HTTP status: ${res.status}`);
@@ -390,9 +383,9 @@ const ModalBodyContainer: FC = () => {
       {buy ? (
         <Modal>
           <BuyModalBody
-            userName={userName}
-            cartGames={cartGames}
-            amount={totalPurchase}
+            userName={userName as string}
+            cartGames={cartGames as GameCart[]}
+            amount={totalPurchase as number}
             closeHandler={closeModal}
             confirmHandler={confirmHandler}
           />
@@ -444,7 +437,7 @@ const ModalBodyContainer: FC = () => {
           />
         </Modal>
       ) : null}
-      {edit ? (
+      {edit || add ? (
         <Modal>
           <EditGameModal
             closeHandler={closeModal}
@@ -470,35 +463,7 @@ const ModalBodyContainer: FC = () => {
             formValid={formValid}
             submitHandlerEdit={submitHandlerEdit}
             deleteHandler={deleteHandler}
-          />
-        </Modal>
-      ) : null}
-      {add ? (
-        <Modal>
-          <AddGameModal
-            closeHandler={closeModal}
-            gameToEdit={gameToEdit}
-            imgUrlInp={imgUrlInp}
-            titleInp={titleInp}
-            titleGetter={titleGetter}
-            categoryInp={categoryInp}
-            setCategory={setCategory}
-            priceGetter={priceGetter}
-            priceInp={priceInp}
-            imgUrlGetter={imgUrlGetter}
-            descriptionGetter={descriptionGetter}
-            descriptionInp={descriptionInp}
-            ageInp={ageInp}
-            setAge={setAge}
-            pcCheckedInp={pcCheckedInp}
-            pcCheckHandler={pcCheckHandler}
-            psCheckedInp={psCheckedInp}
-            psCheckHandler={psCheckHandler}
-            xbxCheckedInp={xbxCheckedInp}
-            xbxCheckHandler={xbxCheckHandler}
-            formValid={formValid}
-            submitHandlerEdit={submitHandlerCreate}
-            deleteHandler={deleteHandler}
+            visible={visible}
           />
         </Modal>
       ) : null}

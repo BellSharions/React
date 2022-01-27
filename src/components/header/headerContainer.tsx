@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import "./header.scss";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "./header";
@@ -42,4 +42,4 @@ const HeaderContainer: FC = () => {
   );
 };
 
-export default HeaderContainer;
+export default memo(HeaderContainer);

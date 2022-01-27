@@ -6,6 +6,7 @@ import { EditGameModalProps } from "@/types/types";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
+import { memo } from "react";
 import "./editGameModal.scss";
 
 const EditGameModal: React.FC<EditGameModalProps> = ({
@@ -30,6 +31,7 @@ const EditGameModal: React.FC<EditGameModalProps> = ({
   xbxCheckHandler,
   submitHandlerEdit,
   deleteHandler,
+  visible,
 }) => (
   <div className="editModal__container">
     <button className="modal_close-btn" type="button" onClick={() => closeHandler()}>
@@ -78,7 +80,7 @@ const EditGameModal: React.FC<EditGameModalProps> = ({
           />
           <div className="form-btn-container">
             <BtnContainer action={() => submitHandlerEdit()} childrenProps={{ label: "Submit" }} />
-            <BtnContainer action={() => deleteHandler()} childrenProps={{ label: "Delete" }} />
+            {visible ? <BtnContainer action={() => deleteHandler()} childrenProps={{ label: "Delete" }} /> : null}
           </div>
         </form>
       </div>
@@ -86,4 +88,4 @@ const EditGameModal: React.FC<EditGameModalProps> = ({
   </div>
 );
 
-export default EditGameModal;
+export default memo(EditGameModal);

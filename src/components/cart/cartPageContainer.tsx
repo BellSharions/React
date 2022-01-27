@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from "react";
+import { FC, memo, useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./cartPage.scss";
 import { IncreaseTotalAmountAction, removeGameFromCartAction } from "../redux/cart/cartActions";
@@ -10,34 +10,29 @@ const CartPageContainer: FC = () => {
   const userName = useSelector((state: ReducerState) => state.reducer.userName);
   const games = useSelector((state: ReducerState) => state.cart.gamesList);
   const userBalance = useSelector((state: ReducerState) => state.cart.userBalance);
-  const [totalAmount, setTotalAmount] = useState<number>(0);
-  const [valid, setValid] = useState<boolean>(false);
   const dispatch = useDispatch();
   const clickHandler = async () => {
     dispatch(removeGameFromCartAction());
-    const postResponse = await fetch(`http://localhost:8080/api/cart/${userName}`, {
+    await fetch(`http://localhost:8080/api/user/cart/${userName}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ gamesList: games.filter((game) => game.check === false) }),
     });
   };
+  const totalAmount = useMemo(
+    () => Number(games.map((game) => game.amount * game.price).reduce((sum, current) => sum + current, 0)),
+    [games]
+  );
+  const valid = useMemo(() => games.map((game) => game.check).some((check) => check === true), [games]);
 
-  useEffect(() => {
-    const total = Number(games.map((game) => game.amount * game.price).reduce((sum, current) => sum + current, 0));
-    setTotalAmount(total);
-  }, [games]);
-  useEffect(() => {
-    setValid(games.map((game) => game.check).some((check) => check === true));
-  }, [games.map((game) => game.check).some((check) => check === true)]);
-
-  const buyFunc = async () => {
+  const buyFunc = useCallback(() => {
     if (totalAmount <= userBalance) {
       dispatch(IncreaseTotalAmountAction(totalAmount));
       dispatch(showBuyModalAction());
     } else {
       alert("You do not have enough money. Please remove something from cart.");
     }
-  };
+  }, [totalAmount, userBalance]);
 
   return (
     <CartPage
@@ -51,4 +46,4 @@ const CartPageContainer: FC = () => {
   );
 };
 
-export default CartPageContainer;
+export default memo(CartPageContainer);

@@ -6,8 +6,6 @@ export default function usePrevious(
 ): MutableRefObject<Array<ProductItemProps>>["current"] {
   const ref = useRef<Array<ProductItemProps>>();
   useEffect(() => {
-    console.log(value);
-
     if (value.length !== 0) ref.current = value;
   }, [value]);
   return ref.current;
