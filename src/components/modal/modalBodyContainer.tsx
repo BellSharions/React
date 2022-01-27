@@ -55,7 +55,7 @@ const ModalBodyContainer: FC = () => {
   const [titleInp, setTitleInp] = useState<string>(gameToEdit.title || "");
   const [categoryInp, setCategoryInp] = useState(incomGenreArr[0]);
   const [priceInp, setPriceInp] = useState<number>(gameToEdit.price || 0.99);
-  const [imgUrlInp, setImgUrlInp] = useState<string>(gameToEdit.imgUrl || "");
+  const [imgUrlInp, setImgUrlInp] = useState<string>("");
   const [descriptionInp, setDescriptionInp] = useState<string>(gameToEdit.description || "");
   const [ageInp, setAgeInp] = useState<number>(gameToEdit.age || +ageArr[0]);
   const [pcCheckedInp, setPcCheckedInp] = useState<boolean>(!gameToEdit.category.includes("PC"));
@@ -80,7 +80,7 @@ const ModalBodyContainer: FC = () => {
       setTitleInp("");
       setCategoryInp("");
       setPriceInp(0);
-      setImgUrlInp("");
+      setImgUrlInp("https://res.cloudinary.com/dev3afzlt/image/upload/v1643294045/300x500_dvgbjh.png");
       setDescriptionInp("");
       setAgeInp(3);
       setPcCheckedInp(false);
