@@ -9,11 +9,11 @@ const HomeContainer: FC = () => {
   const plat = useLocation();
   const searchPlat = plat.pathname.split("/")[2];
   const [sort, age, genre, sortDir, search] = useSelector((state: ReducerState) => [
-    state.reducer.sort,
-    state.reducer.age,
-    state.reducer.genre,
-    state.reducer.sortDir,
-    state.reducer.term,
+    state.filter.sort,
+    state.filter.age,
+    state.filter.genre,
+    state.filter.sortDir,
+    state.filter.term,
   ]);
   return <Home platform={searchPlat} sort={sort} age={age} genre={genre} sortDir={sortDir} search={search} />;
 };

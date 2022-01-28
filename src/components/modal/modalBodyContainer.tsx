@@ -10,7 +10,7 @@ import { ReducerState } from "../redux/reducer";
 import BuyModalBody from "./buyModalBody";
 import "./buyModalBody.scss";
 import DeleteGameModal from "./deleteGameModal";
-import EditGameModal from "./editGameModal";
+import EditGameModal from "./gameModal";
 import Modal from "./modal";
 import ChangePassModalBody from "./passwordModalBody";
 import SignInModalBody from "./signInModalBody";
@@ -23,11 +23,11 @@ const ModalBodyContainer: FC = () => {
     state.cart.totalPurchase,
   ]);
   const [sort, age, genre, sortDir, search] = useSelector((state: ReducerState) => [
-    state.reducer.sort,
-    state.reducer.age,
-    state.reducer.genre,
-    state.reducer.sortDir,
-    state.reducer.term,
+    state.filter.sort,
+    state.filter.age,
+    state.filter.genre,
+    state.filter.sortDir,
+    state.filter.term,
   ]);
   const [signup, signin, changePassword, buy, edit, add, del] = useSelector((state: ReducerState) => [
     state.reducer.signUpModalVisible,
@@ -47,16 +47,14 @@ const ModalBodyContainer: FC = () => {
   const [message, setMessage] = useState("Please enter password");
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const dispatch = useDispatch();
-  const history = useHistory();
   const gameToEdit = useSelector((state: ReducerState) => state.admin.gametoEdit);
   const incomGenreArr = gameToEdit.genre ? gameToEdit.genre.split(", ") : availableGenres;
   const [titleInp, setTitleInp] = useState<string>("");
   const [categoryInp, setCategoryInp] = useState(incomGenreArr[0]);
   const [priceInp, setPriceInp] = useState<number>(0.99);
   const [imgUrlInp, setImgUrlInp] = useState<string>("");
-  const [descriptionInp, setDescriptionInp] = useState<string>(gameToEdit.description || "");
-  const [ageInp, setAgeInp] = useState<number>(gameToEdit.age || +ageArr[0]);
+  const [descriptionInp, setDescriptionInp] = useState<string>("");
+  const [ageInp, setAgeInp] = useState<number>(+ageArr[0]);
   const [pcCheckedInp, setPcCheckedInp] = useState<boolean>(!gameToEdit.category.includes("PC"));
   const [psCheckedInp, setPsCheckedInp] = useState<boolean>(!gameToEdit.category.includes("PlayStation"));
   const [xbxCheckedInp, setXbxCheckedInp] = useState<boolean>(!gameToEdit.category.includes("XBOX"));
@@ -64,43 +62,18 @@ const ModalBodyContainer: FC = () => {
     .filter((categor) => Boolean(categor))
     .join(", ");
   const visible = !!edit;
+  const dispatch = useDispatch();
+  const history = useHistory();
   const gameObj = {
     id: gameToEdit.id,
     title: titleInp,
-    imgUrl: imgUrlInp,
+    logo: imgUrlInp,
     price: Number(priceInp),
     description: descriptionInp,
     age: Number(ageInp),
-    genre: categoryInp,
+    genres: categoryInp,
     category: finalCategory,
     deleted: false,
-  };
-  useEffect(() => {
-    if (add) {
-      setTitleInp("");
-      setCategoryInp("");
-      setPriceInp(0);
-      setImgUrlInp("https://res.cloudinary.com/dev3afzlt/image/upload/v1643294045/300x500_dvgbjh.png");
-      setDescriptionInp("");
-      setAgeInp(3);
-      setPcCheckedInp(false);
-      setPsCheckedInp(false);
-      setXbxCheckedInp(false);
-    } else {
-      setTitleInp(gameToEdit.title);
-      setCategoryInp(incomGenreArr[0]);
-      setPriceInp(gameToEdit.price);
-      setImgUrlInp(gameToEdit.imgUrl);
-      setDescriptionInp(gameToEdit.description || "");
-      setAgeInp(gameToEdit.age);
-      setPcCheckedInp(gameToEdit.category.includes("PC"));
-      setPsCheckedInp(gameToEdit.category.includes("PlayStation"));
-      setXbxCheckedInp(gameToEdit.category.includes("XBOX"));
-    }
-  }, [gameToEdit, add]);
-
-  const deleteHandler = () => {
-    dispatch(showDeleteGameModalAction());
   };
 
   const titleGetter = (nameData: string | number) => {
@@ -121,69 +94,6 @@ const ModalBodyContainer: FC = () => {
 
   const descriptionGetter = (inputName: string) => {
     setDescriptionInp(inputName);
-  };
-
-  const submitHandlerEdit = async () => {
-    const putResponse = await fetch(`http://localhost:8080/api/product/`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(gameObj),
-    });
-    if (putResponse.status === 200) {
-      dispatch(
-        fetchGamesAction(
-          `${new URLSearchParams({
-            text: search,
-            platform: "all games",
-            age,
-            sort,
-            sortDir,
-            genre,
-          })}`
-        )
-      );
-      dispatch(closeModalAction());
-    }
-  };
-
-  const submitHandlerCreate = async () => {
-    await fetch(`http://localhost:8080/api/product/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(gameObj),
-    });
-    dispatch(
-      fetchGamesAction(
-        `${new URLSearchParams({
-          text: search,
-          platform: "all games",
-          age,
-          sort,
-          sortDir,
-          genre,
-        })}`
-      )
-    );
-    dispatch(closeModalAction());
-  };
-  const deleteGame = async () => {
-    await fetch(`http://localhost:8080/api/product/${gameObj.id}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    });
-    dispatch(
-      fetchGamesAction(
-        `${new URLSearchParams({
-          text: search,
-          platform: "all games",
-          age,
-          sort,
-          sortDir,
-          genre,
-        })}`
-      )
-    );
-    dispatch(closeModalAction());
   };
 
   const pcCheckHandler = () => {
@@ -209,25 +119,11 @@ const ModalBodyContainer: FC = () => {
   const newPasswordGetter = (passwordData: string) => {
     setNewPassword(passwordData);
   };
-  const confirmHandler = async () => {
-    const postResponse = await fetch(`http://localhost:8080/api/buy/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userName, cartGames, totalPurchase }),
-    });
-    if (postResponse.status === 404) throw new Error(`HTTP status: ${postResponse.status}`);
-    dispatch(buyGamesAction(totalPurchase as number));
-
-    dispatch(closeModalAction());
-  };
   const repeatNewPasswordGetter = (passwordData: string) => {
     setRepeatNewPassword(passwordData);
   };
   const repeatPasswordGetter = (passwordData: string) => {
     setRepeatPassword(passwordData);
-  };
-  const closeModal = () => {
-    dispatch(closeModalAction());
   };
   const loginGetter = (loginData: string) => {
     setLogin(loginData);
@@ -240,6 +136,36 @@ const ModalBodyContainer: FC = () => {
   const passwordGetter = (passwordData: string) => {
     setPassword(passwordData);
   };
+
+  const deleteHandler = () => {
+    dispatch(showDeleteGameModalAction());
+  };
+  const closeModal = () => {
+    dispatch(closeModalAction());
+  };
+  useEffect(() => {
+    if (add) {
+      setTitleInp("");
+      setCategoryInp("");
+      setPriceInp(0);
+      setImgUrlInp("https://res.cloudinary.com/dev3afzlt/image/upload/v1643294045/300x500_dvgbjh.png");
+      setDescriptionInp("");
+      setAgeInp(3);
+      setPcCheckedInp(false);
+      setPsCheckedInp(false);
+      setXbxCheckedInp(false);
+    } else {
+      setTitleInp(gameToEdit.title);
+      setCategoryInp(incomGenreArr[0]);
+      setPriceInp(gameToEdit.price);
+      setImgUrlInp(gameToEdit.imgUrl);
+      setDescriptionInp(gameToEdit.description || "");
+      setAgeInp(gameToEdit.age);
+      setPcCheckedInp(gameToEdit.category.includes("PC"));
+      setPsCheckedInp(gameToEdit.category.includes("PlayStation"));
+      setXbxCheckedInp(gameToEdit.category.includes("XBOX"));
+    }
+  }, [gameToEdit, add]);
   useEffect(() => {
     const alphNumPass = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
     if (!newPassword) setPassMessage("Please enter password");
@@ -259,6 +185,7 @@ const ModalBodyContainer: FC = () => {
     if (passMessage === "New password is OK" && repeatPassMessage === "Repeated password is OK") setFormValid(true);
     else setFormValid(false);
   }, [passMessage, repeatPassMessage]);
+
   useEffect(() => {
     setPassword("");
     setLogin("");
@@ -378,6 +305,80 @@ const ModalBodyContainer: FC = () => {
     }
     return null;
   }
+  const confirmHandler = async () => {
+    const postResponse = await fetch(`http://localhost:8080/api/buy/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userName, cartGames, totalPurchase }),
+    });
+    if (postResponse.status === 404) throw new Error(`HTTP status: ${postResponse.status}`);
+    dispatch(buyGamesAction(totalPurchase as number));
+
+    dispatch(closeModalAction());
+  };
+  const submitHandlerEdit = async () => {
+    const putResponse = await fetch(`http://localhost:8080/api/product/`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(gameObj),
+    });
+    if (putResponse.status === 200) {
+      dispatch(
+        fetchGamesAction(
+          `${new URLSearchParams({
+            text: search,
+            platform: "all games",
+            age,
+            sort,
+            sortDir,
+            genre,
+          })}`
+        )
+      );
+      dispatch(closeModalAction());
+    }
+  };
+
+  const submitHandlerCreate = async () => {
+    await fetch(`http://localhost:8080/api/product/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(gameObj),
+    });
+    dispatch(
+      fetchGamesAction(
+        `${new URLSearchParams({
+          text: search,
+          platform: "all games",
+          age,
+          sort,
+          sortDir,
+          genre,
+        })}`
+      )
+    );
+    dispatch(closeModalAction());
+  };
+  const deleteGame = async () => {
+    await fetch(`http://localhost:8080/api/product/${gameObj.id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+    dispatch(
+      fetchGamesAction(
+        `${new URLSearchParams({
+          text: search,
+          platform: "all games",
+          age,
+          sort,
+          sortDir,
+          genre,
+        })}`
+      )
+    );
+    dispatch(closeModalAction());
+  };
+
   return (
     <>
       {buy ? (
@@ -462,6 +463,7 @@ const ModalBodyContainer: FC = () => {
             xbxCheckHandler={xbxCheckHandler}
             formValid={formValid}
             submitHandlerEdit={submitHandlerEdit}
+            submitHandlerCreate={submitHandlerCreate}
             deleteHandler={deleteHandler}
             visible={visible}
           />

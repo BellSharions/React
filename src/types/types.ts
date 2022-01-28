@@ -88,6 +88,7 @@ export interface Game {
   date?: string;
 }
 export interface GameToEdit {
+  id?: number;
   title: string;
   category: string;
   price: number;
@@ -96,7 +97,6 @@ export interface GameToEdit {
   genre: string;
   age: number;
   rating?: number;
-  id?: number;
   date?: string;
 }
 export interface FilterAction {
@@ -303,7 +303,8 @@ export interface EditGameModalProps {
   xbxCheckHandler: () => void;
   formValid: boolean;
   submitHandlerEdit: () => void;
-  deleteHandler?: () => void;
+  submitHandlerCreate: () => void;
+  deleteHandler: () => void;
   visible: boolean;
 }
 export interface DeleteGameModalProps {
@@ -313,4 +314,13 @@ export interface DeleteGameModalProps {
 
 export interface AdminStateType {
   gametoEdit: GameToEdit;
+}
+
+export interface FilterStateType {
+  age: string;
+  sort: string;
+  sortDir: string;
+  genre: string;
+  term: string;
+  searchResult: Game[]:
 }

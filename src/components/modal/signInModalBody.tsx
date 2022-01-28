@@ -17,7 +17,7 @@ const SignInModalBody: FC<SignInModalProps> = ({
   <div className="signIn__modal_container">
     <div className="signIn__modal_upper-container">
       <h1 className="signIn__modal_title">Authorization</h1>
-      <button className="signIn__modal_close-btn" type="button" onClick={() => closeModal()}>
+      <button className="signIn__modal_close-btn" type="button" onClick={closeModal}>
         <FontAwesomeIcon icon={faTimes} />
       </button>
     </div>

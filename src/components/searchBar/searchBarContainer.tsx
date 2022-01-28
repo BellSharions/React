@@ -9,7 +9,7 @@ import { changeSearchAction, fetchGamesAction } from "../redux/filter/filterActi
 import { ReducerState } from "../redux/reducer";
 
 const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, genre, search }) => {
-  const searchResult = useSelector((state: ReducerState) => state.reducer.searchResult);
+  const searchResult = useSelector((state: ReducerState) => state.filter.searchResult);
   const [isLoading, setLoading] = loaderHook(false);
   const dispatch = useDispatch();
   const changeSearch = (e: ChangeEvent<HTMLInputElement>) => {

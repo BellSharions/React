@@ -7,9 +7,9 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { memo } from "react";
-import "./editGameModal.scss";
+import "./gameModal.scss";
 
-const AddGameModal: React.FC<EditGameModalProps> = ({
+const gameModal: React.FC<EditGameModalProps> = ({
   closeHandler,
   imgUrlInp,
   titleInp,
@@ -30,9 +30,12 @@ const AddGameModal: React.FC<EditGameModalProps> = ({
   xbxCheckedInp,
   xbxCheckHandler,
   submitHandlerEdit,
+  submitHandlerCreate,
+  deleteHandler,
+  visible,
 }) => (
   <div className="editModal__container">
-    <button className="modal_close-btn" type="button" onClick={() => closeHandler()}>
+    <button className="modal_close-btn" type="button" onClick={closeHandler}>
       <FontAwesomeIcon icon={faTimes} />
     </button>
     <div className="editModal__content_container">
@@ -48,9 +51,7 @@ const AddGameModal: React.FC<EditGameModalProps> = ({
             <p className="criteria__title">Genre</p>
             <select className="criteria__selector" id="criteria" value={categoryInp} onChange={(e) => setCategory(e)}>
               {availableGenres.map((genre) => (
-                <option key={genre} value={genre}>
-                  {genre}
-                </option>
+                <option value={genre}>{genre}</option>
               ))}
             </select>
           </div>
@@ -61,30 +62,35 @@ const AddGameModal: React.FC<EditGameModalProps> = ({
             <p className="criteria__title">Age</p>
             <select className="criteria__selector" id="age" onChange={setAge} value={ageInp}>
               {availableAges.map((age) => (
-                <option key={age} value={age}>
-                  {age}
-                </option>
+                <option value={age}>{age}</option>
               ))}
             </select>
           </div>
           <p className="editModal__contentForm_platformTitle">Platform</p>
+          <FormControlLabel control={<Checkbox checked={pcCheckedInp} onChange={pcCheckHandler} />} label="PC" />
           <FormControlLabel
-            control={<Checkbox checked={pcCheckedInp} onChange={() => pcCheckHandler()} />}
-            label="PC"
-          />
-          <FormControlLabel
-            control={<Checkbox checked={psCheckedInp} onChange={() => psCheckHandler()} />}
+            control={<Checkbox checked={psCheckedInp} onChange={psCheckHandler} />}
             label="PlayStation"
           />
           <FormControlLabel
-            control={<Checkbox value="XBox" checked={xbxCheckedInp} onChange={() => xbxCheckHandler()} />}
+            control={<Checkbox value="XBox" checked={xbxCheckedInp} onChange={xbxCheckHandler} />}
             label="XBox"
           />
-          <BtnContainer action={submitHandlerEdit} childrenProps={{ label: "Submit" }} />
+          <div className="form-btn-container">
+            {visible ? (
+              <>
+                <BtnContainer action={submitHandlerEdit} childrenProps={{ label: "Edit" }} />
+
+                <BtnContainer action={deleteHandler} childrenProps={{ label: "Delete" }} />
+              </>
+            ) : (
+              <BtnContainer action={submitHandlerCreate} childrenProps={{ label: "Submit" }} />
+            )}
+          </div>
         </form>
       </div>
     </div>
   </div>
 );
 
-export default memo(AddGameModal);
+export default memo(gameModal);

@@ -42,7 +42,7 @@ const ProfilePage: FC<ProfileProps> = ({
       </div>
       <div className="profilePage__btnsSection">
         <input type="submit" className="profilePage__btnsSection_saveBtn" value="Save profile" disabled={!formValid} />
-        <button type="button" className="profilePage__btnsSection_changePassBtn" onClick={() => action()}>
+        <button type="button" className="profilePage__btnsSection_changePassBtn" onClick={action}>
           <p>Change password</p>
         </button>
       </div>

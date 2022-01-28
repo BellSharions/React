@@ -41,7 +41,7 @@ const GameCard: FC<ProductItemProps> = ({
         <div className="gameCard__back-description">{description}</div>
         <div className="gameCard__back-buttons">
           {visible ? (
-            <button type="button" className="gameCard__back-button" onClick={() => editAction()}>
+            <button type="button" className="gameCard__back-button" onClick={editAction}>
               Edit
             </button>
           ) : null}

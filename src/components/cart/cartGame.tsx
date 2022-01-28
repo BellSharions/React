@@ -37,7 +37,7 @@ const CartGame: FC<CartGameProps> = ({
       <p className="cartGame__data_paragraphPrice">{totalPerGameCut}</p>
     </div>
     <div className="cartGame__data_check cartGame__data_container">
-      <input type="checkbox" checked={checked} onChange={() => checkHandler()} />
+      <input type="checkbox" checked={checked} onChange={checkHandler} />
     </div>
   </div>
 );

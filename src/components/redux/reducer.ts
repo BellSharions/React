@@ -14,18 +14,10 @@ import {
   showEditGameModal,
   showAddGameModal,
   showDeleteGameModal,
-  fetchGames,
 } from "./actionTypes";
 import adminReducer from "./admin/adminReducer";
 import CartReducer from "./cart/cartReducer";
-import {
-  changeSearchType,
-  fetchGamesSuccess,
-  filterByAgeType,
-  filterByGenreType,
-  filterBySelection,
-  filterBySelectionDirection,
-} from "./filter/filterActionTypes";
+import filterReducer from "./filter/filterReducer";
 
 export const initialState = {
   loggedIn: false,
@@ -33,7 +25,6 @@ export const initialState = {
   fetch: false,
   userName: "",
   role: "user",
-  searchResult: [] as Game[],
   changePassModalVisible: false,
   editGameModalVisible: false,
   addGameModalVisible: false,
@@ -41,11 +32,6 @@ export const initialState = {
   signInModalVisible: false,
   signUpModalVisible: false,
   buyModalVisible: false,
-  age: "all ages",
-  sort: "rating",
-  sortDir: "asc",
-  genre: "all genres",
-  term: "",
 };
 
 const reducer = (
@@ -57,7 +43,6 @@ const reducer = (
   fetch: boolean;
   userName: string;
   role: string;
-  searchResult: Game[];
   changePassModalVisible: boolean;
   editGameModalVisible: boolean;
   addGameModalVisible: boolean;
@@ -65,11 +50,6 @@ const reducer = (
   signInModalVisible: boolean;
   signUpModalVisible: boolean;
   buyModalVisible: boolean;
-  age: string;
-  sort: string;
-  sortDir: string;
-  genre: string;
-  term: string;
 } => {
   switch (action.type) {
     case logInType:
@@ -163,41 +143,6 @@ const reducer = (
         ...state,
         buyModalVisible: true,
       };
-    case filterBySelection:
-      return {
-        ...state,
-        sort: action.payload as string,
-      };
-    case filterBySelectionDirection:
-      return {
-        ...state,
-        sortDir: action.payload as string,
-      };
-    case filterByAgeType:
-      return {
-        ...state,
-        age: action.payload as string,
-      };
-    case filterByGenreType:
-      return {
-        ...state,
-        genre: action.payload as string,
-      };
-    case fetchGames:
-      return {
-        ...state,
-        fetch: action.payload as boolean,
-      };
-    case fetchGamesSuccess:
-      return {
-        ...state,
-        searchResult: action.payload as Game[],
-      };
-    case changeSearchType:
-      return {
-        ...state,
-        term: action.payload as string,
-      };
     default:
       return state;
   }
@@ -206,6 +151,7 @@ export const rootReducer = combineReducers({
   reducer,
   admin: adminReducer,
   cart: CartReducer,
+  filter: filterReducer,
 });
 export default reducer;
 export type ReducerState = ReturnType<typeof rootReducer>;

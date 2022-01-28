@@ -32,7 +32,15 @@
   color: #808080;
   cursor: pointer;
 }
-
+.buyModal_confirm-btn {
+  background-color: inherit;
+  border: none;
+  font-size: 2rem;
+  color: #808080;
+  cursor: pointer;
+  justify-content: center;
+  align-self: center;
+}
 .buy__modal_content-container {
   display: flex;
   flex-direction: column;

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { ReducerState } from "@/components/redux/reducer";
 
 const NewGames: FC = () => {
-  const newGamesList = useSelector((state: ReducerState) => state.reducer.searchResult);
+  const newGamesList = useSelector((state: ReducerState) => state.filter.searchResult);
 
   return (
     <>

@@ -22,16 +22,6 @@ const Profile = lazy(() => import("./components/users/profileContainer"));
 const About = lazy(() => import("./components/about/about"));
 const Products = lazy(() => import("./components/products/productsContainer"));
 const mapStateToProps = (state: ReducerState) => ({
-  signInModalVisible: state.reducer.signInModalVisible,
-  signUpModalVisible: state.reducer.signUpModalVisible,
-  buyModalVisible: state.reducer.buyModalVisible,
-  changePassModalVisible: state.reducer.changePassModalVisible,
-  userName: state.reducer.userName,
-  loggedIn: state.reducer.loggedIn,
-  age: state.reducer.age,
-  sort: state.reducer.sort,
-  sortDir: state.reducer.sortDir,
-  genre: state.reducer.genre,
   isLoading: state.reducer.isLoading,
 });
 const mapDispatchToProps = (
