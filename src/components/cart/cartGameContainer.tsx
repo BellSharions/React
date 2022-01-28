@@ -1,4 +1,4 @@
-import { FC, memo, useMemo, useState } from "react";
+import { FC, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./cartGame.scss";
 import { CartGameContainerProps } from "../../types/types";
@@ -8,7 +8,7 @@ import { changeGameAmountAction, changeGameCheckAction } from "../redux/cart/car
 
 const CartGameContainer: FC<CartGameContainerProps> = ({ title, category, price }) => {
   const games = useSelector((state: ReducerState) => state.cart.gamesList);
-  const foundGame = useMemo(() => games.filter((game) => game.title === title), [games]);
+  const foundGame = games.filter((game) => game.title === title);
   const userName = useSelector((state: ReducerState) => state.reducer.userName);
   const [checked, setChecked] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const CartGameContainer: FC<CartGameContainerProps> = ({ title, category, price 
     foundGame[0].check = !checked;
     dispatch(changeGameCheckAction(foundGame));
   };
-  const totalPerGame = useMemo(() => games.filter((game) => game.title === title)[0].amount * price, [games]);
+  const totalPerGame = games.filter((game) => game.title === title)[0].amount * price;
 
   const today = new Date();
 
@@ -50,4 +50,4 @@ const CartGameContainer: FC<CartGameContainerProps> = ({ title, category, price 
   );
 };
 
-export default memo(CartGameContainer);
+export default CartGameContainer;

@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC } from "react";
 import { ProfileProps } from "@/types/types";
 import "./profile.scss";
 import TextAreaContainer from "@/elements/textAreaContainer";
@@ -50,4 +50,4 @@ const ProfilePage: FC<ProfileProps> = ({
   </div>
 );
 
-export default memo(ProfilePage);
+export default ProfilePage;

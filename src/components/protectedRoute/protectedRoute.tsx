@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import { routesMap } from "@/constants/constants";
-import { FC, memo, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route, RouteProps } from "react-router-dom";
 import { showSignInModalAction } from "../redux/actions";
@@ -35,4 +35,4 @@ const ProtectedRoute: FC<RouteProps> = ({ children, location }) => {
     </>
   );
 };
-export default memo(ProtectedRoute);
+export default ProtectedRoute;

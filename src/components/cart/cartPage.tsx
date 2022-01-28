@@ -1,5 +1,5 @@
 import { CartPageProps } from "@/types/types";
-import { FC, memo } from "react";
+import { FC } from "react";
 import CartGame from "./cartGameContainer";
 import "./cartPage.scss";
 
@@ -62,4 +62,4 @@ const CartPage: FC<CartPageProps> = ({ games, clickHandler, totalAmount, userBal
   </div>
 );
 
-export default memo(CartPage);
+export default CartPage;

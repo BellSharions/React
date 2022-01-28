@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useMemo } from "react";
+import { FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./cartPage.scss";
 import { IncreaseTotalAmountAction, removeGameFromCartAction } from "../redux/cart/cartActions";
@@ -19,20 +19,17 @@ const CartPageContainer: FC = () => {
       body: JSON.stringify({ gamesList: games.filter((game) => game.check === false) }),
     });
   };
-  const totalAmount = useMemo(
-    () => Number(games.map((game) => game.amount * game.price).reduce((sum, current) => sum + current, 0)),
-    [games]
-  );
-  const valid = useMemo(() => games.map((game) => game.check).some((check) => check === true), [games]);
+  const totalAmount = Number(games.map((game) => game.amount * game.price).reduce((sum, current) => sum + current, 0));
+  const valid = games.map((game) => game.check).some((check) => check === true);
 
-  const buyFunc = useCallback(() => {
+  const buyFunc = () => {
     if (totalAmount <= userBalance) {
       dispatch(IncreaseTotalAmountAction(totalAmount));
       dispatch(showBuyModalAction());
     } else {
       alert("You do not have enough money. Please remove something from cart.");
     }
-  }, [totalAmount, userBalance]);
+  };
 
   return (
     <CartPage
@@ -46,4 +43,4 @@ const CartPageContainer: FC = () => {
   );
 };
 
-export default memo(CartPageContainer);
+export default CartPageContainer;

@@ -1,5 +1,5 @@
 import { CartGameProps } from "@/types/types";
-import { FC, memo } from "react";
+import { FC } from "react";
 import "./cartGame.scss";
 
 const CartGame: FC<CartGameProps> = ({
@@ -42,4 +42,4 @@ const CartGame: FC<CartGameProps> = ({
   </div>
 );
 
-export default memo(CartGame);
+export default CartGame;

@@ -1,6 +1,6 @@
 /* eslint-disable no-lone-blocks */
 import { NavLink } from "react-router-dom";
-import { FC, memo } from "react";
+import { FC } from "react";
 import { HeaderProps } from "@/types/types";
 import "./header.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -69,4 +69,4 @@ const Header: FC<HeaderProps> = ({
   </header>
 );
 
-export default memo(Header);
+export default Header;

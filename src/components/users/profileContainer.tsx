@@ -1,4 +1,4 @@
-import { useState, useEffect, FC, ChangeEvent, memo } from "react";
+import { useState, useEffect, FC, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeUsernameAction, showChangePassModalAction } from "../redux/actions";
 import { ReducerState } from "../redux/reducer";
@@ -114,4 +114,4 @@ const ProfilePageContainer: FC = () => {
   );
 };
 
-export default memo(ProfilePageContainer);
+export default ProfilePageContainer;

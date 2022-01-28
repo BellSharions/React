@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC } from "react";
 import { ageArr, genreArr } from "../../constants/constants";
 import { ProductParams } from "../../types/types";
 import SearchBar from "../searchBar/searchBarContainer";
@@ -43,4 +43,4 @@ const Products: FC<ProductParams> = ({ platform, sort, age, genre, sortDir, sear
   </div>
 );
 
-export default memo(Products);
+export default Products;

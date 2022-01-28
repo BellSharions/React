@@ -63,7 +63,13 @@ class AppContainer extends Component<AppProps, AppState> {
   render() {
     return (
       <StrictMode>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense
+          fallback={
+            <div className="loading-icon">
+              <FontAwesomeIcon icon={faSpinner} className="loading__loading-icon" />
+            </div>
+          }
+        >
           <HeaderContainer />
           <Switch>
             <ProtectedRoute path={`${routesMap.PRODUCTS}/:platform`}>
@@ -78,6 +84,7 @@ class AppContainer extends Component<AppProps, AppState> {
             <ProtectedRoute path={routesMap.PROFILE}>
               <Profile />
             </ProtectedRoute>
+
             <Route path={["/", routesMap.HOME]} render={() => <Home />} />
           </Switch>
           <Footer />
