@@ -1,1 +1,1 @@
-{"users":[{"login":"Test1234","password":"Test1234","role":"admin"},{"login":"Test","password":"Test1234","role":"user"}]}
+{"users":[{"login":"Test1234","password":"Test1234","role":"admin","profilePic":"http://res.cloudinary.com/dev3afzlt/image/upload/v1643397473/kqpkwud8qinra05icdfs.png"},{"login":"Test","password":"Test1234","role":"user"}]}

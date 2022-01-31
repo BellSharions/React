@@ -20,7 +20,9 @@ const Header: FC<HeaderProps> = ({
   addAction,
 }) => (
   <header className="header">
-    <h3 className="header__title">Game Market</h3>
+    <NavLink className="header__title" to={routesMap.HOME}>
+      <span className="navtext">Game Market</span>
+    </NavLink>
     <div className="header__navlinks">
       {routes.map((object: singleLink | multiLink) => {
         if (object.type === routeType.link)

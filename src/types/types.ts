@@ -12,13 +12,41 @@ export interface ProductItemProps {
   genre?: string;
   category: string;
   logo?: string;
-  rating?: string;
+  rating: string;
+  price: number;
+  action: (gameTitle: string, gameCategory: string, gamePrice: number, gameCheck: boolean, gameAmount: number) => void;
+  editAction?: () => void;
+  visible?: boolean;
+}
+export interface gameItemProps {
+  id?: number;
+  age?: number;
+  title: string;
+  description?: string;
+  developer?: string;
+  date?: string;
+  genre?: string;
+  category: string;
+  logo?: string;
+  rating: string;
   price: number;
   action?: (gameTitle: string, gameCategory: string, gamePrice: number, gameCheck: boolean, gameAmount: number) => void;
   editAction?: () => void;
   visible?: boolean;
 }
-
+export interface Game {
+  title: string;
+  category: string;
+  price: number;
+  imgUrl: string;
+  logo: string;
+  description?: string;
+  genre: string;
+  age: number;
+  rating: number;
+  id?: number;
+  date?: string;
+}
 export interface AppProps {
   props: string;
 }
@@ -75,18 +103,7 @@ export interface CriteriaProps {
   sort: string;
   sortDir: string;
 }
-export interface Game {
-  title: string;
-  category: string;
-  price: number;
-  imgUrl: string;
-  description?: string;
-  genre: string;
-  age: number;
-  rating?: number;
-  id?: number;
-  date?: string;
-}
+
 export interface GameToEdit {
   id?: number;
   title: string;
@@ -117,7 +134,7 @@ export interface RadioButtonContainerProps {
   filter: string;
 }
 export interface SearchBarComponentProps {
-  list: ProductItemProps[];
+  list: Game[];
   debouncedOnChange: DebouncedFunc<(e: ChangeEvent<HTMLInputElement>) => Promise<void>>;
 }
 export interface ProtectedParams {
@@ -257,7 +274,7 @@ export interface SignUpBtnProps {
 }
 export interface BtnProps {
   action: () => void;
-  text: { label: string; icon: string };
+  text: { label: string; icon?: string };
 }
 export interface BtnContainerProps {
   action: () => void;
@@ -322,5 +339,5 @@ export interface FilterStateType {
   sortDir: string;
   genre: string;
   term: string;
-  searchResult: Game[]:
+  searchResult: Game[];
 }

@@ -1,5 +1,9 @@
 import { memo } from "react";
+import styles from "styled-components";
 
-const About: React.FC = () => <p>About</p>;
+const About = styles.div`
+  font-size: 2vw;
+`;
 
-export default memo(About);
+const AboutComponent: React.FC = () => <About>About</About>;
+export default memo(AboutComponent);

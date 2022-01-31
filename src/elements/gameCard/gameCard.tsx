@@ -2,10 +2,10 @@ import { FC } from "react";
 import Rating from "@material-ui/lab/Rating";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./gameCard.scss";
-import { faPlaystation, faWindows, faXbox } from "@fortawesome/free-brands-svg-icons";
+import { faPlaystation, faWindows, faXbox, IconDefinition } from "@fortawesome/free-brands-svg-icons";
 import { ProductItemProps } from "../../types/types";
 
-const platformIcons = { PC: faWindows, XBOX: faXbox, PlayStation: faPlaystation };
+const platformIcons = [faWindows, faXbox, faPlaystation];
 
 const GameCard: FC<ProductItemProps> = ({
   title,
@@ -23,8 +23,8 @@ const GameCard: FC<ProductItemProps> = ({
       <div className="gameCard__front">
         <div className="gameCard__img-container">
           <div className="gamecard__platform-icons">
-            {category.split(", ").map((platform, index) => (
-              <FontAwesomeIcon key={index.toString()} icon={platformIcons[platform]} className="category__icon" />
+            {category.split(", ").map((value, index) => (
+              <FontAwesomeIcon key={value} icon={platformIcons[index] as IconDefinition} className="category__icon" />
             ))}
           </div>
           <img className="gameCard__img-container-image" src={logo} alt="" />

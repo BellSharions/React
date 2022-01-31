@@ -10,7 +10,7 @@ import { ReducerState } from "../redux/reducer";
 
 const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, genre, search }) => {
   const searchResult = useSelector((state: ReducerState) => state.filter.searchResult);
-  const [isLoading, setLoading] = loaderHook(false);
+  const [setLoading] = loaderHook(false);
   const dispatch = useDispatch();
   const changeSearch = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(changeSearchAction(e.target.value));
@@ -19,7 +19,7 @@ const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, g
   useEffect(() => {
     (() => {
       setLoading(true);
-      setTimeout(async () => {
+      setTimeout(() => {
         if (platform === "" || platform === ":platform" || platform === "home" || platform === undefined)
           dispatch(
             fetchGamesAction(
@@ -30,7 +30,7 @@ const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, g
                 sort,
                 sortDir,
                 genre,
-              })}`
+              } as Record<string, string>)}`
             )
           );
         else
@@ -43,7 +43,7 @@ const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, g
                 sort,
                 sortDir,
                 genre,
-              })}`
+              } as Record<string, string>)}`
             )
           );
         setLoading(false);

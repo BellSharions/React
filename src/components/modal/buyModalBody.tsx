@@ -1,8 +1,8 @@
-import BtnContainer from "@/elements/buttonContainer";
-import { BuyModalProps } from "@/types/types";
+import { FC } from "react";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FC } from "react";
+import BtnContainer from "../../elements/buttonContainer";
+import { BuyModalProps } from "../../types/types";
 import "./buyModalBody.scss";
 
 const BuyModalBody: FC<BuyModalProps> = ({ userName, cartGames, amount, closeHandler, confirmHandler }) => (

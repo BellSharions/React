@@ -14,6 +14,6 @@ function loaderHook(defaultVal: boolean) {
     dispatch(changeLoadingAction(IsLoading));
   }, [IsLoading]);
 
-  return [IsLoading, setLoading];
+  return [setLoading];
 }
 export default loaderHook;
