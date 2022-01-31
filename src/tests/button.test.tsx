@@ -11,7 +11,6 @@ beforeEach(() => {
 
 afterEach(() => {
   unmountComponentAtNode(container);
-  container?.remove();
 });
 
 describe("Button", () => {

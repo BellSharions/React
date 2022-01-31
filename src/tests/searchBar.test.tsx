@@ -12,7 +12,6 @@ beforeEach(() => {
 
 afterEach(() => {
   unmountComponentAtNode(container);
-  container?.remove();
 });
 
 describe("Search bar", () => {
