@@ -1,13 +1,17 @@
-import { signInUrl, signUpUrl } from "@/constants/constants";
+import { ageArr, availableGenres, signInUrl, signUpUrl } from "@/constants/constants";
 import { GameCart } from "@/types/types";
 import { FC, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { closeModalAction, logInAction } from "../redux/actions";
+import { closeModalAction, logInAction, setRoleAction, showDeleteGameModalAction } from "../redux/actions";
 import { buyGamesAction, setCartGamesAction } from "../redux/cart/cartActions";
+import { fetchGamesAction } from "../redux/filter/filterActions";
 import { ReducerState } from "../redux/reducer";
+import AddGameModal from "./addGameModal";
 import BuyModalBody from "./buyModalBody";
 import "./buyModalBody.scss";
+import DeleteGameModal from "./deleteGameModal";
+import EditGameModal from "./editGameModal";
 import Modal from "./modal";
 import ChangePassModalBody from "./passwordModalBody";
 import SignInModalBody from "./signInModalBody";
@@ -19,11 +23,21 @@ const ModalBodyContainer: FC = () => {
     state.cart.gamesList,
     state.cart.totalPurchase,
   ]);
-  const [signup, signin, changePassword, buy] = useSelector((state: ReducerState) => [
+  const [sort, age, genre, sortDir, search] = useSelector((state: ReducerState) => [
+    state.reducer.sort,
+    state.reducer.age,
+    state.reducer.genre,
+    state.reducer.sortDir,
+    state.reducer.term,
+  ]);
+  const [signup, signin, changePassword, buy, edit, add, del] = useSelector((state: ReducerState) => [
     state.reducer.signUpModalVisible,
     state.reducer.signInModalVisible,
     state.reducer.changePassModalVisible,
     state.reducer.buyModalVisible,
+    state.reducer.editGameModalVisible,
+    state.reducer.addGameModalVisible,
+    state.reducer.deleteGameModalVisible,
   ]);
   const [newPassword, setNewPassword] = useState<string>("");
   const [repeatNewPassword, setRepeatNewPassword] = useState<string>("");
@@ -36,6 +50,166 @@ const ModalBodyContainer: FC = () => {
   const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch();
   const history = useHistory();
+  const gameToEdit = useSelector((state: ReducerState) => state.admin.gametoEdit);
+  const incomGenreArr = gameToEdit.genre ? gameToEdit.genre.split(", ") : availableGenres;
+  const [titleInp, setTitleInp] = useState<string>(gameToEdit.title || "");
+  const [categoryInp, setCategoryInp] = useState(incomGenreArr[0]);
+  const [priceInp, setPriceInp] = useState<number>(gameToEdit.price || 0.99);
+  const [imgUrlInp, setImgUrlInp] = useState<string>("");
+  const [descriptionInp, setDescriptionInp] = useState<string>(gameToEdit.description || "");
+  const [ageInp, setAgeInp] = useState<number>(gameToEdit.age || +ageArr[0]);
+  const [pcCheckedInp, setPcCheckedInp] = useState<boolean>(!gameToEdit.category.includes("PC"));
+  const [psCheckedInp, setPsCheckedInp] = useState<boolean>(!gameToEdit.category.includes("PlayStation"));
+  const [xbxCheckedInp, setXbxCheckedInp] = useState<boolean>(!gameToEdit.category.includes("XBOX"));
+  const finalCategory = [pcCheckedInp ? "PC" : null, psCheckedInp ? "PlayStation" : null, xbxCheckedInp ? "XBOX" : null]
+    .filter((categor) => Boolean(categor))
+    .join(", ");
+  const gameObj = {
+    id: gameToEdit.id,
+    title: titleInp,
+    imgUrl: imgUrlInp,
+    price: Number(priceInp),
+    description: descriptionInp,
+    age: Number(ageInp),
+    genre: categoryInp,
+    category: finalCategory,
+    deleted: false,
+  };
+  useEffect(() => {
+    if (add) {
+      setTitleInp("");
+      setCategoryInp("");
+      setPriceInp(0);
+      setImgUrlInp("https://res.cloudinary.com/dev3afzlt/image/upload/v1643294045/300x500_dvgbjh.png");
+      setDescriptionInp("");
+      setAgeInp(3);
+      setPcCheckedInp(false);
+      setPsCheckedInp(false);
+      setXbxCheckedInp(false);
+    } else {
+      setTitleInp(gameToEdit.title);
+      setCategoryInp(incomGenreArr[0]);
+      setPriceInp(gameToEdit.price);
+      setImgUrlInp(gameToEdit.imgUrl);
+      setDescriptionInp(gameToEdit.description);
+      setAgeInp(gameToEdit.age);
+      setPcCheckedInp(gameToEdit.category.includes("PC"));
+      setPsCheckedInp(gameToEdit.category.includes("PlayStation"));
+      setXbxCheckedInp(gameToEdit.category.includes("XBOX"));
+    }
+  }, [gameToEdit, add]);
+
+  const deleteHandler = () => {
+    dispatch(showDeleteGameModalAction());
+  };
+
+  const titleGetter = (nameData: string) => {
+    setTitleInp(nameData);
+  };
+
+  const priceGetter = (priceData: number) => {
+    if (Number(priceData) <= 0.01 && Number(priceData) > 999) {
+      return;
+    }
+    const num = Number(Math.round(priceData * 100) / 100);
+    setPriceInp(num);
+  };
+
+  const imgUrlGetter = (imgUrlData: string) => {
+    setImgUrlInp(imgUrlData);
+  };
+
+  const descriptionGetter = (inputName: string) => {
+    setDescriptionInp(inputName);
+  };
+
+  const submitHandlerEdit = async () => {
+    console.log(gameObj);
+    const putResponse = await fetch(`http://localhost:8080/api/product/`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(gameObj),
+    });
+    if (putResponse.status === 200) {
+      dispatch(
+        fetchGamesAction(
+          `${new URLSearchParams({
+            text: search,
+            platform: "all games",
+            age,
+            sort,
+            sortDir,
+            genre,
+          })}`
+        )
+      );
+      dispatch(closeModalAction());
+    }
+  };
+
+  const submitHandlerCreate = async () => {
+    console.log(gameObj);
+    const postResponse = await fetch(`http://localhost:8080/api/product/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(gameObj),
+    });
+    dispatch(
+      fetchGamesAction(
+        `${new URLSearchParams({
+          text: search,
+          platform: "all games",
+          age,
+          sort,
+          sortDir,
+          genre,
+        })}`
+      )
+    );
+    dispatch(closeModalAction());
+  };
+  const deleteGame = async () => {
+    console.log(gameObj);
+    const deleteResponse = await fetch(`http://localhost:8080/api/product/`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: gameObj.id }),
+    });
+    dispatch(
+      fetchGamesAction(
+        `${new URLSearchParams({
+          text: search,
+          platform: "all games",
+          age,
+          sort,
+          sortDir,
+          genre,
+        })}`
+      )
+    );
+    dispatch(closeModalAction());
+  };
+
+  const pcCheckHandler = () => {
+    setPcCheckedInp(!pcCheckedInp);
+  };
+
+  const psCheckHandler = () => {
+    setPsCheckedInp(!psCheckedInp);
+  };
+
+  const xbxCheckHandler = () => {
+    setXbxCheckedInp(!xbxCheckedInp);
+  };
+
+  const setCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategoryInp(e.target.value);
+  };
+
+  const setAge = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setAgeInp(Number(e.target.value));
+  };
+
   const newPasswordGetter = (passwordData: string) => {
     setNewPassword(passwordData);
   };
@@ -159,6 +333,9 @@ const ModalBodyContainer: FC = () => {
       if (getResponse.gamesList) dispatch(setCartGamesAction(getResponse.gamesList));
       else dispatch(setCartGamesAction([] as GameCart[]));
       const response = await res.json();
+      console.log(response);
+      dispatch(setRoleAction(response.role));
+      localStorage.setItem("role", response.role);
       return response;
     }
     return null;
@@ -180,11 +357,12 @@ const ModalBodyContainer: FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ login, password }),
+        body: JSON.stringify({ login, password, role: "user" }),
       });
 
       if (res.status === 201) {
         dispatch(logInAction(login));
+        dispatch(setRoleAction("user"));
         localStorage.setItem("login", login);
         dispatch(closeModalAction());
         const getResponse = await (
@@ -264,6 +442,69 @@ const ModalBodyContainer: FC = () => {
             repeatPassword={repeatPassword}
             repeatPasswordGetter={repeatPasswordGetter}
           />
+        </Modal>
+      ) : null}
+      {edit ? (
+        <Modal>
+          <EditGameModal
+            closeHandler={closeModal}
+            gameToEdit={gameToEdit}
+            imgUrlInp={imgUrlInp}
+            titleInp={titleInp}
+            titleGetter={titleGetter}
+            categoryInp={categoryInp}
+            setCategory={setCategory}
+            priceGetter={priceGetter}
+            priceInp={priceInp}
+            imgUrlGetter={imgUrlGetter}
+            descriptionGetter={descriptionGetter}
+            descriptionInp={descriptionInp}
+            ageInp={ageInp}
+            setAge={setAge}
+            pcCheckedInp={pcCheckedInp}
+            pcCheckHandler={pcCheckHandler}
+            psCheckedInp={psCheckedInp}
+            psCheckHandler={psCheckHandler}
+            xbxCheckedInp={xbxCheckedInp}
+            xbxCheckHandler={xbxCheckHandler}
+            formValid={formValid}
+            submitHandlerEdit={submitHandlerEdit}
+            deleteHandler={deleteHandler}
+          />
+        </Modal>
+      ) : null}
+      {add ? (
+        <Modal>
+          <AddGameModal
+            closeHandler={closeModal}
+            gameToEdit={gameToEdit}
+            imgUrlInp={imgUrlInp}
+            titleInp={titleInp}
+            titleGetter={titleGetter}
+            categoryInp={categoryInp}
+            setCategory={setCategory}
+            priceGetter={priceGetter}
+            priceInp={priceInp}
+            imgUrlGetter={imgUrlGetter}
+            descriptionGetter={descriptionGetter}
+            descriptionInp={descriptionInp}
+            ageInp={ageInp}
+            setAge={setAge}
+            pcCheckedInp={pcCheckedInp}
+            pcCheckHandler={pcCheckHandler}
+            psCheckedInp={psCheckedInp}
+            psCheckHandler={psCheckHandler}
+            xbxCheckedInp={xbxCheckedInp}
+            xbxCheckHandler={xbxCheckHandler}
+            formValid={formValid}
+            submitHandlerEdit={submitHandlerCreate}
+            deleteHandler={deleteHandler}
+          />
+        </Modal>
+      ) : null}
+      {del ? (
+        <Modal>
+          <DeleteGameModal closeHandler={closeModal} deleteHandler={deleteGame} />
         </Modal>
       ) : null}
     </>

@@ -18,7 +18,7 @@ import Profile from "./components/users/profileContainer";
 import store from "./components/redux/store";
 import { ReducerState } from "./components/redux/reducer";
 import HeaderContainer from "./components/header/headerContainer";
-import { logInAction } from "./components/redux/actions";
+import { logInAction, setRoleAction } from "./components/redux/actions";
 import CartPage from "./components/cart/cartPageContainer";
 import ModalBodyContainer from "./components/modal/modalBodyContainer";
 import { setCartGamesAction } from "./components/redux/cart/cartActions";
@@ -43,15 +43,8 @@ const mapDispatchToProps = (
   }>
 ) => ({
   getLogin: (value: string) => dispatch(logInAction(value)),
+  getRole: (value: string) => dispatch(setRoleAction(value)),
   setCart: (value: GameCart[]) => dispatch(setCartGamesAction(value)),
-});
-const mapDispatchToProps = (
-  dispatch: Dispatch<{
-    type: string;
-    payload: string;
-  }>
-) => ({
-  getLogin: (value: string) => dispatch(logInAction(value)),
 });
 class AppContainer extends Component<AppProps, AppState> {
   ["constructor"]: typeof AppContainer;
@@ -59,6 +52,7 @@ class AppContainer extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     if (localStorage && localStorage.getItem("login")) this.props.getLogin(localStorage.getItem("login"));
+    if (localStorage && localStorage.getItem("role")) this.props.getRole(localStorage.getItem("role"));
     const goExlcude = true;
     if (!goExlcude) {
       console.warn("class-dead-code doesn't work");

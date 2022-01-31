@@ -1,0 +1,31 @@
+.deleteModal__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #111212;
+  border-radius: 8px;
+  padding: 30px;
+  max-width: 80%;
+  max-height: 90%;
+}
+
+.deleteModal__content_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.deleteModal__button_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.deleteModal_close-btn {
+  background-color: inherit;
+  border: none;
+  font-size: 2rem;
+  color: #808080;
+  cursor: pointer;
+  justify-content: center;
+  align-self: center;
+}

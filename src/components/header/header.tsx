@@ -17,7 +17,16 @@ import {
 import Dropdown from "./navbarDropdown/dropdown";
 import BtnContainer from "../../elements/buttonContainer";
 
-const Header: FC<HeaderProps> = ({ userName, loggedIn, showSignInModal, showSignUpModal, logOut, cartNum }) => (
+const Header: FC<HeaderProps> = ({
+  userName,
+  loggedIn,
+  showSignInModal,
+  showSignUpModal,
+  logOut,
+  cartNum,
+  visible,
+  addAction,
+}) => (
   <header className="header">
     <h3 className="header__title">Game Market</h3>
     <div className="header__navlinks">
@@ -40,6 +49,7 @@ const Header: FC<HeaderProps> = ({ userName, loggedIn, showSignInModal, showSign
       ))}
       {loggedIn ? (
         <>
+          {visible ? <BtnContainer action={addAction} childrenProps={{ label: "Add Game" }} /> : null}
           <NavLink
             key={routesMap.CART}
             exact

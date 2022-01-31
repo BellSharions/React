@@ -18,7 +18,6 @@ export const setCartGamesAction = (game: GameCart[]): CartAction => ({
   type: setCartGames,
   payload: game,
 });
-
 export const changeGameCheckAction = (game: Array<GameCart>): { type: string; payload: GameCart[] } => ({
   type: changeGameCheck,
   payload: game,

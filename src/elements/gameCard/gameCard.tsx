@@ -7,7 +7,17 @@ import { ProductItemProps } from "../../types/types";
 
 const platformIcons = { PC: faWindows, XBOX: faXbox, PlayStation: faPlaystation };
 
-const GameCard: FC<ProductItemProps> = ({ title, description, category, logo, rating, price, action }) => (
+const GameCard: FC<ProductItemProps> = ({
+  title,
+  description,
+  category,
+  logo,
+  rating,
+  price,
+  action,
+  editAction,
+  visible,
+}) => (
   <div className="gameCard__container">
     <div className="gameCard__inner">
       <div className="gameCard__front">
@@ -29,13 +39,20 @@ const GameCard: FC<ProductItemProps> = ({ title, description, category, logo, ra
       </div>
       <div className="gameCard__back" tabIndex={0} role="button">
         <div className="gameCard__back-description">{description}</div>
-        <button
-          type="button"
-          className="gameCard__back-button"
-          onClick={() => action(title, category, price, false, 1)}
-        >
-          Buy
-        </button>
+        <div className="gameCard__back-buttons">
+          {visible ? (
+            <button type="button" className="gameCard__back-button" onClick={() => editAction()}>
+              Edit
+            </button>
+          ) : null}
+          <button
+            type="button"
+            className="gameCard__back-button"
+            onClick={() => action(title, category, price, false, 1)}
+          >
+            Buy
+          </button>
+        </div>
       </div>
     </div>
   </div>

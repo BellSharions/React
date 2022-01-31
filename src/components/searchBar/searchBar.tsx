@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import ProductsOutput from "../products/output/productsOutput";
 
-const SearchBar: FC<SearchBarComponentProps> = ({ list, isLoading, debouncedOnChange }) => (
+const SearchBar: FC<SearchBarComponentProps> = ({ list, debouncedOnChange }) => (
   <>
     <div className="searchBar__outercontainer">
       <div className="searchBar__container">
