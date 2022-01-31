@@ -64,12 +64,12 @@ const Header: FC<HeaderProps> = ({
           <NavLink className="header__navlinks-link" to={routesMap.PROFILE}>
             <span className="navtext">{userName}</span>
           </NavLink>
-          <BtnContainer action={logOut} childrenProps={logOutText} />
+          <BtnContainer action={logOut} childrenProps={{ label: "", icon: "fas fa-door-open" }} />
         </>
       ) : (
         <>
-          <BtnContainer action={showSignInModal} childrenProps={signInText} />
-          <BtnContainer action={showSignUpModal} childrenProps={signUpText} />
+          <BtnContainer action={showSignInModal} childrenProps={{ label: "Sign In", icon: "fa fa-sign-in-alt" }} />
+          <BtnContainer action={showSignUpModal} childrenProps={{ label: "Sign Up", icon: "fa fa-user-plus" }} />
         </>
       )}
     </div>
