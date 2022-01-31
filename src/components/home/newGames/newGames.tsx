@@ -1,4 +1,4 @@
-import GameCard from "@/components/gameCard/gameCard";
+import GameCard from "@/elements/gameCard/gameCardContainer";
 import { fetchNewProductsLink } from "@/constants/constants";
 import { useState, useEffect, FC } from "react";
 import "./newGames.scss";
@@ -20,8 +20,16 @@ const NewGames: FC = () => {
           <h1 className="newGame__title">New games</h1>
         </div>
         <div className="newGame__content-container">
-          {newGamesList.map(({ title, description, date, category, logo }) => (
-            <GameCard title={title} description={description} date={date} category={category} logo={logo} />
+          {newGamesList.map(({ title, description, date, category, logo, rating, price }) => (
+            <GameCard
+              title={title}
+              description={description}
+              date={date}
+              category={category}
+              logo={logo}
+              rating={rating}
+              price={price}
+            />
           ))}
         </div>
       </div>

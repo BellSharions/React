@@ -2,7 +2,7 @@ import { FC } from "react";
 import "./signinmodalbody.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import InputText from "./inputTextContainer";
+import InputText from "@/elements/inputTextContainer";
 import { SignInModalProps } from "../../types/types";
 
 const SignInModalBody: FC<SignInModalProps> = ({

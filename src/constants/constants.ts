@@ -8,6 +8,7 @@ export const routesMap = {
   SIGNUP: "/sign-up",
   ERROR: "/error",
   PROFILE: "/profile",
+  CART: "/cart",
 };
 export const enum routeType {
   link,

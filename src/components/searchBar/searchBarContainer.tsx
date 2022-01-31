@@ -2,23 +2,19 @@ import { useState, useEffect, FC, ChangeEvent } from "react";
 import debounce from "lodash.debounce";
 import "./searchBar.scss";
 import loaderHook from "@/hooks/loaderHook";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ProductItemProps, ProductParams } from "../../types/types";
 import { fetchGameQueryLink } from "../../constants/constants";
 import SearchBar from "./searchBar";
 import { changeSearchAction } from "../redux/filter/filterActions";
-import { ReducerState } from "../redux/reducer";
 
-const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, genre }) => {
+const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, genre, search }) => {
   const [list, setList] = useState<Array<ProductItemProps>>([]);
   const [isLoading, setLoading] = loaderHook(false);
-  const [search] = useSelector((state: ReducerState) => [state.term]);
   const dispatch = useDispatch();
-
   const changeSearch = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(changeSearchAction(e.target.value));
   };
-
   const debouncedOnChange = debounce(changeSearch, 300);
   useEffect(() => {
     (() => {
@@ -63,11 +59,10 @@ const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, g
             ).json()
           );
         setLoading(false);
-      }, 1000);
+      }, 500);
       console.log(list);
     })();
   }, [platform, age, sort, sortDir, genre, search]);
-
   return <SearchBar list={list} isLoading={isLoading} debouncedOnChange={debouncedOnChange} />;
 };
 

@@ -10,7 +10,6 @@ const RadioButtonsContainer: FC<RadioButtonContainerProps> = ({ array, filter })
 
   const setSelect = (select: string) => {
     const matcher = new RegExp(`^${select}`, "g");
-    console.log(ageArr.filter((word) => word.match(matcher)).length);
 
     if (ageArr.filter((word) => word.match(matcher)).length === 1) dispatch(filterByAgeAction(select));
     if (genreArr.filter((word) => word.match(matcher)).length === 1) dispatch(filterByGenreAction(select));

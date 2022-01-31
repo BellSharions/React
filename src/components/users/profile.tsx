@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { ProfileProps } from "@/types/types";
 import "./profile.scss";
-import InputTextContainer from "../modal/inputTextContainer";
-import TextAreaContainer from "../modal/textAreaContainer";
+import TextAreaContainer from "@/elements/textAreaContainer";
+import InputTextContainer from "@/elements/inputTextContainer";
 
 const ProfilePage: FC<ProfileProps> = ({
   userName,

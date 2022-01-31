@@ -1,0 +1,155 @@
+.buy__modal_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #111212;
+  border-radius: 8px;
+  padding: 30px;
+  max-width: 50%;
+  max-height: 60%;
+}
+
+.buy__modal_upper-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.buy__modal_title {
+  margin: 0;
+  font-size: 3rem;
+  color: white;
+}
+
+.buy__modal_close-btn {
+  margin-left: auto;
+  background-color: inherit;
+  border: none;
+  font-size: 2rem;
+  color: #808080;
+  cursor: pointer;
+}
+
+.buy__modal_content-container {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 80%;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.buy__modal_contentParagraphs {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 90%;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.buy__modal_contentParagraph-user,
+.buy__modal_contentParagraph {
+  color: white;
+  margin: 0px;
+}
+
+.buy__modal_contentParagraph-user::after {
+  content: ":";
+  color: white;
+}
+
+.buy__modal_contentParagraph::after {
+  content: ";";
+  color: white;
+}
+
+.buy__modal_contentParagraph:last-child::after {
+  content: ".";
+  color: white;
+}
+
+.buy__modal_contentButton {
+  width: 20%;
+  font-size: 2rem;
+  color: white;
+  background-color: #9933cc;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  align-self: center;
+  justify-self: center;
+  padding: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  .buy__modal_title,
+  .buy__modal_close-btn {
+    font-size: 2.5rem;
+  }
+
+  .buy__modal_contentParagraph-user,
+  .buy__modal_contentParagraph {
+    font-size: 16px;
+  }
+
+  .buy__modal_contentButton {
+    width: 30%;
+    font-size: 1.7rem;
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  .buy__modal_container {
+    padding: 15px;
+  }
+
+  .buy__modal_title,
+  .buy__modal_close-btn {
+    font-size: 1.8rem;
+  }
+
+  .buy__modal_contentParagraph-user,
+  .buy__modal_contentParagraph {
+    font-size: 12px;
+  }
+
+  .buy__modal_contentButton {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .buy__modal_title,
+  .buy__modal_close-btn {
+    font-size: 2rem;
+  }
+
+  .buy__modal_contentParagraph-user,
+  .buy__modal_contentParagraph {
+    font-size: 14px;
+  }
+
+  .buy__modal_contentButton {
+    font-size: 1.2rem;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .buy__modal_title,
+  .buy__modal_close-btn {
+    font-size: 1.3rem;
+  }
+
+  .buy__modal_contentParagraph-user,
+  .buy__modal_contentParagraph {
+    font-size: 12px;
+  }
+
+  .buy__modal_contentButton {
+    width: 40%;
+    font-size: 1rem;
+  }
+}

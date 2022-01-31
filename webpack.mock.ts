@@ -115,6 +115,133 @@ export default webpackMockServer.add((app, helper) => {
       }
     });
   });
+  app.post("/api/buy", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    fs.readFile("./src/assets/orders.json", "utf8", (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(400).json(1);
+        res.end();
+      } else {
+        const obj = JSON.parse(data);
+        console.log(_req.body);
+        obj.orders.push(_req.body);
+        fs.writeFile("./src/assets/orders.json", JSON.stringify(obj), "utf8", (error) => {
+          if (error) {
+            console.log(error);
+            res.status(400).json(1);
+            res.end();
+          } else {
+            fs.readFile("./src/assets/carts.json", "utf8", (err2, data2) => {
+              if (err2) {
+                console.log(err2);
+                res.status(400).json(1);
+                res.end();
+              } else {
+                const obj2 = JSON.parse(data2);
+                console.log(obj2);
+                console.log("test");
+                const foundCart = obj2.carts.filter((x) => x.login === _req.body.userName)[0];
+                console.log(foundCart);
+                console.log("test");
+                if (foundCart !== undefined) {
+                  for (let i = 0; i < obj2.carts.length; i++) {
+                    if (obj2.carts[i].login === _req.body.userName) {
+                      console.log("test");
+                      obj2.carts[i].cart = [];
+                      break;
+                    }
+                  }
+                  fs.writeFile("./src/assets/carts.json", JSON.stringify(obj2), "utf8", (err3) => {
+                    if (err3) {
+                      console.log(err3);
+                      res.status(400).json(1);
+                      res.end();
+                    } else {
+                      console.log("test");
+                      res.status(201).json(_req.body);
+                      res.end();
+                    }
+                  });
+                }
+              }
+            });
+          }
+        });
+      }
+    });
+  });
+  app.get("/api/getCart/:login", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    fs.readFile("./src/assets/carts.json", "utf8", (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(400).json(1);
+        res.end();
+      } else {
+        const obj = JSON.parse(data);
+        console.log(obj);
+        console.log(_req.params.login);
+        const foundCart = obj.carts.filter((x) => x.login === _req.params.login)[0];
+        console.log(foundCart);
+        if (foundCart && foundCart.cart) {
+          res.status(201).json(foundCart.cart);
+          res.end();
+        } else {
+          res.status(201).json({ gamesList: [] });
+          res.end();
+        }
+      }
+    });
+  });
+  app.post("/api/cart/:login", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    console.log(_req.params.login);
+
+    fs.readFile("./src/assets/carts.json", "utf8", (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(400).json(1);
+        res.end();
+      } else {
+        const obj = JSON.parse(data);
+        console.log(obj);
+        console.log(_req.params.login);
+        const foundCart = obj.carts.filter((x) => x.login === _req.params.login)[0];
+        console.log(foundCart);
+        if (foundCart !== undefined) {
+          for (let i = 0; i < obj.carts.length; i++) {
+            if (obj.carts[i].login === _req.params.login) {
+              obj.carts[i].cart = _req.body;
+              break;
+            }
+          }
+          fs.writeFile("./src/assets/carts.json", JSON.stringify(obj), "utf8", (err2) => {
+            if (err2) {
+              console.log(err2);
+              res.status(400).json(1);
+              res.end();
+            } else {
+              res.status(201).json(_req.body);
+              res.end();
+            }
+          });
+        } else {
+          obj.carts.push({ login: _req.params.login });
+          fs.writeFile("./src/assets/carts.json", JSON.stringify(obj), "utf8", (err2) => {
+            if (err2) {
+              console.log(err2);
+              res.status(400).json(1);
+              res.end();
+            } else {
+              res.status(201).json(_req.body);
+              res.end();
+            }
+          });
+        }
+      }
+    });
+  });
   app.post("/api/auth/signIn/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
@@ -308,6 +435,13 @@ export default webpackMockServer.add((app, helper) => {
   app.options("/passwordChange/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "http://localhost:8080");
     res.set("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, PATCH");
+    res.set("Access-Control-Allow-Headers", "content-type");
+    res.json(1);
+    res.end();
+  });
+  app.options("/api/cart", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS");
     res.set("Access-Control-Allow-Headers", "content-type");
     res.json(1);
     res.end();

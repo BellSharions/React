@@ -1,5 +1,5 @@
 import { FC } from "react";
-import GameCard from "../../gameCard/gameCard";
+import GameCard from "../../../elements/gameCard/gameCardContainer";
 import { ProductItemProps } from "../../../types/types";
 import "./productsOutput.scss";
 
@@ -9,7 +9,7 @@ interface Props {
 
 const ProductsOutput: FC<Props> = ({ productList }) => (
   <div className="productsOutput__results-container">
-    {productList.length === 0 ? (
+    {!productList || productList.length === 0 ? (
       <p>No games have been found</p>
     ) : (
       productList.map(({ id, title, description, developer, date, category, logo, rating, price }) => (

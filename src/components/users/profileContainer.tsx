@@ -6,7 +6,7 @@ import "./profile.scss";
 import ProfilePage from "./profile";
 
 const ProfilePageContainer: FC = () => {
-  const userName = useSelector((state: ReducerState) => state.userName);
+  const userName = useSelector((state: ReducerState) => state.reducer.userName);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");

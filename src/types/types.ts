@@ -7,11 +7,12 @@ export interface ProductItemProps {
   title: string;
   description?: string;
   developer?: string;
-  date: string;
+  date?: string;
   category: string;
   logo?: string;
   rating: string;
   price: number;
+  action?: (gameTitle: string, gameCategory: string, gamePrice: number, gameCheck: boolean, gameAmount: number) => void;
 }
 
 export interface AppProps {
@@ -34,6 +35,23 @@ export interface ProductParams {
   sort: string;
   sortDir: string;
   genre: string;
+  search?: string;
+}
+export interface GameCart {
+  title: string;
+  category: string;
+  price: number;
+  check: boolean;
+  amount: number;
+}
+export interface CartAction {
+  type: string;
+  payload: GameCart | GameCart[] | number;
+}
+export interface CartStateType {
+  gamesList: GameCart[];
+  totalPurchase: number;
+  userBalance: number;
 }
 export interface HomeProps {
   platform: string;
@@ -41,6 +59,7 @@ export interface HomeProps {
   sort: string;
   sortDir: string;
   genre: string;
+  search: string;
 }
 export interface CriteriaContainerProps {
   sort: string;
@@ -180,6 +199,37 @@ export interface HeaderProps {
   showSignInModal: () => void;
   showSignUpModal: () => void;
   logOut: () => void;
+  cartNum?: number;
+}
+export interface CartPageProps {
+  games: GameCart[];
+  clickHandler: () => void;
+  totalAmount: number;
+  userBalance: number;
+  buyFunc: () => void;
+  valid: boolean;
+}
+export interface CartGameContainerProps {
+  title: string;
+  category: string;
+  price: number;
+}
+export interface CartGameProps {
+  title: string;
+  platforms: string[];
+  today: Date;
+  totalPerGameCut: number;
+  amountHandler: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  number: number;
+  checked: boolean;
+  checkHandler: () => void;
+}
+export interface BuyModalProps {
+  userName: string;
+  cartGames: GameCart[];
+  amount: number;
+  closeHandler: () => void;
+  confirmHandler: () => void;
 }
 
 export interface SignInBtnProps {

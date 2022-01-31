@@ -7,6 +7,7 @@ import {
   showChangePassModal,
   changeUsernameType,
   changeLoading,
+  showBuyModal,
 } from "./actionTypes";
 
 export const logInAction = (userName: string): { type: string; payload: string } => ({
@@ -28,6 +29,9 @@ export const showSignInModalAction = (): { type: string } => ({
 
 export const showSignUpModalAction = (): { type: string } => ({
   type: showSignUpModal,
+});
+export const showBuyModalAction = (): { type: string } => ({
+  type: showBuyModal,
 });
 export const showChangePassModalAction = (): { type: string } => ({
   type: showChangePassModal,
