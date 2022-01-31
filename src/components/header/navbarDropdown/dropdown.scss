@@ -18,7 +18,11 @@ $secondary-color: #19191a;
 
 .dropdown__button-container:hover {
   background-color: $secondary-color;
-  color: #ffffff;
+  color: #9732cb;
+}
+
+.dropdown__button-container:focus-within {
+  border-bottom: 5px solid #9732cb;
 }
 
 .dropdown .dropbtn {
@@ -35,8 +39,9 @@ $secondary-color: #19191a;
 }
 
 .navbar a:hover,
-.dropdown:hover .dropbtn {
+.dropdown__button-container:hover .dropbtn {
   background-color: $secondary-color;
+  color: #9732cb;
 }
 
 .dropdown__content {
@@ -61,6 +66,7 @@ $secondary-color: #19191a;
 
 .dropdown__content a:hover {
   background-color: $secondary-color;
+  color: #9732cb;
 }
 .dropdown__content a:focus {
   border-bottom: 3px solid #9732cb;

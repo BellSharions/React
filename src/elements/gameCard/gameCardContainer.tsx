@@ -38,6 +38,7 @@ const GameCardContainer: FC<ProductItemProps> = ({
       dispatch(changeGameAmountAction(amountGame));
       return;
     }
+    console.log(gamesList);
     dispatch(
       addGameToCartAction({
         title: gameTitle,
