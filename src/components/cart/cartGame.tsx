@@ -1,5 +1,5 @@
 import { CartGameProps } from "@/types/types";
-import { FC, memo } from "react";
+import { FC } from "react";
 import "./cartGame.scss";
 
 const CartGame: FC<CartGameProps> = ({
@@ -37,9 +37,9 @@ const CartGame: FC<CartGameProps> = ({
       <p className="cartGame__data_paragraphPrice">{totalPerGameCut}</p>
     </div>
     <div className="cartGame__data_check cartGame__data_container">
-      <input type="checkbox" checked={checked} onChange={() => checkHandler()} />
+      <input type="checkbox" checked={checked} onChange={checkHandler} />
     </div>
   </div>
 );
 
-export default memo(CartGame);
+export default CartGame;

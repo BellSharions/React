@@ -19,7 +19,7 @@ const SignUpModal: FC<SignUpModalProps> = ({
   <div className="signUp__modal_container">
     <div className="signUp__modal_upper-container">
       <h1 className="signUp__modal_title">Registration</h1>
-      <button className="signUp__modal_close-btn" type="button" onClick={() => closeModal()}>
+      <button className="signUp__modal_close-btn" type="button" onClick={closeModal}>
         <FontAwesomeIcon icon={faTimes} />
       </button>
     </div>

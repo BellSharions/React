@@ -55,8 +55,7 @@ const GameCardContainer: FC<ProductItemProps> = ({
       check: gameCheck,
       amount: gameAmount,
     });
-    console.log(reqBody);
-    const postResponse = await fetch(`http://localhost:8080/api/cart/${userName}`, {
+    const postResponse = await fetch(`http://localhost:8080/api/user/cart/${userName}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ gamesList: reqBody }),

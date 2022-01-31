@@ -1,4 +1,4 @@
-import { Component, ReactNode } from "react";
+import { Component, memo, ReactNode } from "react";
 
 class ErrorCase extends Component {
   constructor(props: string) {
@@ -14,4 +14,4 @@ class ErrorCase extends Component {
     );
   }
 }
-export default ErrorCase;
+export default memo(ErrorCase);

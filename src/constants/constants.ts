@@ -79,7 +79,6 @@ export const routes: Array<singleLink | multiLink> = [
   },
 ];
 
-export const fetchNewProductsLink = "http://localhost:8079/api/getTopProducts";
 export const fetchGameQueryLink = "http://localhost:8079/api/search/";
 export const signInUrl = "http://localhost:8079/api/auth/signIn/";
 export const signUpUrl = "http://localhost:8079/api/auth/signUp/";

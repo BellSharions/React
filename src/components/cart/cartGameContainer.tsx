@@ -1,4 +1,4 @@
-import { FC, memo, useState } from "react";
+import { FC, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./cartGame.scss";
 import { CartGameContainerProps } from "../../types/types";
@@ -8,20 +8,18 @@ import { changeGameAmountAction, changeGameCheckAction } from "../redux/cart/car
 
 const CartGameContainer: FC<CartGameContainerProps> = ({ title, category, price }) => {
   const games = useSelector((state: ReducerState) => state.cart.gamesList);
+  const foundGame = games.filter((game) => game.title === title);
   const userName = useSelector((state: ReducerState) => state.reducer.userName);
   const [checked, setChecked] = useState<boolean>(false);
-  const [number, setNumber] = useState<number>(1);
   const dispatch = useDispatch();
   const platforms = category.split(", ");
 
   const amountHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(e.target.value) > 0) {
       const num = Math.floor(Number(e.target.value));
-      setNumber(num);
-      const amountGame = games.filter((game) => game.title === title);
-      amountGame[0].amount = num;
-      dispatch(changeGameAmountAction(amountGame));
-      const postResponse = await fetch(`http://localhost:8080/api/cart/${userName}`, {
+      foundGame[0].amount = num;
+      dispatch(changeGameAmountAction(foundGame));
+      await fetch(`http://localhost:8080/api/user/cart/${userName}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ gamesList: games }),
@@ -31,11 +29,9 @@ const CartGameContainer: FC<CartGameContainerProps> = ({ title, category, price 
 
   const checkHandler = () => {
     setChecked(!checked);
-    const checkedGame = games.filter((game) => game.title === title);
-    checkedGame[0].check = !checked;
-    dispatch(changeGameCheckAction(checkedGame));
+    foundGame[0].check = !checked;
+    dispatch(changeGameCheckAction(foundGame));
   };
-
   const totalPerGame = games.filter((game) => game.title === title)[0].amount * price;
 
   const today = new Date();
@@ -47,11 +43,11 @@ const CartGameContainer: FC<CartGameContainerProps> = ({ title, category, price 
       today={today}
       totalPerGameCut={totalPerGame}
       amountHandler={amountHandler}
-      number={games.filter((game) => game.title === title)[0].amount}
-      checked={checked}
+      number={foundGame[0].amount}
+      checked={foundGame[0].check}
       checkHandler={checkHandler}
     />
   );
 };
 
-export default memo(CartGameContainer);
+export default CartGameContainer;

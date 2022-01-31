@@ -1,7 +1,8 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import webpackMockServer from "webpack-mock-server";
 import fs from "fs";
-import { mockGameList } from "./src/constants/constants";
 
 function compareGames(game1, game2, key: string, type: string) {
   const isDescending = type;
@@ -14,7 +15,6 @@ function compareGames(game1, game2, key: string, type: string) {
     }
     return 0;
   }
-  console.log(game1.price > game2.price);
   if (key === "price") {
     if (game1.price > game2.price) {
       return isDescending === "asc" ? 1 : -1;
@@ -36,28 +36,12 @@ export default webpackMockServer.add((app, helper) => {
 
     res.json(response);
   });
-  app.get("/games", (_req, res) => {
-    const response = mockGameList;
-    res.set("Access-Control-Allow-Origin", "*");
-    res.json(response);
-    res.end();
-  });
-  app.get("/api/getTopProducts", (_req, res) => {
-    const response = mockGameList.slice(0, 3);
-    res.set("Access-Control-Allow-Origin", "*");
-    res.json(response);
-    res.end();
-  });
-
   app.get("/api/search/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     const { platform, genre, age, sort, sortDir, text } = _req.query;
-    console.log(_req.query);
-    console.log(text);
-    const currentPlatform = platform.toUpperCase();
+    const currentPlatform = (platform as string).toUpperCase();
     fs.readFile("./src/assets/products.json", "utf8", (err, data) => {
       if (err) {
-        console.log(err);
         res.status(400).json(1);
         res.end();
       } else {
@@ -100,9 +84,6 @@ export default webpackMockServer.add((app, helper) => {
         res.end();
       } else {
         const obj = JSON.parse(data);
-        console.log(_req.body.login);
-        console.log(_req.body.password);
-        console.log(obj.users.filter((x) => x.login === _req.body.login));
         if (
           obj.users.filter((x) => x.login === _req.body.login).length === 0 &&
           _req.body.login !== undefined &&
@@ -126,6 +107,28 @@ export default webpackMockServer.add((app, helper) => {
       }
     });
   });
+  app.post("/api/auth/signIn/", (_req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(400).json(1);
+      } else {
+        const obj = JSON.parse(data);
+        const foundUser = obj.users.filter((x) => x.login === _req.body.login)[0];
+        if (_req.body.login !== undefined && _req.body.password !== undefined && foundUser !== undefined)
+          if (
+            foundUser.length !== 0 &&
+            foundUser.login === _req.body.login &&
+            foundUser.password === _req.body.password
+          ) {
+            res.json(foundUser);
+            res.end();
+          } else res.status(400).json(1);
+        else res.status(400).json(1);
+      }
+    });
+  });
   app.post("/api/buy", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     fs.readFile("./src/assets/orders.json", "utf8", (err, data) => {
@@ -135,7 +138,6 @@ export default webpackMockServer.add((app, helper) => {
         res.end();
       } else {
         const obj = JSON.parse(data);
-        console.log(_req.body);
         obj.orders.push(_req.body);
         fs.writeFile("./src/assets/orders.json", JSON.stringify(obj), "utf8", (error) => {
           if (error) {
@@ -150,15 +152,10 @@ export default webpackMockServer.add((app, helper) => {
                 res.end();
               } else {
                 const obj2 = JSON.parse(data2);
-                console.log(obj2);
-                console.log("test");
                 const foundCart = obj2.carts.filter((x) => x.login === _req.body.userName)[0];
-                console.log(foundCart);
-                console.log("test");
                 if (foundCart !== undefined) {
                   for (let i = 0; i < obj2.carts.length; i++) {
                     if (obj2.carts[i].login === _req.body.userName) {
-                      console.log("test");
                       obj2.carts[i].cart = [];
                       break;
                     }
@@ -169,7 +166,6 @@ export default webpackMockServer.add((app, helper) => {
                       res.status(400).json(1);
                       res.end();
                     } else {
-                      console.log("test");
                       res.status(201).json(_req.body);
                       res.end();
                     }
@@ -182,7 +178,7 @@ export default webpackMockServer.add((app, helper) => {
       }
     });
   });
-  app.get("/api/getCart/:login", (_req, res) => {
+  app.get("/api/user/cart/:login", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     fs.readFile("./src/assets/carts.json", "utf8", (err, data) => {
       if (err) {
@@ -191,10 +187,7 @@ export default webpackMockServer.add((app, helper) => {
         res.end();
       } else {
         const obj = JSON.parse(data);
-        console.log(obj);
-        console.log(_req.params.login);
         const foundCart = obj.carts.filter((x) => x.login === _req.params.login)[0];
-        console.log(foundCart);
         if (foundCart && foundCart.cart) {
           res.status(201).json(foundCart.cart);
           res.end();
@@ -205,10 +198,8 @@ export default webpackMockServer.add((app, helper) => {
       }
     });
   });
-  app.post("/api/cart/:login", (_req, res) => {
+  app.post("/api/user/cart/:login", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
-    console.log(_req.params.login);
-
     fs.readFile("./src/assets/carts.json", "utf8", (err, data) => {
       if (err) {
         console.log(err);
@@ -216,10 +207,7 @@ export default webpackMockServer.add((app, helper) => {
         res.end();
       } else {
         const obj = JSON.parse(data);
-        console.log(obj);
-        console.log(_req.params.login);
         const foundCart = obj.carts.filter((x) => x.login === _req.params.login)[0];
-        console.log(foundCart);
         if (foundCart !== undefined) {
           for (let i = 0; i < obj.carts.length; i++) {
             if (obj.carts[i].login === _req.params.login) {
@@ -253,32 +241,7 @@ export default webpackMockServer.add((app, helper) => {
       }
     });
   });
-  app.post("/api/auth/signIn/", (_req, res) => {
-    res.set("Access-Control-Allow-Origin", "*");
-    fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
-      if (err) {
-        console.log(err);
-        res.status(400).json(1);
-      } else {
-        const obj = JSON.parse(data);
-        console.log(_req.body);
-        console.log(_req.body.login);
-        const foundUser = obj.users.filter((x) => x.login === _req.body.login)[0];
-        console.log(foundUser);
-        if (_req.body.login !== undefined && _req.body.password !== undefined && foundUser !== undefined)
-          if (
-            foundUser.length !== 0 &&
-            foundUser.login === _req.body.login &&
-            foundUser.password === _req.body.password
-          ) {
-            res.json(foundUser);
-            res.end();
-          } else res.status(400).json(1);
-        else res.status(400).json(1);
-      }
-    });
-  });
-  app.get("/users/", (_req, res) => {
+  app.get("/user/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     if (_req.query.login !== undefined)
       fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
@@ -287,9 +250,7 @@ export default webpackMockServer.add((app, helper) => {
           res.status(400).json(1);
         } else {
           const obj = JSON.parse(data);
-          console.log(_req.query);
           const foundUser = obj.users.filter((x) => x.login === _req.query.login)[0];
-          console.log(foundUser);
           if (foundUser !== undefined) {
             res.json(foundUser);
             res.end();
@@ -298,10 +259,8 @@ export default webpackMockServer.add((app, helper) => {
       });
     else res.status(400).json(1);
   });
-  app.patch("/users/:login", (_req, res) => {
+  app.patch("/user/:login", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
-    console.log(_req.params);
-    console.log(_req.body);
     if (_req.params.login !== undefined)
       fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
         if (err) {
@@ -309,11 +268,8 @@ export default webpackMockServer.add((app, helper) => {
           res.status(400).json(1);
         } else {
           const obj = JSON.parse(data);
-          console.log(obj.users.length);
           const foundUser = obj.users.filter((x) => x.login === _req.params.login)[0];
           const existingUser = obj.users.filter((x) => x.login === _req.body.login)[0];
-          console.log(foundUser);
-          console.log(existingUser);
           if (foundUser !== undefined && existingUser === undefined) {
             for (let i = 0; i < obj.users.length; i++) {
               if (obj.users[i].login === _req.params.login) {
@@ -337,10 +293,8 @@ export default webpackMockServer.add((app, helper) => {
       });
     else res.status(400).json(_req.params.login);
   });
-  app.patch("/passwordChange/:login", (_req, res) => {
+  app.patch("/user/passwordChange/:login", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
-    console.log(_req.params);
-    console.log(_req.body);
     if (_req.params.login !== undefined)
       fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
         if (err) {
@@ -348,9 +302,7 @@ export default webpackMockServer.add((app, helper) => {
           res.status(400).json(1);
         } else {
           const obj = JSON.parse(data);
-          console.log(obj.users.length);
           const foundUser = obj.users.filter((x) => x.login === _req.params.login)[0];
-          console.log(foundUser);
           if (foundUser !== undefined) {
             for (let i = 0; i < obj.users.length; i++) {
               if (obj.users[i].login === _req.params.login) {
@@ -380,8 +332,6 @@ export default webpackMockServer.add((app, helper) => {
   });
   app.post("/upload/:login", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
-    console.log(_req.params);
-    console.log(_req.body);
     if (_req.params.login === undefined) res.status(400).json(_req.params.login);
     else
       fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
@@ -390,9 +340,7 @@ export default webpackMockServer.add((app, helper) => {
           res.status(400).json(1);
         } else {
           const obj = JSON.parse(data);
-          console.log(obj.users.length);
           const foundUser = obj.users.filter((x) => x.login === _req.params.login)[0];
-          console.log(foundUser);
           if (foundUser === undefined) res.status(400).json(_req.params.login);
           else {
             for (let i = 0; i < obj.users.length; i++) {
@@ -417,7 +365,6 @@ export default webpackMockServer.add((app, helper) => {
   });
   app.put("/api/product/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
-    console.log(_req.body);
     fs.readFile("./src/assets/products.json", "utf8", (err, data) => {
       if (err) {
         console.log(err);
@@ -427,7 +374,6 @@ export default webpackMockServer.add((app, helper) => {
         const obj = JSON.parse(data);
         obj.map((game) => {
           if (game.id === _req.body.id) {
-            console.log(game);
             game.title = _req.body.title;
             game.age = _req.body.age;
             game.category = _req.body.category;
@@ -452,7 +398,6 @@ export default webpackMockServer.add((app, helper) => {
   });
   app.post("/api/product/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
-    console.log(_req.body);
     let flag = false;
     fs.readFile("./src/assets/products.json", "utf8", (err, data) => {
       if (err) {
@@ -485,9 +430,8 @@ export default webpackMockServer.add((app, helper) => {
       }
     });
   });
-  app.delete("/api/product/", (_req, res) => {
+  app.delete("/api/product/:id", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
-    console.log(_req.body);
     fs.readFile("./src/assets/products.json", "utf8", (err, data) => {
       if (err) {
         console.log(err);
@@ -496,8 +440,7 @@ export default webpackMockServer.add((app, helper) => {
       } else {
         const obj = JSON.parse(data);
         obj.map((game) => {
-          if (game.id === _req.body.id) {
-            console.log(game);
+          if (game.id === +_req.params.id) {
             game.deleted = true;
           }
         });
@@ -542,14 +485,14 @@ export default webpackMockServer.add((app, helper) => {
     res.json(1);
     res.end();
   });
-  app.options("/users/", (_req, res) => {
+  app.options("/user/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "http://localhost:8080");
     res.set("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, PATCH");
     res.set("Access-Control-Allow-Headers", "content-type");
     res.json(1);
     res.end();
   });
-  app.options("/passwordChange/", (_req, res) => {
+  app.options("/user/passwordChange/", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "http://localhost:8080");
     res.set("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, PATCH");
     res.set("Access-Control-Allow-Headers", "content-type");

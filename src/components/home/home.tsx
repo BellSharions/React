@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC } from "react";
 import { HomeProps } from "@/types/types";
 import Categories from "./categories/categories";
 import SearchBarContainer from "../searchBar/searchBarContainer";
@@ -15,4 +15,4 @@ const Home: FC<HomeProps> = ({ platform, sort, age, genre, sortDir, search }) =>
   </div>
 );
 
-export default memo(Home);
+export default Home;

@@ -1,19 +1,11 @@
+/* eslint-disable no-lone-blocks */
 import { NavLink } from "react-router-dom";
 import { FC } from "react";
 import { HeaderProps } from "@/types/types";
 import "./header.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import {
-  logOutText,
-  multiLink,
-  routes,
-  routesMap,
-  routeType,
-  signInText,
-  signUpText,
-  singleLink,
-} from "../../constants/constants";
+import { multiLink, routes, routesMap, routeType, singleLink } from "../../constants/constants";
 import Dropdown from "./navbarDropdown/dropdown";
 import BtnContainer from "../../elements/buttonContainer";
 
@@ -30,23 +22,24 @@ const Header: FC<HeaderProps> = ({
   <header className="header">
     <h3 className="header__title">Game Market</h3>
     <div className="header__navlinks">
-      {routes.map((object: singleLink | multiLink) => (
-        <>
-          {object.type === routeType.link && (
+      {routes.map((object: singleLink | multiLink) => {
+        if (object.type === routeType.link)
+          return (
             <NavLink className="header__navlinks-link" key={object.item.name} to={(object as singleLink).item.route}>
               <span className="navtext">{(object as singleLink).item.name}</span>
               <i className={(object as singleLink).item.icon} />
             </NavLink>
-          )}
-          {object.type === routeType.dropdown && (
+          );
+        if (object.type === routeType.dropdown)
+          return (
             <Dropdown
               key={object.item.name}
               name={(object as multiLink).item.name}
               subLinks={(object as multiLink).item.data}
             />
-          )}
-        </>
-      ))}
+          );
+        return null;
+      })}
       {loggedIn ? (
         <>
           {visible ? <BtnContainer action={addAction} childrenProps={{ label: "Add Game" }} /> : null}

@@ -10,7 +10,7 @@ const ProfilePageContainer: FC = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
-  const [message2, setUploadMessage] = useState("");
+  const [imageMessage, setUploadMessage] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [formValid, setFormValid] = useState(false);
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const ProfilePageContainer: FC = () => {
     setDescription(inputName);
   };
   const profilePicGetter = async () => {
-    await fetch(`http://localhost:8080/users/?login=${userName}`, {
+    await fetch(`http://localhost:8080/user/?login=${userName}`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -81,7 +81,7 @@ const ProfilePageContainer: FC = () => {
     if (e) {
       e.preventDefault();
     }
-    await fetch(`http://localhost:8080/users/${userName}`, {
+    await fetch(`http://localhost:8080/user/${userName}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -100,13 +100,12 @@ const ProfilePageContainer: FC = () => {
     <ProfilePage
       userName={userName}
       profilePic={profilePic}
-      profilePicGetter={profilePicGetter}
       saveHandler={saveHandler}
       userNameGetter={userNameGetter}
       profilePicHandler={profilePicHandler}
       name={name}
       message={message}
-      message2={message2}
+      message2={imageMessage}
       descriptionGetter={descriptionGetter}
       description={description}
       formValid={formValid}

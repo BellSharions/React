@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import "./username.scss";
 import { UserNameProps } from "../types/types";
 
@@ -8,4 +8,4 @@ const UserName: FC<UserNameProps> = ({ userName }) => (
   </div>
 );
 
-export default UserName;
+export default memo(UserName);

@@ -1,3 +1,4 @@
+import BtnContainer from "@/elements/buttonContainer";
 import { BuyModalProps } from "@/types/types";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,7 +7,7 @@ import "./buyModalBody.scss";
 
 const BuyModalBody: FC<BuyModalProps> = ({ userName, cartGames, amount, closeHandler, confirmHandler }) => (
   <div className="buy__modal_container" role="note">
-    <button className="buy__modal_close-btn" type="button" onClick={() => closeHandler()}>
+    <button className="buy__modal_close-btn" type="button" onClick={closeHandler}>
       <FontAwesomeIcon icon={faTimes} />
     </button>
     <div className="buy__modal_content-container">
@@ -20,9 +21,9 @@ const BuyModalBody: FC<BuyModalProps> = ({ userName, cartGames, amount, closeHan
           </p>
         ))}
       </div>
-      <button className="changePass__modal_close-btn" type="button" onClick={() => confirmHandler()}>
-        Confirm
-      </button>
+      <div className="buyModal_confirm-btn">
+        <BtnContainer action={confirmHandler} childrenProps={{ label: "Confirm" }} />
+      </div>
     </div>
   </div>
 );

@@ -37,7 +37,7 @@ const CartPage: FC<CartPageProps> = ({ games, clickHandler, totalAmount, userBal
         </div>
         {games.length > 0 ? (
           <div className="cartPage__formRemove_container">
-            <button className="cartPage__formRemove_btn" type="button" onClick={() => clickHandler()} disabled={!valid}>
+            <button className="cartPage__formRemove_btn" type="button" onClick={clickHandler} disabled={!valid}>
               Remove
             </button>
           </div>
@@ -51,7 +51,7 @@ const CartPage: FC<CartPageProps> = ({ games, clickHandler, totalAmount, userBal
           </div>
           <div className="cartPage__formSubmit_submitBtn">
             {games.length > 0 ? (
-              <button className="cartPage__formSubmit_btn" type="button" onClick={() => buyFunc()}>
+              <button className="cartPage__formSubmit_btn" type="button" onClick={buyFunc}>
                 Buy
               </button>
             ) : null}

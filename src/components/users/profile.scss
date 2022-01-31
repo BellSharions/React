@@ -92,18 +92,11 @@
   .profilePage__editSection {
     max-width: 40%;
   }
-  .inputText__label {
-    font-size: 0.2em;
-  }
   .profileTextArea__textarea {
     max-width: 100%;
   }
   .profileTextArea__label {
     max-width: 100%;
-  }
-  .inputText__container {
-    flex-direction: column;
-    flex-wrap: wrap;
   }
   .profilePage__btnsSection {
     max-width: 18%;
@@ -113,9 +106,6 @@
 @media only screen and (min-width: 1000px) {
   .profilePage__editSection {
     min-width: 40%;
-  }
-  .inputText__label {
-    font-size: 0.2em;
   }
   .profileTextArea__textarea {
     min-width: 100%;

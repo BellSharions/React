@@ -9,6 +9,5 @@ export const showChangePassModal = "showChangePassModal";
 export const showEditGameModal = "showEditGameModal";
 export const showAddGameModal = "showAddGameModal";
 export const showDeleteGameModal = "showDeleteGameModal";
-export const fetchGames = "fetchGames";
 export const closeModal = "closeModal";
 export const changeLoading = "changeLoading";

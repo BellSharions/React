@@ -1,17 +1,11 @@
 import GameCard from "@/elements/gameCard/gameCardContainer";
-import { fetchNewProductsLink } from "@/constants/constants";
-import { useState, useEffect, FC } from "react";
+import { FC, memo } from "react";
 import "./newGames.scss";
+import { useSelector } from "react-redux";
+import { ReducerState } from "@/components/redux/reducer";
 
 const NewGames: FC = () => {
-  const [newGamesList, setNewGamesList] = useState([]);
-
-  useEffect(() => {
-    async function newGameFetching() {
-      setNewGamesList(await (await fetch(fetchNewProductsLink)).json());
-    }
-    newGameFetching();
-  }, []);
+  const newGamesList = useSelector((state: ReducerState) => state.filter.searchResult);
 
   return (
     <>
@@ -20,14 +14,15 @@ const NewGames: FC = () => {
           <h1 className="newGame__title">New games</h1>
         </div>
         <div className="newGame__content-container">
-          {newGamesList.map(({ title, description, date, category, logo, rating, price }) => (
+          {newGamesList.slice(0, 3).map(({ id, title, description, date, category, logo, rating, price }) => (
             <GameCard
+              key={id}
               title={title}
               description={description}
               date={date}
               category={category}
               logo={logo}
-              rating={rating}
+              rating={rating?.toString()}
               price={price}
             />
           ))}
@@ -37,4 +32,4 @@ const NewGames: FC = () => {
   );
 };
 
-export default NewGames;
+export default memo(NewGames);

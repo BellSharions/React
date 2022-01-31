@@ -19,7 +19,7 @@ const ChangePassModalBody: FC<PasswordModalProps> = ({
   <div className="changePass__modal_container">
     <div className="changePass__modal_upper-container">
       <h1 className="changePass__modal_title">Change password</h1>
-      <button className="changePass__modal_close-btn" type="button" onClick={() => closeModal()}>
+      <button className="changePass__modal_close-btn" type="button" onClick={closeModal}>
         <FontAwesomeIcon icon={faTimes} />
       </button>
     </div>
