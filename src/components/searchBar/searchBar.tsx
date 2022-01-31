@@ -1,8 +1,7 @@
 import { FC } from "react";
-import "./searchBar.scss";
-import { SearchBarComponentProps } from "@/types/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { SearchBarComponentProps } from "../../types/types";
 import ProductsOutput from "../products/output/productsOutput";
 
 const SearchBar: FC<SearchBarComponentProps> = ({ list, debouncedOnChange }) => (

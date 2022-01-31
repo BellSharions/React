@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { useDispatch } from "react-redux";
-import { filterByAgeAction, filterByGenreAction } from "@/components/redux/filter/filterActions";
-import { ageArr, genreArr } from "@/constants/constants";
-import { RadioButtonContainerProps } from "@/types/types";
+import { ageArr, genreArr } from "../../../constants/constants";
+import { RadioButtonContainerProps } from "../../../types/types";
+import { filterByAgeAction, filterByGenreAction } from "../../redux/filter/filterActions";
 import RadioButtons from "./radioButtons";
 
 const RadioButtonsContainer: FC<RadioButtonContainerProps> = ({ array, filter }) => {
