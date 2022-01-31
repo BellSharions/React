@@ -1,22 +1,30 @@
 import { InputComponentProps } from "@/types/types";
 import { FC } from "react";
-import "./inputtext.css";
+import styles from "styled-components";
 
+const InputContainer = styles.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+const Input = styles.input`
+  border: 1px solid white;
+  box-sizing: border-box;
+  background-color: inherit;
+  height: 1.5rem;
+  width: 60%;
+  color: white;
+`;
+const InputLabel = styles.label`
+  font-size: 1.5rem;
+  color: white;
+`;
 const InputText: FC<InputComponentProps> = ({ name, id, type, value, changeHandler }) => (
-  <div className="inputText__container">
-    <label htmlFor={id} className="inputText__label">
-      {name}
-    </label>
-    <input
-      name={name}
-      id={id}
-      type={type}
-      value={value}
-      onChange={changeHandler}
-      className="inputText__input"
-      autoComplete="off"
-    />
-  </div>
+  <InputContainer>
+    <InputLabel htmlFor={id}>{name}</InputLabel>
+    <Input name={name} id={id} type={type} value={value} onChange={changeHandler} autoComplete="off" />
+  </InputContainer>
 );
 
 export default InputText;
