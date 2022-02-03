@@ -15,6 +15,10 @@ export const enum RouteType {
   link,
   dropdown,
 }
+export const enum Roles {
+  ADMIN = "admin",
+  USER = "user",
+}
 export const enum CallType {
   GET = "GET",
   POST = "POST",

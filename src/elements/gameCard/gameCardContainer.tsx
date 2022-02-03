@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import apiCall from "@/apiCall";
-import { CallType, userCartUrl } from "@/constants";
+import { CallType, Roles, userCartUrl } from "@/constants";
 import { showEditGameModalAction } from "../../components/redux/actions";
 import { addGameToEditAction } from "../../components/redux/admin/adminActions";
 import { GameToEdit } from "../../types";
@@ -85,7 +85,7 @@ const GameCardContainer: FC<GameItemProps> = ({
   };
 
   useEffect(() => {
-    if (role === "admin") setVisible(true);
+    if (role === Roles.ADMIN) setVisible(true);
   }, [role]);
 
   return (

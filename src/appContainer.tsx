@@ -96,13 +96,11 @@ class AppContainer extends Component<AppProps, AppState> {
           </Switch>
           <Footer />
           <ModalBodyContainer />
-          <>
-            {store.getState().reducer.isLoading ? (
-              <div className="loading-icon">
-                <FontAwesomeIcon icon={faSpinner} className="loading__loading-icon" />
-              </div>
-            ) : null}
-          </>
+          {store.getState().reducer.isLoading ? (
+            <div className="loading-icon">
+              <FontAwesomeIcon icon={faSpinner} className="loading__loading-icon" />
+            </div>
+          ) : null}
         </Suspense>
       </StrictMode>
     );

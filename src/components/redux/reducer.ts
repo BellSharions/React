@@ -1,3 +1,4 @@
+import { Roles } from "@/constants";
 import { Game } from "@/types";
 import { combineReducers } from "redux";
 import {
@@ -24,7 +25,7 @@ export const initialState = {
   isLoading: false,
   fetch: false,
   userName: "",
-  role: "user",
+  role: Roles.USER,
   changePassModalVisible: false,
   editGameModalVisible: false,
   addGameModalVisible: false,

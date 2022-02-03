@@ -6,6 +6,7 @@ import {
   CallType,
   passwdChangeUrl,
   productUrl,
+  Roles,
   RoutesMap,
   signInUrl,
   signUpUrl,
@@ -285,11 +286,11 @@ const ModalBodyContainer: FC = () => {
       setMessage("Please use name shorter than 30 characters or longer than 3 characters");
     } else {
       setMessage(verifyPassword(password).validMessage);
-      const res = await apiCall(signUpUrl, CallType.POST, { login, password, role: "user" });
+      const res = await apiCall(signUpUrl, CallType.POST, { login, password, role: Roles.USER });
 
       if (res.status === 201) {
         dispatch(logInAction(login));
-        dispatch(setRoleAction("user"));
+        dispatch(setRoleAction(Roles.USER));
         localStorage.setItem("login", login);
         dispatch(closeModalAction());
         const getResponse = await apiCall(`${userCartUrl}${login}`, CallType.GET, null);
