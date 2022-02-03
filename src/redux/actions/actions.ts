@@ -8,6 +8,7 @@ export const enum UserActions {
   LOG_OUT = "LOG_OUT",
   CHANGE_LOADING = "CHANGE_LOADING",
 }
+
 export const logInAction = createAction<string>(UserActions.LOG_IN);
 export const setRoleAction = createAction<Roles>(UserActions.SET_ROLE);
 export const changeUsernameAction = createAction<string>(UserActions.CHANGE_USERNAME);

@@ -65,17 +65,6 @@ export interface CartResponse {
   gamesList: GameCart[];
 }
 
-export interface CartAction {
-  type: string;
-  payload: GameCart | GameCart[] | number;
-}
-
-export interface CartStateType {
-  gamesList: GameCart[];
-  totalPurchase: number;
-  userBalance: number;
-}
-
 export interface GameToEdit {
   id?: number;
   title: string;
@@ -87,23 +76,4 @@ export interface GameToEdit {
   age: number;
   rating?: number;
   date?: string;
-}
-
-export interface FilterAction {
-  type: string;
-  payload: Game[];
-}
-
-export interface FilterState {
-  loading: boolean;
-  gamesList: Game[];
-}
-
-export interface AdminStateType {
-  gametoEdit: GameToEdit;
-}
-
-export interface FilterStateType extends BaseSearchCriteria {
-  term: string;
-  searchResult: Game[];
 }

@@ -14,14 +14,17 @@ export const initialState = {
   userName: "",
   role: Roles.USER,
 };
+
 interface IUserAction {
   payload: string;
   type: string;
 }
+
 interface IUserBoolAction {
   payload: boolean;
   type: string;
 }
+
 interface IUserRoleAction {
   payload: Roles;
   type: string;
@@ -34,18 +37,21 @@ function logIn(state: typeof initialState, action: IUserAction) {
     userName: action.payload,
   };
 }
+
 function setRole(state: typeof initialState, action: IUserRoleAction) {
   return {
     ...state,
     role: action.payload,
   };
 }
+
 function changeUsername(state: typeof initialState, action: IUserAction) {
   return {
     ...state,
     userName: action.payload,
   };
 }
+
 function logOut(state: typeof initialState) {
   return {
     ...state,
@@ -53,6 +59,7 @@ function logOut(state: typeof initialState) {
     userName: initialState.userName,
   };
 }
+
 function changeLoading(state: typeof initialState, action: IUserBoolAction) {
   return {
     ...state,

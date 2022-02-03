@@ -1,4 +1,4 @@
-import { FilterStateType, Game } from "@/types";
+import { BaseSearchCriteria, Game } from "@/types";
 import { createReducer } from "@reduxjs/toolkit";
 import {
   changeSearchAction,
@@ -8,6 +8,11 @@ import {
   filterBySelectionAction,
   filterBySelectionDirectionAction,
 } from "../actions/filterActions";
+
+export interface FilterStateType extends BaseSearchCriteria {
+  term: string;
+  searchResult: Game[];
+}
 
 interface IFilterAction {
   payload: string;
@@ -27,6 +32,7 @@ export const initialState: FilterStateType = {
   term: "",
   searchResult: [] as Game[],
 };
+
 function fetchGames(state: FilterStateType, action: IGameAction) {
   return {
     ...state,

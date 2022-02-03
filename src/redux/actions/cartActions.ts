@@ -5,10 +5,12 @@ interface IAmount {
   title: string;
   amount: number;
 }
+
 interface ICheck {
   title: string;
   check: boolean;
 }
+
 export const enum CartActions {
   ADD_GAME_TO_CART = "ADD_GAME_TO_CART",
   SET_CART_GAMES = "SET_CART_GAMES",
@@ -19,6 +21,7 @@ export const enum CartActions {
   DECREASE_TOTAL_AMOUNT = "DECREASE_TOTAL_AMOUNT",
   BUY_GAMES = "BUY_GAMES",
 }
+
 export const addGameToCartAction = createAction<GameCart>(CartActions.ADD_GAME_TO_CART);
 export const setCartGamesAction = createAction<GameCart[]>(CartActions.SET_CART_GAMES);
 export const changeGameCheckAction = createAction<ICheck>(CartActions.CHANGE_GAME_CHECK);

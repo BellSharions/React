@@ -1,4 +1,4 @@
-import { AdminStateType, GameToEdit } from "@/types";
+import { GameToEdit } from "@/types";
 import { createReducer } from "@reduxjs/toolkit";
 import { addGameToEditAction } from "../actions/adminActions";
 
@@ -6,7 +6,9 @@ interface IAdminAction {
   payload: GameToEdit;
   type: string;
 }
-
+export interface AdminStateType {
+  gametoEdit: GameToEdit;
+}
 export const initialState: AdminStateType = {
   gametoEdit: { id: 0, title: "", category: "", price: 0, imgUrl: "", description: "", genre: "", age: 0, rating: 0 },
 };
@@ -17,6 +19,7 @@ function addGameToEdit(state: AdminStateType, action: IAdminAction) {
     gametoEdit: action.payload,
   };
 }
+
 export const adminReducer = createReducer(initialState, (builder) => {
   builder.addCase(addGameToEditAction, addGameToEdit);
 });

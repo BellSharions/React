@@ -9,41 +9,55 @@ import {
   decreaseTotalAmountAction,
   buyGamesAction,
 } from "../actions/cartActions";
-import { CartStateType, GameCart } from "../../types";
+import { GameCart } from "../../types";
+
+export interface CartStateType {
+  gamesList: GameCart[];
+  totalPurchase: number;
+  userBalance: number;
+}
 
 const InitialCartState: CartStateType = {
   gamesList: [] as GameCart[],
   totalPurchase: 0,
   userBalance: 1000,
 };
+
 interface ICartAction {
   payload: GameCart[];
   type: string;
 }
+
 interface ICartSingleAction {
   payload: GameCart;
   type: string;
 }
+
 interface ICartNumberAction {
   payload: number;
   type: string;
 }
+
 interface ICartStringAction {
   payload: string;
   type: string;
 }
+
 interface IAmount {
   title: string;
   amount: number;
 }
+
 interface ICheck {
   title: string;
   check: boolean;
 }
+
 interface ICartAmountAction {
   payload: IAmount;
   type: string;
 }
+
 interface ICartCheckAction {
   payload: ICheck;
   type: string;
@@ -66,6 +80,7 @@ function setCartGames(state: CartStateType, action: ICartAction) {
     userBalance: state.userBalance,
   };
 }
+
 function changeGameCheck(state: CartStateType, action: ICartCheckAction) {
   return {
     ...state,
@@ -76,6 +91,7 @@ function changeGameCheck(state: CartStateType, action: ICartCheckAction) {
     userBalance: state.userBalance,
   };
 }
+
 function changeGameAmount(state: CartStateType, action: ICartAmountAction) {
   return {
     ...state,
@@ -86,6 +102,7 @@ function changeGameAmount(state: CartStateType, action: ICartAmountAction) {
     userBalance: state.userBalance,
   };
 }
+
 function removeGameFromCart(state: CartStateType) {
   return {
     ...state,
@@ -94,6 +111,7 @@ function removeGameFromCart(state: CartStateType) {
     userBalance: state.userBalance,
   };
 }
+
 function increaseTotalAmount(state: CartStateType, action: ICartNumberAction) {
   return {
     ...state,
@@ -102,6 +120,7 @@ function increaseTotalAmount(state: CartStateType, action: ICartNumberAction) {
     userBalance: state.userBalance,
   };
 }
+
 function decreaseTotalAmount(state: CartStateType, action: ICartNumberAction) {
   return {
     ...state,
@@ -110,6 +129,7 @@ function decreaseTotalAmount(state: CartStateType, action: ICartNumberAction) {
     userBalance: state.userBalance,
   };
 }
+
 function buyGames(state: CartStateType, action: ICartNumberAction) {
   return {
     ...state,
