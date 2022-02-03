@@ -1,8 +1,8 @@
-import GameCard from "@/elements/gameCard/gameCardContainer";
 import { FC, memo } from "react";
 import "./newGames.scss";
 import { useSelector } from "react-redux";
-import { ReducerState } from "@/components/redux/reducer";
+import GameCard from "../../common/gameCard/gameCardContainer";
+import { ReducerState } from "../../../redux/reducers/reducer";
 
 const NewGames: FC = () => {
   const newGamesList = useSelector((state: ReducerState) => state.filter.searchResult);

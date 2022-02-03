@@ -6,7 +6,7 @@ import "./header.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { routes, RoutesMap, RouteType } from "@/constants";
-import BtnContainer from "../../elements/buttonContainer";
+import BtnContainer from "../common/buttonContainer";
 import Dropdown from "./navbar-dropdown/dropdown";
 
 export interface HeaderProps {

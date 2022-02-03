@@ -1,11 +1,11 @@
 import { availableAges, availableGenres } from "@/constants";
-import BtnContainer from "@/elements/buttonContainer";
-import InputText from "@/elements/inputTextContainer";
-import TextAreaContainer from "@/elements/textAreaContainer";
 import { Game } from "@/types";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
+import TextAreaContainer from "../common/textAreaContainer";
+import InputText from "../common/inputTextContainer";
+import BtnContainer from "../common/buttonContainer";
 import "./gameModal.scss";
 
 export interface GameModalProps {

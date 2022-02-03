@@ -1,17 +1,17 @@
 /* eslint-disable no-nested-ternary */
-import { RoutesMap } from "@/constants";
+import { ModalTypes, RoutesMap } from "@/constants";
+import { showModalAction } from "@/redux/actions/modalActions";
+import { ReducerState } from "@/redux/store/store";
 import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route, RouteProps } from "react-router-dom";
-import { showSignInModalAction } from "../redux/actions";
-import { ReducerState } from "../redux/reducer";
 
 const ProtectedRoute: FC<RouteProps> = ({ children, location }) => {
   const [loggedIn] = useSelector((state: ReducerState) => [state.reducer.loggedIn]);
   const dispatch = useDispatch();
   useEffect(() => {
     if (!loggedIn) {
-      dispatch(showSignInModalAction());
+      dispatch(showModalAction(ModalTypes.SIGNIN));
     }
   }, [loggedIn]);
 

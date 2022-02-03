@@ -1,5 +1,5 @@
-import { changeLoadingAction } from "@/components/redux/actions";
-import { ReducerState } from "@/components/redux/reducer";
+import { changeLoadingAction } from "@/redux/actions/actions";
+import { ReducerState } from "@/redux/reducers/reducer";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 

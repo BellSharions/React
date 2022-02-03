@@ -26,6 +26,15 @@ export const enum CallType {
   DELETE = "DELETE",
   PATCH = "PATCH",
 }
+export const enum ModalTypes {
+  EDITGAME = "EDIT_GAME",
+  ADDGAME = "ADD_GAME",
+  SIGNUP = "SIGN_UP",
+  SIGNIN = "SIGN_IN",
+  BUYGAMES = "BUY_GAMES",
+  DELETEGAME = "DELETE_GAME",
+  PASSCHANGE = "PASS_CHANGE",
+}
 export const loginKey = "login";
 export const roleKey = "role";
 export const ageOptions = ["all ages", "3", "12", "16", "18"];
@@ -98,7 +107,7 @@ export const routes: Array<singleLink | multiLink> = [
   },
 ];
 
-export const fetchGameQueryLink = "http://localhost:8079/api/search/";
+export const fetchGameQueryLink = "http://localhost:8080/api/search?";
 export const signInUrl = "http://localhost:8079/api/auth/signIn/";
 export const signUpUrl = "http://localhost:8079/api/auth/signUp/";
 export const userCartUrl = "http://localhost:8080/api/user/cart/";

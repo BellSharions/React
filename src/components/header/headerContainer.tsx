@@ -1,25 +1,26 @@
 import { FC, useEffect, useState } from "react";
 import "./header.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { Roles } from "@/constants";
+import { ModalTypes, Roles } from "@/constants";
+import { showModalAction } from "@/redux/actions/modalActions";
+import { ReducerState } from "@/redux/store/store";
 import Header from "./header";
-import { logOutAction, showAddGameModalAction, showSignInModalAction, showSignUpModalAction } from "../redux/actions";
-import { ReducerState } from "../redux/reducer";
+import { logOutAction } from "../../redux/actions/actions";
 
 const HeaderContainer: FC = () => {
   const [name, loggedIn] = useSelector((state: ReducerState) => [state.reducer.userName, state.reducer.loggedIn]);
   const dispatch = useDispatch();
-  const cartNum: number = useSelector((state: ReducerState) => state.cart.gamesList.length);
+  const cartNum: number = useSelector((state: ReducerState) => state.cart.gamesList?.length);
   const role = useSelector((state: ReducerState) => state.reducer.role);
   const [visible, setVisible] = useState<boolean>(false);
   const showSignInModal = () => {
-    dispatch(showSignInModalAction());
+    dispatch(showModalAction(ModalTypes.SIGNIN));
   };
   const addAction = () => {
-    dispatch(showAddGameModalAction());
+    dispatch(showModalAction(ModalTypes.ADDGAME));
   };
   const showSignUpModal = () => {
-    dispatch(showSignUpModalAction());
+    dispatch(showModalAction(ModalTypes.SIGNUP));
   };
   const logOut = () => {
     localStorage.removeItem("login");

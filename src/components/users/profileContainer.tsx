@@ -1,9 +1,19 @@
 import { useState, useEffect, FC, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import apiCall from "@/apiCall";
-import { CallType, cloudinaryUpload, maxSymbols, minSymbols, userGetUrl, userUpload, userUrl } from "@/constants";
-import { changeUsernameAction, showChangePassModalAction } from "../redux/actions";
-import { ReducerState } from "../redux/reducer";
+import {
+  CallType,
+  cloudinaryUpload,
+  maxSymbols,
+  minSymbols,
+  ModalTypes,
+  userGetUrl,
+  userUpload,
+  userUrl,
+} from "@/constants";
+import { ReducerState } from "@/redux/store/store";
+import { showModalAction } from "@/redux/actions/modalActions";
+import { changeUsernameAction } from "../../redux/actions/actions";
 import "./profile.scss";
 import ProfilePage from "./profile";
 
@@ -18,7 +28,7 @@ const ProfilePageContainer: FC = () => {
   const userName = useSelector((state: ReducerState) => state.reducer.userName);
 
   const changePassword = () => {
-    dispatch(showChangePassModalAction());
+    dispatch(showModalAction(ModalTypes.PASSCHANGE));
   };
 
   const onUserNameChange = (inputName: string) => {

@@ -1,6 +1,6 @@
-import { filterBySelectionAction, filterBySelectionDirectionAction } from "@/components/redux/filter/filterActions";
 import { FC } from "react";
 import { useDispatch } from "react-redux";
+import { filterBySelectionAction, filterBySelectionDirectionAction } from "../../../redux/actions/filterActions";
 import CriteriaSelector from "./criteriaSelector";
 
 export interface CriteriaContainerProps {

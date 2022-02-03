@@ -1,6 +1,6 @@
-import BtnContainer from "@/elements/buttonContainer";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BtnContainer from "../common/buttonContainer";
 import "./deleteGameModal.scss";
 
 export interface DeleteGameModalProps {

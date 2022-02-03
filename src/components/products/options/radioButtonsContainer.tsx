@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useDispatch } from "react-redux";
 import { ageOptions, genreOptions } from "../../../constants";
-import { filterByAgeAction, filterByGenreAction } from "../../redux/filter/filterActions";
+import { filterByAgeAction, filterByGenreAction } from "../../../redux/actions/filterActions";
 import RadioButtons from "./radioButtons";
 
 export interface RadioButtonContainerProps {

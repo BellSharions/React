@@ -2,7 +2,7 @@ import { FC } from "react";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GameCart } from "@/types";
-import BtnContainer from "../../elements/buttonContainer";
+import BtnContainer from "../common/buttonContainer";
 import "./buyModalBody.scss";
 
 export interface BuyModalProps {

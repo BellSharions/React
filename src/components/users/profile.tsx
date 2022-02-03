@@ -1,7 +1,7 @@
 import { ChangeEvent, FC } from "react";
 import "./profile.scss";
-import TextAreaContainer from "@/elements/textAreaContainer";
-import InputTextContainer from "@/elements/inputTextContainer";
+import TextAreaContainer from "../common/textAreaContainer";
+import InputTextContainer from "../common/inputTextContainer";
 
 export interface ProfileProps {
   userName: string;

@@ -2,10 +2,10 @@ import { FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./cartPage.scss";
 import apiCall from "@/apiCall";
-import { CallType, userCartUrl } from "@/constants";
-import { IncreaseTotalAmountAction, removeGameFromCartAction } from "../redux/cart/cartActions";
-import { ReducerState } from "../redux/reducer";
-import { showBuyModalAction } from "../redux/actions";
+import { CallType, ModalTypes, userCartUrl } from "@/constants";
+import { ReducerState } from "@/redux/store/store";
+import { showModalAction } from "@/redux/actions/modalActions";
+import { increaseTotalAmountAction, removeGameFromCartAction } from "../../redux/actions/cartActions";
 import CartPage from "./cartPage";
 
 const CartPageContainer: FC = () => {
@@ -24,8 +24,8 @@ const CartPageContainer: FC = () => {
 
   const buyFunc = () => {
     if (totalAmount <= userBalance) {
-      dispatch(IncreaseTotalAmountAction(totalAmount));
-      dispatch(showBuyModalAction());
+      dispatch(increaseTotalAmountAction(totalAmount));
+      dispatch(showModalAction(ModalTypes.BUYGAMES));
     } else {
       alert("You do not have enough money. Please remove something from cart.");
     }

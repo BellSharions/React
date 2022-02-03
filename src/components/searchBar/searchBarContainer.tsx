@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { debounceDelay, RoutesMap } from "@/constants";
 import { ProductParams } from "../../types";
 import SearchBar from "./searchBar";
-import { changeSearchAction, fetchGamesAction } from "../redux/filter/filterActions";
-import { ReducerState } from "../redux/reducer";
+import { changeSearchAction, fetchGamesAction } from "../../redux/actions/filterActions";
+import { ReducerState } from "../../redux/reducers/reducer";
 
 const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, genre, search }) => {
   const dispatch = useDispatch();

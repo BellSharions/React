@@ -10,12 +10,12 @@ import Home from "./components/home/homeContainer";
 import { CallType, loginKey, roleKey, RoutesMap, userCartUrl } from "./constants";
 import { CartResponse, GameCart } from "./types";
 import CartPage from "./components/cart/cartPageContainer";
-import store from "./components/redux/store";
-import { ReducerState } from "./components/redux/reducer";
+import store from "./redux/store/store";
+import { ReducerState } from "./redux/reducers/reducer";
 import HeaderContainer from "./components/header/headerContainer";
-import { logInAction, setRoleAction } from "./components/redux/actions";
+import { logInAction, setRoleAction } from "./redux/actions/actions";
 import ModalBodyContainer from "./components/modal/modalBodyContainer";
-import { setCartGamesAction } from "./components/redux/cart/cartActions";
+import { setCartGamesAction } from "./redux/actions/cartActions";
 import apiCall from "./apiCall";
 import ProtectedRoute from "./components/protected-route/protectedRoute";
 
@@ -30,8 +30,6 @@ export interface AppProps {
 export interface AppState {
   loggedIn?: boolean;
   userName?: string;
-  showSignInModal: boolean;
-  showSignUpModal: boolean;
 }
 
 function storageGrab(key: string) {

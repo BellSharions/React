@@ -1,13 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import apiCall from "@/apiCall";
-import { CallType, Roles, userCartUrl } from "@/constants";
-import { showEditGameModalAction } from "../../components/redux/actions";
-import { addGameToEditAction } from "../../components/redux/admin/adminActions";
-import { GameToEdit } from "../../types";
+import { CallType, ModalTypes, Roles, userCartUrl } from "@/constants";
+import { ReducerState } from "@/redux/store/store";
+import { showModalAction } from "@/redux/actions/modalActions";
+import { addGameToEditAction } from "../../../redux/actions/adminActions";
+import { GameToEdit } from "../../../types";
 import GameCard from "./gameCard";
-import { addGameToCartAction, changeGameAmountAction } from "../../components/redux/cart/cartActions";
-import { ReducerState } from "../../components/redux/reducer";
+import { addGameToCartAction, changeGameAmountAction } from "../../../redux/actions/cartActions";
 
 export interface GameItemProps {
   id?: number;
@@ -25,7 +25,10 @@ export interface GameItemProps {
   editAction?: () => void;
   visible?: boolean;
 }
-
+interface IAmount {
+  title: string;
+  amount: number;
+}
 const GameCardContainer: FC<GameItemProps> = ({
   id,
   title,
@@ -52,8 +55,7 @@ const GameCardContainer: FC<GameItemProps> = ({
   ) => {
     if (gamesList.some((game) => game.title === gameTitle)) {
       const amountGame = gamesList.filter((game) => game.title === title);
-      amountGame[0].amount += 1;
-      dispatch(changeGameAmountAction(amountGame));
+      dispatch(changeGameAmountAction({ title: amountGame[0].title, amount: amountGame[0].amount + 1 } as IAmount));
       return;
     }
     dispatch(
@@ -81,7 +83,7 @@ const GameCardContainer: FC<GameItemProps> = ({
     dispatch(
       addGameToEditAction({ id, title, description, age, category, genre, imgUrl: logo, rate, price } as GameToEdit)
     );
-    dispatch(showEditGameModalAction());
+    dispatch(showModalAction(ModalTypes.EDITGAME));
   };
 
   useEffect(() => {

@@ -4,6 +4,7 @@ import {
   availableGenres,
   buyUrl,
   CallType,
+  ModalTypes,
   passwdChangeUrl,
   productUrl,
   Roles,
@@ -12,14 +13,15 @@ import {
   signUpUrl,
   userCartUrl,
 } from "@/constants";
+import { closeModalAction, showModalAction } from "@/redux/actions/modalActions";
+import { ReducerState } from "@/redux/store/store";
 import { CartResponse, GameCart } from "@/types";
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { closeModalAction, logInAction, setRoleAction, showDeleteGameModalAction } from "../redux/actions";
-import { buyGamesAction, setCartGamesAction } from "../redux/cart/cartActions";
-import { fetchGamesAction } from "../redux/filter/filterActions";
-import { ReducerState } from "../redux/reducer";
+import { logInAction, setRoleAction } from "../../redux/actions/actions";
+import { buyGamesAction, setCartGamesAction } from "../../redux/actions/cartActions";
+import { fetchGamesAction } from "../../redux/actions/filterActions";
 import BuyModalBody from "./buyModalBody";
 import "./buyModalBody.scss";
 import DeleteGameModal from "./deleteGameModal";
@@ -65,20 +67,15 @@ const ModalBodyContainer: FC = () => {
     state.filter.sortDir,
     state.filter.term,
   ]);
-  const [signup, signin, changePassword, buy, edit, add, del] = useSelector((state: ReducerState) => [
-    state.reducer.signUpModalVisible,
-    state.reducer.signInModalVisible,
-    state.reducer.changePassModalVisible,
-    state.reducer.buyModalVisible,
-    state.reducer.editGameModalVisible,
-    state.reducer.addGameModalVisible,
-    state.reducer.deleteGameModalVisible,
+  const [modalSelect, modalClosed] = useSelector((state: ReducerState) => [
+    state.modalReducer.openedModal,
+    state.modalReducer.modalClosed,
   ]);
 
   const finalCategory = [pcCheckedInp ? "PC" : null, psCheckedInp ? "PlayStation" : null, xbxCheckedInp ? "XBOX" : null]
     .filter((categor) => Boolean(categor))
     .join(", ");
-  const visible = !!edit;
+  const visible = modalSelect === ModalTypes.EDITGAME;
 
   const gameObj = {
     id: gameToEdit.id,
@@ -164,13 +161,13 @@ const ModalBodyContainer: FC = () => {
   };
 
   const deleteHandler = () => {
-    dispatch(showDeleteGameModalAction());
+    dispatch(showModalAction(ModalTypes.DELETEGAME));
   };
   const closeModal = () => {
     dispatch(closeModalAction());
   };
   useEffect(() => {
-    if (add) {
+    if (modalSelect === ModalTypes.ADDGAME) {
       setTitleInp("");
       setCategoryInp("");
       setPriceInp(0);
@@ -193,7 +190,7 @@ const ModalBodyContainer: FC = () => {
       setPsCheckedInp(gameToEdit.category.includes("PlayStation"));
       setXbxCheckedInp(gameToEdit.category.includes("XBOX"));
     }
-  }, [gameToEdit, add]);
+  }, [gameToEdit, modalSelect === ModalTypes.ADDGAME]);
   useEffect(() => {
     const alphNumPass = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
     if (!newPassword) setPassMessage("Please enter password");
@@ -219,7 +216,7 @@ const ModalBodyContainer: FC = () => {
     setLogin("");
     setRepeatPassword("");
     setMessage("Please enter password");
-  }, [signup, signin, changePassword, buy]);
+  }, [modalSelect]);
 
   const verifyPassword = (pass: string) => {
     const alphNumPass = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
@@ -338,98 +335,102 @@ const ModalBodyContainer: FC = () => {
 
   return (
     <>
-      {buy ? (
-        <Modal>
-          <BuyModalBody
-            userName={userName as string}
-            cartGames={cartGames as GameCart[]}
-            amount={totalPurchase as number}
-            closeHandler={closeModal}
-            confirmHandler={confirmHandler}
-          />
-        </Modal>
-      ) : null}
-      {changePassword ? (
-        <Modal>
-          <ChangePassModalBody
-            closeModal={closeModal}
-            changeFunc={changeFunc}
-            passwordChanged={onNewPasswordChanged}
-            newPassword={newPassword}
-            passMessage={passMessage}
-            repeatPasswordChanged={onRepeatNewPasswordChanged}
-            repeatNewPassword={repeatNewPassword}
-            repeatPassMessage={repeatPassMessage}
-            formValid={formValid}
-          />
-        </Modal>
-      ) : null}
-      {signin ? (
-        <Modal>
-          <SignInModalBody
-            closeModal={closeModal}
-            loginChanged={onLoginChanged}
-            postFunc={postFunc}
-            passwordChanged={onPasswordChanged}
-            messageChanged={onMessageChanged}
-            login={login}
-            password={password}
-            message={message}
-            verifyPassword={verifyPassword}
-          />
-        </Modal>
-      ) : null}
-      {signup ? (
-        <Modal>
-          <SignUpModal
-            closeModal={closeModal}
-            logupChanged={onLoginChanged}
-            putFunc={putFunc}
-            passwordChanged={onPasswordChanged}
-            logup={login}
-            password={password}
-            message={message}
-            verifyPassword={verifyPassword}
-            repeatPassword={repeatPassword}
-            repeatPasswordChanged={onRepeatPasswordChanged}
-          />
-        </Modal>
-      ) : null}
-      {edit || add ? (
-        <Modal>
-          <EditGameModal
-            closeHandler={closeModal}
-            gameToEdit={gameToEdit}
-            imgUrlInp={imgUrlInp}
-            titleInp={titleInp}
-            onTitleChanged={onTitleChanged}
-            categoryInp={categoryInp}
-            setCategory={setCategory}
-            onPriceChanged={onPriceChanged}
-            priceInp={priceInp}
-            onImgUrlChanged={onImgUrlChanged}
-            onDescriptionChanged={onDescriptionChanged}
-            descriptionInp={descriptionInp}
-            ageInp={ageInp}
-            setAge={setAge}
-            pcCheckedInp={pcCheckedInp}
-            pcCheckHandler={pcCheckHandler}
-            psCheckedInp={psCheckedInp}
-            psCheckHandler={psCheckHandler}
-            xbxCheckedInp={xbxCheckedInp}
-            xbxCheckHandler={xbxCheckHandler}
-            formValid={formValid}
-            submitHandlerEdit={submitHandlerEdit}
-            submitHandlerCreate={submitHandlerCreate}
-            deleteHandler={deleteHandler}
-            visible={visible}
-          />
-        </Modal>
-      ) : null}
-      {del ? (
-        <Modal>
-          <DeleteGameModal closeHandler={closeModal} deleteHandler={deleteGame} />
-        </Modal>
+      {!modalClosed ? (
+        <>
+          {modalSelect === ModalTypes.BUYGAMES ? (
+            <Modal>
+              <BuyModalBody
+                userName={userName as string}
+                cartGames={cartGames as GameCart[]}
+                amount={totalPurchase as number}
+                closeHandler={closeModal}
+                confirmHandler={confirmHandler}
+              />
+            </Modal>
+          ) : null}
+          {modalSelect === ModalTypes.PASSCHANGE ? (
+            <Modal>
+              <ChangePassModalBody
+                closeModal={closeModal}
+                changeFunc={changeFunc}
+                passwordChanged={onNewPasswordChanged}
+                newPassword={newPassword}
+                passMessage={passMessage}
+                repeatPasswordChanged={onRepeatNewPasswordChanged}
+                repeatNewPassword={repeatNewPassword}
+                repeatPassMessage={repeatPassMessage}
+                formValid={formValid}
+              />
+            </Modal>
+          ) : null}
+          {modalSelect === ModalTypes.SIGNIN ? (
+            <Modal>
+              <SignInModalBody
+                closeModal={closeModal}
+                loginChanged={onLoginChanged}
+                postFunc={postFunc}
+                passwordChanged={onPasswordChanged}
+                messageChanged={onMessageChanged}
+                login={login}
+                password={password}
+                message={message}
+                verifyPassword={verifyPassword}
+              />
+            </Modal>
+          ) : null}
+          {modalSelect === ModalTypes.SIGNUP ? (
+            <Modal>
+              <SignUpModal
+                closeModal={closeModal}
+                logupChanged={onLoginChanged}
+                putFunc={putFunc}
+                passwordChanged={onPasswordChanged}
+                logup={login}
+                password={password}
+                message={message}
+                verifyPassword={verifyPassword}
+                repeatPassword={repeatPassword}
+                repeatPasswordChanged={onRepeatPasswordChanged}
+              />
+            </Modal>
+          ) : null}
+          {modalSelect === ModalTypes.EDITGAME || modalSelect === ModalTypes.ADDGAME ? (
+            <Modal>
+              <EditGameModal
+                closeHandler={closeModal}
+                gameToEdit={gameToEdit}
+                imgUrlInp={imgUrlInp}
+                titleInp={titleInp}
+                onTitleChanged={onTitleChanged}
+                categoryInp={categoryInp}
+                setCategory={setCategory}
+                onPriceChanged={onPriceChanged}
+                priceInp={priceInp}
+                onImgUrlChanged={onImgUrlChanged}
+                onDescriptionChanged={onDescriptionChanged}
+                descriptionInp={descriptionInp}
+                ageInp={ageInp}
+                setAge={setAge}
+                pcCheckedInp={pcCheckedInp}
+                pcCheckHandler={pcCheckHandler}
+                psCheckedInp={psCheckedInp}
+                psCheckHandler={psCheckHandler}
+                xbxCheckedInp={xbxCheckedInp}
+                xbxCheckHandler={xbxCheckHandler}
+                formValid={formValid}
+                submitHandlerEdit={submitHandlerEdit}
+                submitHandlerCreate={submitHandlerCreate}
+                deleteHandler={deleteHandler}
+                visible={visible}
+              />
+            </Modal>
+          ) : null}
+          {modalSelect === ModalTypes.DELETEGAME ? (
+            <Modal>
+              <DeleteGameModal closeHandler={closeModal} deleteHandler={deleteGame} />
+            </Modal>
+          ) : null}
+        </>
       ) : null}
     </>
   );

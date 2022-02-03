@@ -2,7 +2,7 @@ import { FC, SyntheticEvent } from "react";
 import "./passwordModalBody.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import InputTextContainer from "@/elements/inputTextContainer";
+import InputTextContainer from "../common/inputTextContainer";
 
 export interface PasswordModalProps {
   closeModal: () => void;

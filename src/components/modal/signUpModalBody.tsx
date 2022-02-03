@@ -2,7 +2,7 @@ import { FC } from "react";
 import "./signupmodalbody.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import InputText from "@/elements/inputTextContainer";
+import InputText from "../common/inputTextContainer";
 
 export interface SignUpModalProps {
   closeModal: () => void;
