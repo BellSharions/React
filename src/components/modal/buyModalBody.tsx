@@ -1,9 +1,17 @@
 import { FC } from "react";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { GameCart } from "@/types";
 import BtnContainer from "../../elements/buttonContainer";
-import { BuyModalProps } from "../../types/types";
 import "./buyModalBody.scss";
+
+export interface BuyModalProps {
+  userName: string;
+  cartGames: GameCart[];
+  amount: number;
+  closeHandler: () => void;
+  confirmHandler: () => void;
+}
 
 const BuyModalBody: FC<BuyModalProps> = ({ userName, cartGames, amount, closeHandler, confirmHandler }) => (
   <div className="buy__modal_container" role="note">

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import GameCard from "../../../elements/gameCard/gameCardContainer";
-import { Game } from "../../../types/types";
+import { Game } from "../../../types";
 import "./productsOutput.scss";
 
 interface Props {

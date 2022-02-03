@@ -3,53 +3,46 @@ import debounce from "lodash.debounce";
 import "./searchBar.scss";
 import loaderHook from "@/hooks/loaderHook";
 import { useDispatch, useSelector } from "react-redux";
-import { ProductParams } from "../../types/types";
+import { debounceDelay, RoutesMap } from "@/constants";
+import { ProductParams } from "../../types";
 import SearchBar from "./searchBar";
 import { changeSearchAction, fetchGamesAction } from "../redux/filter/filterActions";
 import { ReducerState } from "../redux/reducer";
 
 const SearchBarContainer: FC<ProductParams> = ({ platform, age, sort, sortDir, genre, search }) => {
-  const searchResult = useSelector((state: ReducerState) => state.filter.searchResult);
-  const [setLoading] = loaderHook(false);
   const dispatch = useDispatch();
-  const changeSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(changeSearchAction(e.target.value));
+  const [setLoading] = loaderHook(false);
+
+  const searchResult = useSelector((state: ReducerState) => state.filter.searchResult);
+
+  const changeSearch = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeSearchAction(value));
   };
-  const debouncedOnChange = debounce(changeSearch, 300);
+
+  const searchParams = new URLSearchParams({
+    text: search,
+    age,
+    sort,
+    sortDir,
+    genre,
+  } as Record<string, string>);
+
+  const debouncedOnChange = debounce(changeSearch, debounceDelay);
+
   useEffect(() => {
-    (() => {
-      setLoading(true);
-      setTimeout(() => {
-        if (platform === "" || platform === ":platform" || platform === "home" || platform === undefined)
-          dispatch(
-            fetchGamesAction(
-              `${new URLSearchParams({
-                text: search,
-                platform: "all games",
-                age,
-                sort,
-                sortDir,
-                genre,
-              } as Record<string, string>)}`
-            )
-          );
-        else
-          dispatch(
-            fetchGamesAction(
-              `${new URLSearchParams({
-                text: search,
-                platform,
-                age,
-                sort,
-                sortDir,
-                genre,
-              } as Record<string, string>)}`
-            )
-          );
-        setLoading(false);
-      }, 500);
-    })();
+    setLoading(true);
+    setTimeout(() => {
+      if (platform === RoutesMap.HOME || !platform) {
+        searchParams.append("platform", "all games");
+        dispatch(fetchGamesAction(`${searchParams}`));
+      } else {
+        searchParams.append("platform", platform);
+        dispatch(fetchGamesAction(`${searchParams}`));
+      }
+      setLoading(false);
+    }, 500);
   }, [platform, age, sort, sortDir, genre, search]);
+
   return <SearchBar list={searchResult} debouncedOnChange={debouncedOnChange} />;
 };
 

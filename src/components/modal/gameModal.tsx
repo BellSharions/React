@@ -1,24 +1,52 @@
-import { availableAges, availableGenres } from "@/constants/constants";
+import { availableAges, availableGenres } from "@/constants";
 import BtnContainer from "@/elements/buttonContainer";
 import InputText from "@/elements/inputTextContainer";
 import TextAreaContainer from "@/elements/textAreaContainer";
-import { EditGameModalProps } from "@/types/types";
+import { Game } from "@/types";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import "./gameModal.scss";
 
-const gameModal: React.FC<EditGameModalProps> = ({
+export interface GameModalProps {
+  closeHandler: () => void;
+  gameToEdit: Game;
+  imgUrlInp: string;
+  titleInp: string;
+  onTitleChanged: (nameData: string | number) => void;
+  categoryInp: string;
+  setCategory: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onPriceChanged: (price: number | string) => void;
+  priceInp: number;
+  onImgUrlChanged: (imgUrlData: string | number) => void;
+  onDescriptionChanged: (inputName: string) => void;
+  descriptionInp: string;
+  ageInp: number;
+  setAge: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  pcCheckedInp: boolean;
+  pcCheckHandler: () => void;
+  psCheckedInp: boolean;
+  psCheckHandler: () => void;
+  xbxCheckedInp: boolean;
+  xbxCheckHandler: () => void;
+  formValid: boolean;
+  submitHandlerEdit: () => void;
+  submitHandlerCreate: () => void;
+  deleteHandler: () => void;
+  visible: boolean;
+}
+
+const gameModal: React.FC<GameModalProps> = ({
   closeHandler,
   imgUrlInp,
   titleInp,
-  titleGetter,
-  priceGetter,
+  onTitleChanged,
+  onPriceChanged,
   priceInp,
   categoryInp,
   setCategory,
-  imgUrlGetter,
-  descriptionGetter,
+  onImgUrlChanged,
+  onDescriptionChanged,
   descriptionInp,
   setAge,
   ageInp,
@@ -45,7 +73,7 @@ const gameModal: React.FC<EditGameModalProps> = ({
       <div className="editModal__contentForm_container">
         <p className="editModal__contentForm_title">Information</p>
         <form className="editModal__contentForm_form">
-          <InputText name="Name" id="titleInput" type="text" onChange={titleGetter} value={titleInp} />
+          <InputText name="Name" id="titleInput" type="text" onChange={onTitleChanged} value={titleInp} />
           <div className="criteria__label">
             <p className="criteria__title">Genre</p>
             <select className="criteria__selector" id="criteria" value={categoryInp} onChange={(e) => setCategory(e)}>
@@ -56,9 +84,14 @@ const gameModal: React.FC<EditGameModalProps> = ({
               ))}
             </select>
           </div>
-          <InputText name="Price" id="priceInput" type="number" onChange={priceGetter} value={priceInp} />
-          <InputText name="Image" id="imgUrlInput" type="text" onChange={imgUrlGetter} value={imgUrlInp} />
-          <TextAreaContainer name="Description" id="Description" onChange={descriptionGetter} value={descriptionInp} />
+          <InputText name="Price" id="priceInput" type="number" onChange={onPriceChanged} value={priceInp} />
+          <InputText name="Image" id="imgUrlInput" type="text" onChange={onImgUrlChanged} value={imgUrlInp} />
+          <TextAreaContainer
+            name="Description"
+            id="Description"
+            onChange={onDescriptionChanged}
+            value={descriptionInp}
+          />
           <div className="criteria__label">
             <p className="criteria__title">Age</p>
             <select className="criteria__selector" id="age" onChange={setAge} value={ageInp}>

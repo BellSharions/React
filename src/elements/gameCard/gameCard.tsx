@@ -3,7 +3,23 @@ import Rating from "@material-ui/lab/Rating";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./gameCard.scss";
 import { faPlaystation, faWindows, faXbox, IconDefinition } from "@fortawesome/free-brands-svg-icons";
-import { ProductItemProps } from "../../types/types";
+
+export interface ProductItemProps {
+  id?: number;
+  age?: number;
+  title: string;
+  description?: string;
+  developer?: string;
+  date?: string;
+  genre?: string;
+  category: string;
+  logo?: string;
+  rating: string;
+  price: number;
+  action: (gameTitle: string, gameCategory: string, gamePrice: number, gameCheck: boolean, gameAmount: number) => void;
+  editAction?: () => void;
+  visible?: boolean;
+}
 
 const platformIcons = [faWindows, faXbox, faPlaystation];
 
@@ -27,7 +43,7 @@ const GameCard: FC<ProductItemProps> = ({
               <FontAwesomeIcon key={value} icon={platformIcons[index] as IconDefinition} className="category__icon" />
             ))}
           </div>
-          <img className="gameCard__img-container-image" src={logo} alt="" />
+          <img className="gameCard__img-container-image" src={logo} alt="Loading gamecard" />
         </div>
         <div className="gameCard__content-container">
           <div className="gameCard__front-text-container">

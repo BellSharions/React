@@ -1,8 +1,12 @@
 import { filterBySelectionAction, filterBySelectionDirectionAction } from "@/components/redux/filter/filterActions";
-import { CriteriaContainerProps } from "@/types/types";
 import { FC } from "react";
 import { useDispatch } from "react-redux";
 import CriteriaSelector from "./criteriaSelector";
+
+export interface CriteriaContainerProps {
+  sort: string;
+  sortDir: string;
+}
 
 const CriteriaSelectorContainer: FC<CriteriaContainerProps> = ({ sort, sortDir }) => {
   const dispatch = useDispatch();

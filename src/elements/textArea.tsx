@@ -1,5 +1,4 @@
-import { TextAreaProps } from "@/types/types";
-import { FC } from "react";
+import { ChangeEventHandler, FC } from "react";
 import styles from "styled-components";
 
 const InputAreaContainer = styles.div`
@@ -20,6 +19,14 @@ const InputAreaLabel = styles.label`
   font-size: 1rem;
   color: white;
 `;
+
+export interface TextAreaProps {
+  name: string;
+  id: string;
+  value: string;
+  onChange: ChangeEventHandler<HTMLTextAreaElement>;
+}
+
 const TextArea: FC<TextAreaProps> = ({ name, id, value, onChange }) => (
   <InputAreaContainer>
     <InputAreaLabel htmlFor={id}>{name}</InputAreaLabel>

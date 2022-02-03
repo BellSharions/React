@@ -1,5 +1,5 @@
 import { FC, memo } from "react";
-import { gameCategories } from "../../../constants/constants";
+import { gameCategories } from "../../../constants";
 import Category from "./category";
 import "./categories.scss";
 

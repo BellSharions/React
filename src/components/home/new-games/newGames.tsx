@@ -14,7 +14,7 @@ const NewGames: FC = () => {
           <h1 className="newGame__title">New games</h1>
         </div>
         <div className="newGame__content-container">
-          {newGamesList.slice(0, 3).map(({ id, title, description, date, category, logo, rating, price }) => (
+          {newGamesList.slice(-3).map(({ id, title, description, date, category, logo, rating, price }) => (
             <GameCard
               key={id}
               title={title}

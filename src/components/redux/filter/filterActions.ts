@@ -1,4 +1,4 @@
-import { FilterAction, Game } from "@/types/types";
+import { FilterAction, Game } from "@/types";
 import { Dispatch } from "redux";
 import {
   changeSearchType,

@@ -1,6 +1,12 @@
-import { TextAreaContainerProps } from "@/types/types";
 import { FC } from "react";
 import TextArea from "./textArea";
+
+export interface TextAreaContainerProps {
+  name: string;
+  id: string;
+  value: string;
+  onChange: (value: string) => void;
+}
 
 const TextAreaContainer: FC<TextAreaContainerProps> = ({ name, id, value, onChange }) => {
   const changeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {

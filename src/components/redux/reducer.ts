@@ -1,4 +1,4 @@
-import { Game } from "@/types/types";
+import { Game } from "@/types";
 import { combineReducers } from "redux";
 import {
   logInType,

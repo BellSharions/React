@@ -1,4 +1,4 @@
-import { FilterStateType, Game } from "@/types/types";
+import { FilterStateType, Game } from "@/types";
 import {
   changeSearchType,
   fetchGamesSuccess,

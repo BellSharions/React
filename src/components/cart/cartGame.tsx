@@ -1,6 +1,16 @@
-import { CartGameProps } from "@/types/types";
 import { FC } from "react";
 import "./cartGame.scss";
+
+export interface CartGameProps {
+  title: string;
+  platforms: string[];
+  today: Date;
+  totalPerGameCut: number;
+  amountHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  number: number;
+  checked: boolean;
+  checkHandler: () => void;
+}
 
 const CartGame: FC<CartGameProps> = ({
   title,

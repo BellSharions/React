@@ -1,9 +1,20 @@
-import { FC } from "react";
+import { FC, FormEventHandler } from "react";
 import "./signinmodalbody.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import InputText from "@/elements/inputTextContainer";
-import { SignInModalProps } from "../../types/types";
+
+export interface SignInModalProps {
+  closeModal: () => void;
+  login: string;
+  password: string;
+  message: string;
+  postFunc: FormEventHandler<HTMLFormElement>;
+  loginChanged: (value: string) => void;
+  passwordChanged: (value: string) => void;
+  messageChanged: (value: string) => void;
+  verifyPassword: (value: string) => void;
+}
 
 const SignInModalBody: FC<SignInModalProps> = ({
   closeModal,
@@ -11,8 +22,8 @@ const SignInModalBody: FC<SignInModalProps> = ({
   password,
   message,
   postFunc,
-  loginGetter,
-  passwordGetter,
+  loginChanged,
+  passwordChanged,
 }) => (
   <div className="signIn__modal_container">
     <div className="signIn__modal_upper-container">
@@ -23,8 +34,8 @@ const SignInModalBody: FC<SignInModalProps> = ({
     </div>
     <form action="#" className="signIn__modal_content-container" onSubmit={postFunc}>
       <span>{message}</span>
-      <InputText name="Login" id="SignInLogin" type="text" onChange={loginGetter} value={login} />
-      <InputText name="Password" id="SignInPassword" type="password" onChange={passwordGetter} value={password} />
+      <InputText name="Login" id="SignInLogin" type="text" onChange={loginChanged} value={login} />
+      <InputText name="Password" id="SignInPassword" type="password" onChange={passwordChanged} value={password} />
       <div className="signIn__modal_submit-btn-container">
         <input className="signIn__modal_submit-btn" type="submit" />
       </div>

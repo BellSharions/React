@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { ageArr, genreArr } from "../../constants/constants";
-import { ProductParams } from "../../types/types";
+import { ageOptions, genreOptions } from "../../constants";
+import { ProductParams } from "../../types";
 import SearchBar from "../searchBar/searchBarContainer";
 import CriteriaSelector from "./options/criteriaSelectorContainer";
 import RadioButtons from "./options/radioButtonsContainer";
@@ -26,7 +26,7 @@ const Products: FC<ProductParams> = ({ platform, sort, age, genre, sortDir, sear
             <p className="productsPage__sortTable_genreTitle sortTable_titleItem">Genres</p>
           </div>
           <div className="productsPage__sortTable_genreSelector sortTable_contentItem">
-            <RadioButtons array={genreArr} filter={genre} />
+            <RadioButtons array={genreOptions} filter={genre} />
           </div>
         </div>
         <div className="productsPage_sortTable_age productsPage__sortTable_item">
@@ -34,7 +34,7 @@ const Products: FC<ProductParams> = ({ platform, sort, age, genre, sortDir, sear
             <p className="productsPage__sortTable_genreTitle sortTable_titleItem">Age</p>
           </div>
           <div className="productsPage__sortTable_ageSelector sortTable_contentItem">
-            <RadioButtons array={ageArr} filter={age} />
+            <RadioButtons array={ageOptions} filter={age} />
           </div>
         </div>
       </form>

@@ -1,6 +1,12 @@
-import { CriteriaProps } from "@/types/types";
 import { FC } from "react";
 import "./criteriaSelector.scss";
+
+export interface CriteriaProps {
+  setCriteria: (value: string) => void;
+  setType: (value: string) => void;
+  sort: string;
+  sortDir: string;
+}
 
 const CriteriaSelector: FC<CriteriaProps> = ({ setCriteria, setType, sort, sortDir }) => (
   <div className="criteriaSelector__container">

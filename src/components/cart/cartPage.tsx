@@ -1,7 +1,16 @@
-import { CartPageProps } from "@/types/types";
+import { GameCart } from "@/types";
 import { FC } from "react";
 import CartGame from "./cartGameContainer";
 import "./cartPage.scss";
+
+export interface CartPageProps {
+  games: GameCart[];
+  clickHandler: () => void;
+  totalAmount: number;
+  userBalance: number;
+  buyFunc: () => void;
+  valid: boolean;
+}
 
 const CartPage: FC<CartPageProps> = ({ games, clickHandler, totalAmount, userBalance, buyFunc, valid }) => (
   <div className="cartPage__container">

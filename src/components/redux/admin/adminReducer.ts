@@ -1,4 +1,4 @@
-import { AdminStateType, GameToEdit } from "@/types/types";
+import { AdminStateType, GameToEdit } from "@/types";
 import { addGameToEditType } from "./adminActionTypes";
 
 export const initialState: AdminStateType = {

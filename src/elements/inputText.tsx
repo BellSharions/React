@@ -1,5 +1,5 @@
-import { InputComponentProps } from "@/types/types";
-import { FC } from "react";
+import { InputComponentProps } from "@/types";
+import { ChangeEventHandler, FC } from "react";
 import styles from "styled-components";
 
 const InputContainer = styles.div`
@@ -20,6 +20,15 @@ const InputLabel = styles.label`
   font-size: 1.5rem;
   color: white;
 `;
+
+export interface InputComponentProps {
+  name: string;
+  id: string;
+  type: string;
+  value: string;
+  changeHandler: ChangeEventHandler<HTMLInputElement>;
+}
+
 const InputText: FC<InputComponentProps> = ({ name, id, type, value, changeHandler }) => (
   <InputContainer>
     <InputLabel htmlFor={id}>{name}</InputLabel>

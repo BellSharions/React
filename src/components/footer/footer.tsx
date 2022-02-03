@@ -1,6 +1,6 @@
 import "./footer.scss";
 import { memo } from "react";
-import { gameCompaniesIcons } from "../../constants/constants";
+import { gameCompaniesIcons } from "../../constants";
 
 const Footer: React.FC = () => (
   <footer className="footer">

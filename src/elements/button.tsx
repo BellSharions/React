@@ -1,6 +1,10 @@
 import { FC } from "react";
-import { BtnProps } from "@/types/types";
 import "./button.scss";
+
+export interface BtnProps {
+  action: () => void;
+  text: { label: string; icon?: string };
+}
 
 const Button: FC<BtnProps> = ({ action, text }) => (
   <div className="button__container">

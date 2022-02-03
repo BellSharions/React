@@ -1,6 +1,18 @@
-import { ageArr, availableGenres, routesMap, signInUrl, signUpUrl } from "@/constants/constants";
-import { GameCart } from "@/types/types";
-import { FC, useEffect, useState } from "react";
+import apiCall from "@/apiCall";
+import {
+  ageOptions,
+  availableGenres,
+  buyUrl,
+  CallType,
+  passwdChangeUrl,
+  productUrl,
+  RoutesMap,
+  signInUrl,
+  signUpUrl,
+  userCartUrl,
+} from "@/constants";
+import { CartResponse, GameCart } from "@/types";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { closeModalAction, logInAction, setRoleAction, showDeleteGameModalAction } from "../redux/actions";
@@ -17,6 +29,29 @@ import SignInModalBody from "./signInModalBody";
 import SignUpModal from "./signUpModalBody";
 
 const ModalBodyContainer: FC = () => {
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [repeatNewPassword, setRepeatNewPassword] = useState<string>("");
+  const [passMessage, setPassMessage] = useState("Please enter new password");
+  const [repeatPassMessage, setRepeatPassMessage] = useState("Please enter password");
+  const [formValid, setFormValid] = useState(false);
+  const [repeatPassword, setRepeatPassword] = useState<string>("");
+  const [message, setMessage] = useState("Please enter password");
+  const [login, setLogin] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const gameToEdit = useSelector((state: ReducerState) => state.admin.gametoEdit);
+  const incomGenreArr = gameToEdit.genre ? gameToEdit.genre.split(", ") : availableGenres;
+  const [titleInp, setTitleInp] = useState<string>("");
+  const [categoryInp, setCategoryInp] = useState(incomGenreArr[0]);
+  const [priceInp, setPriceInp] = useState<number>(0.99);
+  const [imgUrlInp, setImgUrlInp] = useState<string>("");
+  const [descriptionInp, setDescriptionInp] = useState<string>("");
+  const [ageInp, setAgeInp] = useState<number>(+ageOptions[0]);
+  const [pcCheckedInp, setPcCheckedInp] = useState<boolean>(!gameToEdit.category.includes("PC"));
+  const [psCheckedInp, setPsCheckedInp] = useState<boolean>(!gameToEdit.category.includes("PlayStation"));
+  const [xbxCheckedInp, setXbxCheckedInp] = useState<boolean>(!gameToEdit.category.includes("XBOX"));
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [userName, cartGames, totalPurchase] = useSelector((state: ReducerState) => [
     state.reducer.userName,
     state.cart.gamesList,
@@ -38,32 +73,12 @@ const ModalBodyContainer: FC = () => {
     state.reducer.addGameModalVisible,
     state.reducer.deleteGameModalVisible,
   ]);
-  const [newPassword, setNewPassword] = useState<string>("");
-  const [repeatNewPassword, setRepeatNewPassword] = useState<string>("");
-  const [passMessage, setPassMessage] = useState("Please enter new password");
-  const [repeatPassMessage, setRepeatPassMessage] = useState("Please enter password");
-  const [formValid, setFormValid] = useState(false);
-  const [repeatPassword, setRepeatPassword] = useState<string>("");
-  const [message, setMessage] = useState("Please enter password");
-  const [login, setLogin] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const gameToEdit = useSelector((state: ReducerState) => state.admin.gametoEdit);
-  const incomGenreArr = gameToEdit.genre ? gameToEdit.genre.split(", ") : availableGenres;
-  const [titleInp, setTitleInp] = useState<string>("");
-  const [categoryInp, setCategoryInp] = useState(incomGenreArr[0]);
-  const [priceInp, setPriceInp] = useState<number>(0.99);
-  const [imgUrlInp, setImgUrlInp] = useState<string>("");
-  const [descriptionInp, setDescriptionInp] = useState<string>("");
-  const [ageInp, setAgeInp] = useState<number>(+ageArr[0]);
-  const [pcCheckedInp, setPcCheckedInp] = useState<boolean>(!gameToEdit.category.includes("PC"));
-  const [psCheckedInp, setPsCheckedInp] = useState<boolean>(!gameToEdit.category.includes("PlayStation"));
-  const [xbxCheckedInp, setXbxCheckedInp] = useState<boolean>(!gameToEdit.category.includes("XBOX"));
+
   const finalCategory = [pcCheckedInp ? "PC" : null, psCheckedInp ? "PlayStation" : null, xbxCheckedInp ? "XBOX" : null]
     .filter((categor) => Boolean(categor))
     .join(", ");
   const visible = !!edit;
-  const dispatch = useDispatch();
-  const history = useHistory();
+
   const gameObj = {
     id: gameToEdit.id,
     title: titleInp,
@@ -74,13 +89,23 @@ const ModalBodyContainer: FC = () => {
     genres: categoryInp,
     category: finalCategory,
     deleted: false,
+    rating: "3",
   };
 
-  const titleGetter = (nameData: string | number) => {
+  const searchParams = new URLSearchParams({
+    text: search,
+    platform: "all games",
+    age,
+    sort,
+    sortDir,
+    genre,
+  } as Record<string, string>);
+
+  const onTitleChanged = (nameData: string | number) => {
     setTitleInp(nameData as string);
   };
 
-  const priceGetter = (priceData: number | string) => {
+  const onPriceChanged = (priceData: number | string) => {
     if (Number(priceData as number) <= 0.01 && Number(priceData as number) > 999) {
       return;
     }
@@ -88,11 +113,11 @@ const ModalBodyContainer: FC = () => {
     setPriceInp(num);
   };
 
-  const imgUrlGetter = (imgUrlData: string | number) => {
+  const onImgUrlChanged = (imgUrlData: string | number) => {
     setImgUrlInp(imgUrlData as string);
   };
 
-  const descriptionGetter = (inputName: string) => {
+  const onDescriptionChanged = (inputName: string) => {
     setDescriptionInp(inputName);
   };
 
@@ -108,32 +133,32 @@ const ModalBodyContainer: FC = () => {
     setXbxCheckedInp(!xbxCheckedInp);
   };
 
-  const setCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const setCategory = (e: ChangeEvent<HTMLInputElement>) => {
     setCategoryInp(e.target.value);
   };
 
-  const setAge = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const setAge = (e: ChangeEvent<HTMLInputElement>) => {
     setAgeInp(Number(e.target.value));
   };
 
-  const newPasswordGetter = (passwordData: string) => {
+  const onNewPasswordChanged = (passwordData: string) => {
     setNewPassword(passwordData);
   };
-  const repeatNewPasswordGetter = (passwordData: string) => {
+  const onRepeatNewPasswordChanged = (passwordData: string) => {
     setRepeatNewPassword(passwordData);
   };
-  const repeatPasswordGetter = (passwordData: string) => {
+  const onRepeatPasswordChanged = (passwordData: string) => {
     setRepeatPassword(passwordData);
   };
-  const loginGetter = (loginData: string) => {
+  const onLoginChanged = (loginData: string) => {
     setLogin(loginData);
   };
 
-  const messageGetter = (messageData: string) => {
+  const onMessageChanged = (messageData: string) => {
     setMessage(messageData);
   };
 
-  const passwordGetter = (passwordData: string) => {
+  const onPasswordChanged = (passwordData: string) => {
     setPassword(passwordData);
   };
 
@@ -155,6 +180,8 @@ const ModalBodyContainer: FC = () => {
       setPsCheckedInp(false);
       setXbxCheckedInp(false);
     } else {
+      console.log(gameToEdit);
+
       setTitleInp(gameToEdit.title);
       setCategoryInp(incomGenreArr[0]);
       setPriceInp(gameToEdit.price);
@@ -211,32 +238,22 @@ const ModalBodyContainer: FC = () => {
   };
 
   async function changeFunc(e: React.SyntheticEvent) {
-    if (e) e.preventDefault();
-    const patchResponse = await fetch(`http://localhost:8080/user/passwordChange/${userName}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ repeatNewPassword }),
-    });
-    if (patchResponse.status === 404) throw new Error(`HTTP status: ${patchResponse.status}`);
+    e.preventDefault();
+
+    const patchResponse = await apiCall(`${passwdChangeUrl}${userName}`, CallType.PATCH, { repeatNewPassword });
+    if (patchResponse.status !== 201) throw new Error(`HTTP status: ${patchResponse.status}`);
     dispatch(closeModalAction());
     return null;
   }
 
   async function postFunc(e: React.SyntheticEvent) {
-    if (e) e.preventDefault();
+    e.preventDefault();
 
     if (!verifyPassword(password).isValid) {
       setMessage(verifyPassword(password).validMessage);
     } else {
       setMessage(verifyPassword(password).validMessage);
-      const res = await fetch(signInUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ login, password }),
-      });
-
+      const res = await apiCall(signInUrl, CallType.POST, { login, password });
       if (res.status === 200) {
         dispatch(logInAction(login));
         localStorage.setItem("login", login);
@@ -246,24 +263,19 @@ const ModalBodyContainer: FC = () => {
         setMessage("An error has appeared! Check your credentials and try again.");
         throw new Error(`HTTP status: ${res.status}`);
       }
-      const getResponse = await (
-        await fetch(`http://localhost:8080/api/user/cart/${login}`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        })
-      ).json();
-      if (getResponse.gamesList) dispatch(setCartGamesAction(getResponse.gamesList));
-      else dispatch(setCartGamesAction([] as GameCart[]));
-      const response = await res.json();
-      dispatch(setRoleAction(response.role));
-      localStorage.setItem("role", response.role);
-      return response;
+      const getResponse = await apiCall(`${userCartUrl}${login}`, CallType.GET, null);
+
+      if (getResponse.status === 200) {
+        dispatch(setCartGamesAction((getResponse.data as CartResponse).gamesList));
+      }
+      dispatch(setRoleAction(res.data.role));
+      localStorage.setItem("role", res.data.role);
     }
     return null;
   }
 
   async function putFunc(e: React.SyntheticEvent) {
-    if (e) e.preventDefault();
+    e.preventDefault();
 
     if (!(repeatPassword === password)) {
       setMessage("Password is not correct");
@@ -273,110 +285,54 @@ const ModalBodyContainer: FC = () => {
       setMessage("Please use name shorter than 30 characters or longer than 3 characters");
     } else {
       setMessage(verifyPassword(password).validMessage);
-      const res = await fetch(signUpUrl, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ login, password, role: "user" }),
-      });
+      const res = await apiCall(signUpUrl, CallType.POST, { login, password, role: "user" });
 
       if (res.status === 201) {
         dispatch(logInAction(login));
         dispatch(setRoleAction("user"));
         localStorage.setItem("login", login);
         dispatch(closeModalAction());
-        const getResponse = await (
-          await fetch(`http://localhost:8080/api/user/cart/${login}`, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          })
-        ).json();
-        if (getResponse) dispatch(setCartGamesAction(getResponse.gamesList));
-        else dispatch(setCartGamesAction([] as GameCart[]));
-        history.push(routesMap.PROFILE);
+        const getResponse = await apiCall(`${userCartUrl}${login}`, CallType.GET, null);
+
+        if (getResponse.status === 200) {
+          dispatch(setCartGamesAction((getResponse.data as CartResponse).gamesList));
+        }
+        history.push(RoutesMap.PROFILE);
       } else {
         setMessage("This login is already in use, please use another one");
         throw new Error(`HTTP status: ${res.status}`);
       }
-
-      const response = await res.json();
-      return response;
     }
     return null;
   }
   const confirmHandler = async () => {
-    const postResponse = await fetch(`http://localhost:8080/api/buy/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userName, cartGames, totalPurchase }),
-    });
+    const postResponse = await apiCall(buyUrl, CallType.POST, { userName, cartGames, totalPurchase });
     if (postResponse.status === 404) throw new Error(`HTTP status: ${postResponse.status}`);
     dispatch(buyGamesAction(totalPurchase as number));
 
     dispatch(closeModalAction());
   };
   const submitHandlerEdit = async () => {
-    const putResponse = await fetch(`http://localhost:8080/api/product/`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(gameObj),
-    });
+    const putResponse = await apiCall(productUrl, CallType.PUT, gameObj);
     if (putResponse.status === 200) {
-      dispatch(
-        fetchGamesAction(
-          `${new URLSearchParams({
-            text: search,
-            platform: "all games",
-            age,
-            sort,
-            sortDir,
-            genre,
-          })}`
-        )
-      );
+      dispatch(fetchGamesAction(`${searchParams}`));
       dispatch(closeModalAction());
     }
   };
 
   const submitHandlerCreate = async () => {
-    await fetch(`http://localhost:8080/api/product/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(gameObj),
-    });
-    dispatch(
-      fetchGamesAction(
-        `${new URLSearchParams({
-          text: search,
-          platform: "all games",
-          age,
-          sort,
-          sortDir,
-          genre,
-        })}`
-      )
-    );
-    dispatch(closeModalAction());
+    const postResponse = await apiCall(productUrl, CallType.POST, gameObj);
+    if (postResponse.status === 200) {
+      dispatch(fetchGamesAction(`${searchParams}`));
+      dispatch(closeModalAction());
+    }
   };
   const deleteGame = async () => {
-    await fetch(`http://localhost:8080/api/product/${gameObj.id}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    });
-    dispatch(
-      fetchGamesAction(
-        `${new URLSearchParams({
-          text: search,
-          platform: "all games",
-          age,
-          sort,
-          sortDir,
-          genre,
-        })}`
-      )
-    );
-    dispatch(closeModalAction());
+    const deleteResponse = await apiCall(productUrl + gameObj.id, CallType.DELETE, null);
+    if (deleteResponse.status === 200) {
+      dispatch(fetchGamesAction(`${searchParams}`));
+      dispatch(closeModalAction());
+    }
   };
 
   return (
@@ -397,10 +353,10 @@ const ModalBodyContainer: FC = () => {
           <ChangePassModalBody
             closeModal={closeModal}
             changeFunc={changeFunc}
-            passwordGetter={newPasswordGetter}
+            passwordChanged={onNewPasswordChanged}
             newPassword={newPassword}
             passMessage={passMessage}
-            repeatPasswordGetter={repeatNewPasswordGetter}
+            repeatPasswordChanged={onRepeatNewPasswordChanged}
             repeatNewPassword={repeatNewPassword}
             repeatPassMessage={repeatPassMessage}
             formValid={formValid}
@@ -411,10 +367,10 @@ const ModalBodyContainer: FC = () => {
         <Modal>
           <SignInModalBody
             closeModal={closeModal}
-            loginGetter={loginGetter}
+            loginChanged={onLoginChanged}
             postFunc={postFunc}
-            passwordGetter={passwordGetter}
-            messageGetter={messageGetter}
+            passwordChanged={onPasswordChanged}
+            messageChanged={onMessageChanged}
             login={login}
             password={password}
             message={message}
@@ -426,15 +382,15 @@ const ModalBodyContainer: FC = () => {
         <Modal>
           <SignUpModal
             closeModal={closeModal}
-            logupGetter={loginGetter}
+            logupChanged={onLoginChanged}
             putFunc={putFunc}
-            passwordGetter={passwordGetter}
+            passwordChanged={onPasswordChanged}
             logup={login}
             password={password}
             message={message}
             verifyPassword={verifyPassword}
             repeatPassword={repeatPassword}
-            repeatPasswordGetter={repeatPasswordGetter}
+            repeatPasswordChanged={onRepeatPasswordChanged}
           />
         </Modal>
       ) : null}
@@ -445,13 +401,13 @@ const ModalBodyContainer: FC = () => {
             gameToEdit={gameToEdit}
             imgUrlInp={imgUrlInp}
             titleInp={titleInp}
-            titleGetter={titleGetter}
+            onTitleChanged={onTitleChanged}
             categoryInp={categoryInp}
             setCategory={setCategory}
-            priceGetter={priceGetter}
+            onPriceChanged={onPriceChanged}
             priceInp={priceInp}
-            imgUrlGetter={imgUrlGetter}
-            descriptionGetter={descriptionGetter}
+            onImgUrlChanged={onImgUrlChanged}
+            onDescriptionChanged={onDescriptionChanged}
             descriptionInp={descriptionInp}
             ageInp={ageInp}
             setAge={setAge}

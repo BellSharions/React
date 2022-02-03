@@ -2,7 +2,13 @@ import { FC, memo } from "react";
 import { Link } from "react-router-dom";
 import "./category.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { CategoryProp } from "../../../types/types";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+
+export interface CategoryProp {
+  title: string;
+  path: string;
+  icon: IconProp;
+}
 
 const Category: FC<CategoryProp> = ({ icon, title, path }) => (
   <Link to={path} key={title} className="category__container">

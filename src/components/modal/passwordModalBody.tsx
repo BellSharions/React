@@ -1,17 +1,28 @@
-import { FC } from "react";
+import { FC, SyntheticEvent } from "react";
 import "./passwordModalBody.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { PasswordModalProps } from "@/types/types";
 import InputTextContainer from "@/elements/inputTextContainer";
+
+export interface PasswordModalProps {
+  closeModal: () => void;
+  changeFunc: (e: SyntheticEvent<Element, Event>) => Promise<null>;
+  newPassword: string;
+  passMessage: string;
+  formValid: boolean;
+  passwordChanged: (value: string) => void;
+  repeatPasswordChanged: (passwordData: string) => void;
+  repeatNewPassword: string;
+  repeatPassMessage: string;
+}
 
 const ChangePassModalBody: FC<PasswordModalProps> = ({
   closeModal,
   changeFunc,
-  passwordGetter,
+  passwordChanged,
   newPassword,
   passMessage,
-  repeatPasswordGetter,
+  repeatPasswordChanged,
   repeatNewPassword,
   repeatPassMessage,
   formValid,
@@ -28,7 +39,7 @@ const ChangePassModalBody: FC<PasswordModalProps> = ({
         name="Password"
         id="SignUpPassword"
         type="password"
-        onChange={passwordGetter}
+        onChange={passwordChanged}
         value={newPassword}
       />
       <p>{passMessage}</p>
@@ -37,7 +48,7 @@ const ChangePassModalBody: FC<PasswordModalProps> = ({
         name="Repeat password"
         id="SignUpRepeatPassword"
         type="password"
-        onChange={repeatPasswordGetter}
+        onChange={repeatPasswordChanged}
         value={repeatNewPassword}
       />
       <p>{repeatPassMessage}</p>

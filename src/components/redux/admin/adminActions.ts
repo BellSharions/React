@@ -1,4 +1,4 @@
-import { GameToEdit } from "@/types/types";
+import { GameToEdit } from "@/types";
 import { addGameToEditType } from "./adminActionTypes";
 
 export const addGameToEditAction = (value: GameToEdit): { type: string; payload: GameToEdit } => ({

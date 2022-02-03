@@ -8,7 +8,7 @@ import {
   decreaseTotalAmount,
   setCartGames,
 } from "./cartActionTypes";
-import { GameCart, CartAction } from "../../../types/types";
+import { GameCart, CartAction } from "../../../types";
 
 export const addGameToCartAction = (game: GameCart): CartAction => ({
   type: addGameToCart,

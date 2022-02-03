@@ -48,9 +48,9 @@ export default webpackMockServer.add((app, helper) => {
         const obj = JSON.parse(data);
         const response = obj
           .filter((game) => {
-            if (game.genres === genre && game.age <= +age) return game;
+            if (game.genre === genre && game.age <= +age) return game;
             if (genre === "all genres" && game.age <= +age) return game;
-            if (game.genres === genre && age === "all ages") return game;
+            if (game.genre === genre && age === "all ages") return game;
             if (genre === "all genres" && age === "all ages") return game;
             return 0;
           })
@@ -189,10 +189,10 @@ export default webpackMockServer.add((app, helper) => {
         const obj = JSON.parse(data);
         const foundCart = obj.carts.filter((x) => x.login === _req.params.login)[0];
         if (foundCart && foundCart.cart) {
-          res.status(201).json(foundCart.cart);
+          res.status(200).json(foundCart.cart);
           res.end();
         } else {
-          res.status(201).json({ gamesList: [] });
+          res.status(400).json({ gamesList: [] });
           res.end();
         }
       }
@@ -270,7 +270,7 @@ export default webpackMockServer.add((app, helper) => {
           const obj = JSON.parse(data);
           const foundUser = obj.users.filter((x) => x.login === _req.params.login)[0];
           const existingUser = obj.users.filter((x) => x.login === _req.body.login)[0];
-          if (foundUser !== undefined && existingUser === undefined) {
+          if (foundUser !== undefined && !existingUser) {
             for (let i = 0; i < obj.users.length; i++) {
               if (obj.users[i].login === _req.params.login) {
                 obj.users[i].login = _req.body.login;
@@ -332,7 +332,7 @@ export default webpackMockServer.add((app, helper) => {
   });
   app.post("/upload/:login", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
-    if (_req.params.login === undefined) res.status(400).json(_req.params.login);
+    if (!_req.params.login) res.status(400).json(_req.params.login);
     else
       fs.readFile("./src/assets/users.json", "utf8", (err, data) => {
         if (err) {
@@ -341,11 +341,13 @@ export default webpackMockServer.add((app, helper) => {
         } else {
           const obj = JSON.parse(data);
           const foundUser = obj.users.filter((x) => x.login === _req.params.login)[0];
-          if (foundUser === undefined) res.status(400).json(_req.params.login);
+          if (!foundUser) res.status(400).json(_req.params.login);
           else {
+            console.log(_req.body);
+
             for (let i = 0; i < obj.users.length; i++) {
               if (obj.users[i].login === _req.params.login) {
-                obj.users[i].profilePic = _req.body;
+                obj.users[i].profilePic = Object.keys(_req.body)[0];
                 break;
               }
             }
@@ -379,7 +381,7 @@ export default webpackMockServer.add((app, helper) => {
             game.category = _req.body.category;
             game.description = _req.body.description;
             game.genres = _req.body.genre;
-            game.logo = _req.body.imgUrl;
+            game.logo = _req.body.logo;
             game.price = _req.body.price;
           }
         });

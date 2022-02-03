@@ -1,9 +1,13 @@
 import { FC } from "react";
 import { useDispatch } from "react-redux";
-import { ageArr, genreArr } from "../../../constants/constants";
-import { RadioButtonContainerProps } from "../../../types/types";
+import { ageOptions, genreOptions } from "../../../constants";
 import { filterByAgeAction, filterByGenreAction } from "../../redux/filter/filterActions";
 import RadioButtons from "./radioButtons";
+
+export interface RadioButtonContainerProps {
+  array: Array<string>;
+  filter: string;
+}
 
 const RadioButtonsContainer: FC<RadioButtonContainerProps> = ({ array, filter }) => {
   const dispatch = useDispatch();
@@ -11,8 +15,8 @@ const RadioButtonsContainer: FC<RadioButtonContainerProps> = ({ array, filter })
   const setSelect = (select: string) => {
     const matcher = new RegExp(`^${select}`, "g");
 
-    if (ageArr.filter((word) => word.match(matcher)).length === 1) dispatch(filterByAgeAction(select));
-    if (genreArr.filter((word) => word.match(matcher)).length === 1) dispatch(filterByGenreAction(select));
+    if (ageOptions.filter((word) => word.match(matcher)).length === 1) dispatch(filterByAgeAction(select));
+    if (genreOptions.filter((word) => word.match(matcher)).length === 1) dispatch(filterByGenreAction(select));
   };
 
   return <RadioButtons setSelect={setSelect} array={array} filter={filter} />;

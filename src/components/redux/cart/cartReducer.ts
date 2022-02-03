@@ -8,7 +8,7 @@ import {
   decreaseTotalAmount,
   setCartGames,
 } from "./cartActionTypes";
-import { CartAction, CartStateType, GameCart } from "../../../types/types";
+import { CartAction, CartStateType, GameCart } from "../../../types";
 
 const InitialCartState: CartStateType = {
   gamesList: [],

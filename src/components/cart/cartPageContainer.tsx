@@ -1,6 +1,8 @@
 import { FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./cartPage.scss";
+import apiCall from "@/apiCall";
+import { CallType, userCartUrl } from "@/constants";
 import { IncreaseTotalAmountAction, removeGameFromCartAction } from "../redux/cart/cartActions";
 import { ReducerState } from "../redux/reducer";
 import { showBuyModalAction } from "../redux/actions";
@@ -13,10 +15,8 @@ const CartPageContainer: FC = () => {
   const dispatch = useDispatch();
   const clickHandler = async () => {
     dispatch(removeGameFromCartAction());
-    await fetch(`http://localhost:8080/api/user/cart/${userName}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ gamesList: games.filter((game) => game.check === false) }),
+    await apiCall(`${userCartUrl}${userName}`, CallType.POST, {
+      gamesList: games.filter((game) => game.check === false),
     });
   };
   const totalAmount = Number(games.map((game) => game.amount * game.price).reduce((sum, current) => sum + current, 0));

@@ -1,8 +1,14 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { SearchBarComponentProps } from "../../types/types";
+import { DebouncedFunc } from "lodash";
+import { Game } from "@/types";
 import ProductsOutput from "../products/output/productsOutput";
+
+export interface SearchBarComponentProps {
+  list: Game[];
+  debouncedOnChange: DebouncedFunc<(e: ChangeEvent<HTMLInputElement>) => Promise<void>>;
+}
 
 const SearchBar: FC<SearchBarComponentProps> = ({ list, debouncedOnChange }) => (
   <>

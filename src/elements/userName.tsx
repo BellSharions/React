@@ -1,6 +1,9 @@
 import { FC, memo } from "react";
 import "./username.scss";
-import { UserNameProps } from "../types/types";
+
+export interface UserNameProps {
+  userName: string | undefined;
+}
 
 const UserName: FC<UserNameProps> = ({ userName }) => (
   <div className="userName__container">

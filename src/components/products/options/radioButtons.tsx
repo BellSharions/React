@@ -1,5 +1,10 @@
 import { FC } from "react";
-import { RadioButtonProps } from "@/types/types";
+
+export interface RadioButtonProps {
+  setSelect: (value: string) => void;
+  array: Array<string>;
+  filter: string;
+}
 
 const RadioButtons: FC<RadioButtonProps> = ({ setSelect, array, filter }) => (
   <div className="selector__container">

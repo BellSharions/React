@@ -1,8 +1,12 @@
 import BtnContainer from "@/elements/buttonContainer";
-import { DeleteGameModalProps } from "@/types/types";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./deleteGameModal.scss";
+
+export interface DeleteGameModalProps {
+  closeHandler: () => void;
+  deleteHandler: () => Promise<void>;
+}
 
 const DeleteGameModal: React.FC<DeleteGameModalProps> = ({ closeHandler, deleteHandler }) => (
   <div className="deleteModal__container">

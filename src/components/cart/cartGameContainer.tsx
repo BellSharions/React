@@ -1,10 +1,17 @@
-import { FC, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./cartGame.scss";
-import { CartGameContainerProps } from "../../types/types";
+import { CallType, userCartUrl } from "@/constants";
+import apiCall from "@/apiCall";
 import { ReducerState } from "../redux/reducer";
 import CartGame from "./cartGame";
 import { changeGameAmountAction, changeGameCheckAction } from "../redux/cart/cartActions";
+
+export interface CartGameContainerProps {
+  title: string;
+  category: string;
+  price: number;
+}
 
 const CartGameContainer: FC<CartGameContainerProps> = ({ title, category, price }) => {
   const games = useSelector((state: ReducerState) => state.cart.gamesList);
@@ -14,16 +21,12 @@ const CartGameContainer: FC<CartGameContainerProps> = ({ title, category, price 
   const dispatch = useDispatch();
   const platforms = category.split(", ");
 
-  const amountHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (Number(e.target.value) > 0) {
-      const num = Math.floor(Number(e.target.value));
+  const amountHandler = async ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+    if (Number(value) > 0) {
+      const num = Math.floor(Number(value));
       foundGame[0].amount = num;
       dispatch(changeGameAmountAction(foundGame));
-      await fetch(`http://localhost:8080/api/user/cart/${userName}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ gamesList: games }),
-      });
+      await apiCall(`${userCartUrl}${userName}`, CallType.POST, { gamesList: games });
     }
   };
 

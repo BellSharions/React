@@ -7,9 +7,8 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Footer from "./components/footer/footer";
 import Home from "./components/home/homeContainer";
-import { routesMap } from "./constants/constants";
-import { AppProps, AppState, GameCart } from "./types/types";
-import ProtectedRoute from "./components/protectedRoute/protectedRoute";
+import { CallType, loginKey, roleKey, RoutesMap, userCartUrl } from "./constants";
+import { CartResponse, GameCart } from "./types";
 import CartPage from "./components/cart/cartPageContainer";
 import store from "./components/redux/store";
 import { ReducerState } from "./components/redux/reducer";
@@ -17,13 +16,32 @@ import HeaderContainer from "./components/header/headerContainer";
 import { logInAction, setRoleAction } from "./components/redux/actions";
 import ModalBodyContainer from "./components/modal/modalBodyContainer";
 import { setCartGamesAction } from "./components/redux/cart/cartActions";
+import apiCall from "./apiCall";
+import ProtectedRoute from "./components/protected-route/protectedRoute";
 
 const Profile = lazy(() => import("./components/users/profileContainer"));
 const About = lazy(() => import("./components/about/about"));
 const Products = lazy(() => import("./components/products/productsContainer"));
+
+export interface AppProps {
+  props: string;
+}
+
+export interface AppState {
+  loggedIn?: boolean;
+  userName?: string;
+  showSignInModal: boolean;
+  showSignUpModal: boolean;
+}
+
+function storageGrab(key: string) {
+  return localStorage.getItem(key);
+}
+
 const mapStateToProps = (state: ReducerState) => ({
   isLoading: state.reducer.isLoading,
 });
+
 const mapDispatchToProps = (
   dispatch: Dispatch<{
     type: string;
@@ -35,28 +53,17 @@ const mapDispatchToProps = (
   setCart: (value: GameCart[]) => dispatch(setCartGamesAction(value)),
 });
 class AppContainer extends Component<AppProps, AppState> {
-  ["constructor"]: typeof AppContainer;
-
   constructor(props: AppProps) {
     super(props);
-    if (localStorage && localStorage.getItem("login")) this.props.getLogin(localStorage.getItem("login"));
-    if (localStorage && localStorage.getItem("role")) this.props.getRole(localStorage.getItem("role"));
-    const goExlcude = true;
-    if (!goExlcude) {
-      console.warn("class-dead-code doesn't work");
-    }
+    if (storageGrab(loginKey)) this.props.getLogin(storageGrab(loginKey));
+    if (storageGrab(roleKey)) this.props.getRole(storageGrab(roleKey));
   }
 
   async componentDidMount() {
-    const getResponse = await (
-      await fetch(`http://localhost:8080/api/user/cart/${store.getState().reducer.userName}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
-    ).json();
+    const getResponse = await apiCall(`${userCartUrl}${store.getState().reducer.userName}`, CallType.GET, null);
 
-    if (getResponse) {
-      if (getResponse.gamesList) this.props.setCart(getResponse.gamesList);
+    if (getResponse.status === 200) {
+      this.props.setCart((getResponse.data as CartResponse).gamesList);
     }
   }
 
@@ -72,20 +79,20 @@ class AppContainer extends Component<AppProps, AppState> {
         >
           <HeaderContainer />
           <Switch>
-            <ProtectedRoute path={`${routesMap.PRODUCTS}/:platform`}>
+            <ProtectedRoute path={`${RoutesMap.PRODUCTS}/:platform`}>
               <Products />
             </ProtectedRoute>
-            <ProtectedRoute path={routesMap.CART}>
+            <ProtectedRoute path={RoutesMap.CART}>
               <CartPage />
             </ProtectedRoute>
-            <ProtectedRoute path={routesMap.ABOUT}>
+            <ProtectedRoute path={RoutesMap.ABOUT}>
               <About />
             </ProtectedRoute>
-            <ProtectedRoute path={routesMap.PROFILE}>
+            <ProtectedRoute path={RoutesMap.PROFILE}>
               <Profile />
             </ProtectedRoute>
 
-            <Route path={["/", routesMap.HOME]} render={() => <Home />} />
+            <Route path={["/", RoutesMap.HOME]} render={() => <Home />} />
           </Switch>
           <Footer />
           <ModalBodyContainer />

@@ -2,8 +2,20 @@ import { FC } from "react";
 import "./signupmodalbody.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { SignUpModalProps } from "@/types/types";
 import InputText from "@/elements/inputTextContainer";
+
+export interface SignUpModalProps {
+  closeModal: () => void;
+  logup: string;
+  password: string;
+  repeatPassword: string;
+  message: string;
+  putFunc: (e: SyntheticEvent<Element, Event>) => Promise<unknown>;
+  logupChanged: (value: string) => void;
+  passwordChanged: (value: string) => void;
+  verifyPassword: (value: string) => void;
+  repeatPasswordChanged: (value: string) => void;
+}
 
 const SignUpModal: FC<SignUpModalProps> = ({
   closeModal,
@@ -11,10 +23,10 @@ const SignUpModal: FC<SignUpModalProps> = ({
   password,
   message,
   putFunc,
-  logupGetter,
-  passwordGetter,
+  logupChanged,
+  passwordChanged,
   repeatPassword,
-  repeatPasswordGetter,
+  repeatPasswordChanged,
 }) => (
   <div className="signUp__modal_container">
     <div className="signUp__modal_upper-container">
@@ -25,13 +37,13 @@ const SignUpModal: FC<SignUpModalProps> = ({
     </div>
     <p>{message}</p>
     <form action="#" className="signUp__modal_content-container" onSubmit={putFunc}>
-      <InputText name="Login" id="SignUplogin" type="text" onChange={logupGetter} value={logup} />
-      <InputText name="Password" id="SignUpPassword" type="password" onChange={passwordGetter} value={password} />
+      <InputText name="Login" id="SignUplogin" type="text" onChange={logupChanged} value={logup} />
+      <InputText name="Password" id="SignUpPassword" type="password" onChange={passwordChanged} value={password} />
       <InputText
         name="Repeat Password"
         id="SignUpRepeatPassword"
         type="password"
-        onChange={repeatPasswordGetter}
+        onChange={repeatPasswordChanged}
         value={repeatPassword}
       />
       <div className="signUp__modal_submit-btn-container">
