@@ -11,13 +11,13 @@ import {
 } from "../actions/cartActions";
 import { GameCart } from "../../types";
 
-export interface CartStateType {
+export interface CartState {
   gamesList: GameCart[];
   totalPurchase: number;
   userBalance: number;
 }
 
-const InitialCartState: CartStateType = {
+const InitialCartState: CartState = {
   gamesList: [] as GameCart[],
   totalPurchase: 0,
   userBalance: 1000,
@@ -63,7 +63,7 @@ interface ICartCheckAction {
   type: string;
 }
 
-function addGameToCart(state: CartStateType, action: ICartSingleAction) {
+function addGameToCart(state: CartState, action: ICartSingleAction) {
   return {
     ...state,
     gamesList: state.gamesList.concat(action.payload),
@@ -72,7 +72,7 @@ function addGameToCart(state: CartStateType, action: ICartSingleAction) {
   };
 }
 
-function setCartGames(state: CartStateType, action: ICartAction) {
+function setCartGames(state: CartState, action: ICartAction) {
   return {
     ...state,
     gamesList: action.payload,
@@ -81,7 +81,7 @@ function setCartGames(state: CartStateType, action: ICartAction) {
   };
 }
 
-function changeGameCheck(state: CartStateType, action: ICartCheckAction) {
+function changeGameCheck(state: CartState, action: ICartCheckAction) {
   return {
     ...state,
     gamesList: state.gamesList.map((initGame) =>
@@ -92,7 +92,7 @@ function changeGameCheck(state: CartStateType, action: ICartCheckAction) {
   };
 }
 
-function changeGameAmount(state: CartStateType, action: ICartAmountAction) {
+function changeGameAmount(state: CartState, action: ICartAmountAction) {
   return {
     ...state,
     gamesList: state.gamesList.map((initGame) =>
@@ -103,7 +103,7 @@ function changeGameAmount(state: CartStateType, action: ICartAmountAction) {
   };
 }
 
-function removeGameFromCart(state: CartStateType) {
+function removeGameFromCart(state: CartState) {
   return {
     ...state,
     gamesList: state.gamesList.filter((game) => game.check === false),
@@ -112,7 +112,7 @@ function removeGameFromCart(state: CartStateType) {
   };
 }
 
-function increaseTotalAmount(state: CartStateType, action: ICartNumberAction) {
+function increaseTotalAmount(state: CartState, action: ICartNumberAction) {
   return {
     ...state,
     gamesList: state.gamesList,
@@ -121,7 +121,7 @@ function increaseTotalAmount(state: CartStateType, action: ICartNumberAction) {
   };
 }
 
-function decreaseTotalAmount(state: CartStateType, action: ICartNumberAction) {
+function decreaseTotalAmount(state: CartState, action: ICartNumberAction) {
   return {
     ...state,
     gamesList: state.gamesList,
@@ -130,7 +130,7 @@ function decreaseTotalAmount(state: CartStateType, action: ICartNumberAction) {
   };
 }
 
-function buyGames(state: CartStateType, action: ICartNumberAction) {
+function buyGames(state: CartState, action: ICartNumberAction) {
   return {
     ...state,
     gamesList: InitialCartState.gamesList,
